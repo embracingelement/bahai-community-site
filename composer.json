@@ -1,0 +1,19 @@
+{
+    "name": "embracingelement/bahai-community-site",
+    "require": {
+        "google/apiclient": "^1.1"
+    },
+    "require-dev":{
+      "phpunit/phpunit": "^5.0",
+      "phpunit/php-code-coverage": "dev-master#b8436b000263f6d72fbad1d36890e247ce84857e"
+    },
+    "autoload": {
+      "psr-4": {"": "app/"}
+    },
+    "authors": [
+        {
+            "name": "Dominic Scimeca",
+            "email": "dominic@embracingelement.com"
+        }
+    ]
+}
