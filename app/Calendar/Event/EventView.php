@@ -8,13 +8,16 @@
 
 namespace Calendar\Event;
 
+use Twig_Environment;
 
 class EventView {
+    private $twig;
+
+    function __construct(Twig_Environment $twig){
+        $this->twig = $twig;
+    }
+
     public function getEventHTML(Event $event){
-        $html = "<li>";
-        $html.= "<h4>".$event->getTitle()."</h4>";
-        $html.= "<p>Start Date : ".$event->getStartDate()."</p>";
-        $html.= "</li>";
-        return $html;
+        return $this->twig->render('event.html',array('event'=> $event));
     }
 }

@@ -4,7 +4,9 @@ namespace BCS;
 
 use Calendar\CalendarClient;
 use Calendar\CalendarService;
+use Calendar\Event\EventAggregator;
 use Calendar\Event\EventView;
+use Config\Twig;
 
 /**
  * Created by PhpStorm.
@@ -17,11 +19,14 @@ class BahaiCommunitySiteApp {
     private $calendarClient;
     private $calendarService;
     private $eventView;
+    private $eventAggregator;
 
     function __construct(){
+        $twig = new Twig();
         $this->calendarClient = new CalendarClient();
         $this->calendarService = new CalendarService($this->calendarClient);
-        $this->eventView = new EventView();
+        $this->eventView = new EventView($twig->getTwig());
+        $this->eventAggregator = new EventAggregator();
     }
 
     /**

@@ -2,6 +2,7 @@
 namespace Calendar;
 use Calendar\Event\Event;
 use Google_Service_Calendar;
+use Google_Service_Calendar_Event;
 
 /**
  * Created by PhpStorm.
@@ -23,8 +24,8 @@ class CalendarService {
         $calendarId = 'primary';
         $optParams = array(
             'maxResults' => 10,
-            'orderBy' => 'startTime',
-            'singleEvents' => TRUE,
+//            'orderBy' => 'startTime',
+//            'singleEvents' => TRUE,
             'timeMin' => date('c'),
         );
 
@@ -33,19 +34,26 @@ class CalendarService {
         $events = [];
 
         foreach ($results->getItems() as $googleEvent) {
-            $start = $googleEvent->start->dateTime;
-            if (empty($start)) {
-                $start = $googleEvent->start->date;
-            }
-            $title = $googleEvent->getSummary();
-
-            $event = new Event();
-            $event->setTitle($title);
-            $event->setStartDate($start);
-
-            array_push($events, $event);
+            array_push($events, $this->createEventFromGoogleEvent($googleEvent));
         }
 
         return $events;
+    }
+
+    function createEventFromGoogleEvent(Google_Service_Calendar_Event $googleEvent){
+//        print_r("<pre>");
+//        print_r($googleEvent);
+        $start = $googleEvent->start->dateTime;
+        if (empty($start)) {
+            $start = $googleEvent->start->date;
+        }
+
+        $event = new Event();
+        $event->setTitle($googleEvent->getSummary());
+        $event->setStartDate($start);
+        $event->setLocation($googleEvent->getLocation());
+        $event->setDescription($googleEvent->getDescription());
+
+        return $event;
     }
 }
