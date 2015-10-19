@@ -13,12 +13,13 @@ use Twig_Environment;
 use Twig_Loader_Filesystem;
 
 class Twig {
-    private $twig;
+    private $twigLoader;
+    private $twigEnvironment;
 
     function __construct(){
-        $twig_loader = new Twig_Loader_Filesystem(APP_ROOT.'/templates');
-        $this->twig = new Twig_Environment($twig_loader, array(
-            'cache' => REPO_ROOT.'/cache/templates',
+        $this->twigLoader = new Twig_Loader_Filesystem(APP_ROOT.'/templates');
+        $this->twigEnvironment = new Twig_Environment($this->twigLoader, array(
+            'cache' => APP_ROOT.'/templates/cache',
             'debug' => DEBUG
         ));
     }
@@ -26,8 +27,16 @@ class Twig {
     /**
      * @return Twig_Environment
      */
-    public function getTwig()
+    public function getTwigEnvironment()
     {
-        return $this->twig;
+        return $this->twigEnvironment;
+    }
+
+    /**
+     * @return Twig_Loader_Filesystem
+     */
+    public function getTwigLoader()
+    {
+        return $this->twigLoader;
     }
 }

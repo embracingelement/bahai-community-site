@@ -25,7 +25,7 @@ class BahaiCommunitySiteApp {
         $twig = new Twig();
         $this->calendarClient = new CalendarClient();
         $this->calendarService = new CalendarService($this->calendarClient);
-        $this->eventView = new EventView($twig->getTwig());
+        $this->eventView = new EventView($twig->getTwigEnvironment());
         $this->eventAggregator = new EventAggregator();
     }
 

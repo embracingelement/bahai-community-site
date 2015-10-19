@@ -18,6 +18,6 @@ class EventView {
     }
 
     public function getEventHTML(Event $event){
-        return $this->twig->render('event.html',array('event'=> $event));
+        return $this->twig->render('event.twig',array('event'=> $event));
     }
 }

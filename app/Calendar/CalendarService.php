@@ -53,6 +53,7 @@ class CalendarService {
         $event->setStartDate($start);
         $event->setLocation($googleEvent->getLocation());
         $event->setDescription($googleEvent->getDescription());
+        $event->setContactEmail($googleEvent->getCreator()->getEmail());
 
         return $event;
     }

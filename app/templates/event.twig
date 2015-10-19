@@ -1,0 +1,22 @@
+<div class='scrolly {{ event.featured }}'>
+    <div class='scrollytitle text-left' lang='en'>{{ event.title }}</div>
+    <div class='scrollydate text-left'>{{ event.startDate }}</div>
+    <div class='text-left popoverex nooutline'>
+        <a tabindex='0' title='Location' data-toggle='popover' data-html='true' data-trigger='focus' data-content='<p>{{ event.location }}<br />".$defaultaddress."</p><p><a href=\"###MAPLINK###\" target=\"_blank\" id=\"{{ event.location }}\">Directions</a> | <a href=\"contact.php\" id=\"Contacts\">Contact Info</a></p>'>
+            <div class='scrollybody'>{{ event.location }}</div>
+        </a>
+    </div>
+    <p class='text-center popoverex'>
+        <a
+                tabindex='0'
+                id='{{ event.contactEmail }}-###DATE2###-{{ event.startDate | replace({" ":"-"}) }}-{{ event.title | replace({" ":"-"}) }}'
+                class='btn btn-default'
+                data-toggle='popover'
+                title='Details'
+                data-trigger='focus'
+                data-html='true'
+                data-content='{{ event.description }}<p>For more information, please e-mail {{ event.contactEmail }}: <a id=\"email-{{ event.contactEmail }}-###DATE2###-{{ event.startDate | replace({" ":"-"}) }}-{{ event.title | replace({" ":"-"}) }}\" href=\"mailto:{{ event.contactEmail }}?subject={{ event.title | replace({" ":"-"}) }}\" title=\"{{ event.contactEmail }}\">{{ event.contactEmail }}</a></p>'>
+            Details
+        </a>
+    </p>
+</div>
