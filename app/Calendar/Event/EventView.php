@@ -19,15 +19,17 @@ class EventView {
 
     public function getEventHTML($eventData, $calendar){
         $events = is_array($eventData) ? $this->sortByFeatured($eventData): [$eventData];
-//        print_r("<pre>");
-//        print_r($events);
 
-        $html = "";
-        foreach($events as $event){
-            $html .= $this->generateHTML($event, $calendar);
+        if(empty($events)){
+            return $this->generateEmptyHTML();
+        }else {
+            $html = "";
+            foreach ($events as $event) {
+                $html .= $this->generateHTML($event, $calendar);
+            }
+
+            return $html;
         }
-
-        return $html;
     }
 
     /**
@@ -54,11 +56,17 @@ class EventView {
     private function generateHTML(Event $event, $calendar){
         $featured = $event->isFeatured() ? "featured" : "";
 
+        //TODO fix date formatting for start date
+
         return $this->twig->render('event.twig',array(
             'event'=> $event,
             'calendar'=>$calendar,
             'featured'=>$featured
         ));
+    }
+
+    private function generateEmptyHTML(){
+        return $this->twig->render('events.none.twig');
     }
 
 }

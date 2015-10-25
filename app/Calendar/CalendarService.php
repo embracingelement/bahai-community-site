@@ -21,6 +21,38 @@ class CalendarService {
         $this->googleService = new Google_Service_Calendar($client->getGoogleClient());
     }
 
+    function getAndGroupCalendarsByType($calendars){
+        $calendarMap = [];
+        /** @var Calendar $calendar */
+        foreach($calendars as $calendar){
+            $mapKey = $calendar->getType();
+
+            if(!array_key_exists($mapKey,$calendarMap)){
+                $calendarMap[$mapKey] = [];
+            }
+
+            $calendarMap[$mapKey] = array_merge($calendarMap[$mapKey], $this->getUpcomingEvents($calendar));
+        }
+
+        foreach($calendarMap as $type => $events){
+            $calendarMap[$type] = $this->sortEventsByDate($events);
+        }
+
+        return $calendarMap;
+    }
+
+    private function sortEventsByDate($events){
+        $eventByDate = [];
+        /** @var Event $event */
+        foreach($events as $event){
+            $eventByDate[$event->getStartDate()] = $event;
+        }
+
+        ksort($eventByDate);
+
+        return array_values($eventByDate);
+    }
+
     function getUpcomingEvents(Calendar $calendar, $options = array()){
         $optParams = array(
             'maxResults' => 50,

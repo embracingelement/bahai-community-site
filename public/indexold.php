@@ -8,11 +8,58 @@ require '../app/Config/Definitions.php';
 $app = new BahaiCommunitySiteApp();
 $calendarService = $app->getCalendarService();
 $eventView = $app->getEventView();
-$nadiaCalendar = new \Calendar\Calendar("nadia@labahais.org");
-$nadiaCalendar->setLocationTitle("LA Baha'i Center");
-$nadiaCalendar->setLocation("5755 Rodeo Road, Los Angeles, CA 90016");
-$nadiaCalendar->setContact("Nadia");
-$events = $calendarService->getUpcomingEvents($nadiaCalendar);
+$labcCalendar = new \Calendar\Calendar("nadia@labahais.org","Bahai Center");
+$labcCalendar->setLocationTitle("LA Baha'i Center");
+$labcCalendar->setLocation("5755 Rodeo Road, Los Angeles, CA 90016");
+$labcCalendar->setContact("Nadia");
+$encinoCalendar = new Calendar\Calendar("labc.org_k55hah7gd5ji1jhms75d7b6bh4@group.calendar.google.com","Bahai Center");
+$encinoCalendar->setContact("Nadia");
+$encinoCalendar->setLocationTitle("Encino Baha'i Community Center");
+$encinoCalendar->setLocation("4830 Genesta Ave, Encino, CA 91316");
+$unityCenterCalendar = new Calendar\Calendar("labc.org_se9o00h6euaf7hlsvcts0r5qag@group.calendar.google.com","Bahai Center");
+$unityCenterCalendar->setContact("Nadia");
+$unityCenterCalendar->setLocationTitle("Unity Center");
+$unityCenterCalendar->setLocation("5753 Rodeo Road, Los Angeles, CA 90016");
+
+
+$coreActivityCalendars = array(
+    new Calendar\Calendar("mona@labahais.org","Study Circles"),
+    new Calendar\Calendar("dominic@labahais.org","Study Circles"),
+    new Calendar\Calendar("kalim@labahais.org","Study Circles"),
+    new Calendar\Calendar("naveed@labahais.org","Study Circles"),
+    new Calendar\Calendar("neda@labahais.org","Children's Classes"),
+    new Calendar\Calendar("labc.org_49p2gc784mt1jptsk2oaoh7sp8@group.calendar.google.com","Children's Classes"),
+    new Calendar\Calendar("talisa@labahais.org","Children's Classes"),
+    new Calendar\Calendar("touba@labahais.org","Children's Classes"),
+    new Calendar\Calendar("viva@labahais.org","Children's Classes"),
+//    new Calendar\Calendar("chitra@labahais.org","Children's Classes"),
+//    new Calendar\Calendar("fariba@labahais.org","Jr. Youth"),
+    new Calendar\Calendar("tannaz@labahais.org","Jr. Youth"),
+//    new Calendar\Calendar("nahaal@labahais.org","Jr. Youth"),
+    new Calendar\Calendar("esperanza@labahais.org","Jr. Youth"),
+//    new Calendar\Calendar("arrian@labahais.org","Jr. Youth"),
+//    new Calendar\Calendar("nilu@labahais.org","Jr. Youth"),
+    new Calendar\Calendar("negar@labahais.org","Teaching"),
+//    new Calendar\Calendar("barbara@labahais.org","Teaching"),
+    new Calendar\Calendar("divi@labahais.org","Teaching"),
+//    new Calendar\Calendar("glenda@labahais.org","Teaching"),
+    new Calendar\Calendar("ladan@labahais.org","Teaching"),
+    new Calendar\Calendar("erfan@labahais.org","Community Life"),
+    new Calendar\Calendar("hoda@labahais.org","Community Life"),
+//    new Calendar\Calendar("jonathan@labahais.org","Community Life"),
+    new Calendar\Calendar("anne@labahais.org","Community Life"),
+    new Calendar\Calendar("touba@labahais.org","Community Life"),
+    new Calendar\Calendar("labc.org_dgcs32ebtuv1q5kmdd6f26r4g0@group.calendar.google.com","Community Life")
+);
+
+$coreActivityEventsMap = $calendarService->getAndGroupCalendarsByType($coreActivityCalendars);
+
+//print_r("<pre>");
+//print_r($coreActivityEventsMap);
+
+$labcEvents = $calendarService->getUpcomingEvents($labcCalendar);
+$encinoEvents = $calendarService->getUpcomingEvents($encinoCalendar);
+$unityCenterEvents = $calendarService->getUpcomingEvents($unityCenterCalendar);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -109,9 +156,7 @@ $events = $calendarService->getUpcomingEvents($nadiaCalendar);
                     </a>
 
                     <div class="scrollable" id="scrollable-losangeles">
-                        <?php echo $eventView->getEventHTML($events, $nadiaCalendar); ?>
-                        <?php //include 'ParseGoogleCalendar.php'; ?>
-                        <?php //ParseGoogleCalendar("https://www.google.com/calendar/feeds/nadia%40labahais.org/public/basic", "Nadia", "nadia@labahais.org", "LA Baha'i Center", "5755 Rodeo Road, Los Angeles, CA 90016"); ?>
+                        <?php echo $eventView->getEventHTML($labcEvents, $labcCalendar); ?>
                     </div>
 
                 </div>
@@ -124,7 +169,7 @@ $events = $calendarService->getUpcomingEvents($nadiaCalendar);
                     </a>
 
                     <div class="scrollable" id="scrollable-encino">
-                        <?php //ParseGoogleCalendar("https://www.google.com/calendar/feeds/labc.org_k55hah7gd5ji1jhms75d7b6bh4%40group.calendar.google.com/public/basic", "Nadia", "nadia@labahais.org", "Encino Baha'i Community Center", "4830 Genesta Ave, Encino, CA 91316"); ?>
+                        <?php echo $eventView->getEventHTML($encinoEvents, $encinoCalendar); ?>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="unity">
@@ -136,10 +181,7 @@ $events = $calendarService->getUpcomingEvents($nadiaCalendar);
                     </a>
 
                     <div class="scrollable" id="scrollable-unity">
-                        <?php
-                        // ParseGoogleCalendar("https://www.google.com/calendar/feeds/santamonicabahai@gmail.com/public/basic", "Lawrence", "info@santamonicabahai.org", "Santa Monica Baha'i Center", "3102 Colorado Avenue, Santa Monica, CA 90404");
-                       // ParseGoogleCalendar("https://www.google.com/calendar/feeds/labc.org_se9o00h6euaf7hlsvcts0r5qag%40group.calendar.google.com/public/basic", "Nadia", "nadia@labahais.org", "Unity Center", "5753 Rodeo Road, Los Angeles, CA 90016");
-                        ?>
+                        <?php echo $eventView->getEventHTML($unityCenterEvents, $unityCenterCalendar); ?>
                     </div>
                 </div>
             </div>
@@ -195,7 +237,7 @@ $events = $calendarService->getUpcomingEvents($nadiaCalendar);
                 <div class="container">
                     <div class="col-sm-4 activityicondiv"><span class="activityicon">C</span></div>
                     <div class="col-sm-8">
-                        <?php //include 'activitylistC.php'; ?>
+                        <?php echo $eventView->getEventHTML($coreActivityEventsMap["Children's Classes"], new Calendar\Calendar("id","type")); ?>
                     </div>
                 </div>
             </div>
@@ -203,7 +245,7 @@ $events = $calendarService->getUpcomingEvents($nadiaCalendar);
                 <div class="container">
                     <div class="col-sm-4 activityicondiv"><span class="activityicon">J</span></div>
                     <div class="col-sm-8">
-                        <?php //include 'activitylistJ.php'; ?>
+                        <?php echo $eventView->getEventHTML($coreActivityEventsMap["Jr. Youth"], new Calendar\Calendar("id","type")); ?>
                     </div>
                 </div>
             </div>
@@ -211,7 +253,7 @@ $events = $calendarService->getUpcomingEvents($nadiaCalendar);
                 <div class="container">
                     <div class="col-sm-4 activityicondiv"><span class="activityicon">S</span></div>
                     <div class="col-sm-8">
-                        <?php //include 'activitylistS.php'; ?>
+                        <?php echo $eventView->getEventHTML($coreActivityEventsMap["Study Circles"], new Calendar\Calendar("id","type")); ?>
                     </div>
                 </div>
             </div>
@@ -219,7 +261,7 @@ $events = $calendarService->getUpcomingEvents($nadiaCalendar);
                 <div class="container">
                     <div class="col-sm-4 activityicondiv"><span class="activityicon">L</span></div>
                     <div class="col-sm-8">
-                        <?php //include 'activitylistD.php'; ?>
+                        <?php echo $eventView->getEventHTML($coreActivityEventsMap["Community Life"], new Calendar\Calendar("id","type")); ?>
                     </div>
                 </div>
             </div>

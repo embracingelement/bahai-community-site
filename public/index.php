@@ -8,10 +8,8 @@ require '../app/Config/Definitions.php';
 $app = new BahaiCommunitySiteApp();
 $calendarService = $app->getCalendarService();
 $eventView = $app->getEventView();
-$nadiaCalendar = new \Calendar\Calendar("nadia@labahais.org");
-$nadiaCalendar->setLocationTitle("LA Baha'i Center");
-$nadiaCalendar->setLocation("5755 Rodeo Road, Los Angeles, CA 90016");
-$events = $calendarService->getUpcomingEvents($nadiaCalendar);
+echo "<pre>";
+print_r($calendarService->getCurrentCalendars());
 
 ?>
 <html>
@@ -21,7 +19,7 @@ $events = $calendarService->getUpcomingEvents($nadiaCalendar);
 
    <h1>Success!</h1>
     <ul class="upcoming">
-        <?php echo $eventView->getEventHTML($events, $nadiaCalendar); ?>
+
     </ul>
     </body>
 

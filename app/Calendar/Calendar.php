@@ -11,12 +11,14 @@ namespace Calendar;
 
 class Calendar {
     private $id;
+    private $type;
     private $location;
     private $locationTitle;
     private $contact;
 
-    function __construct($id){
+    function __construct($id, $type){
         $this->id = $id;
+        $this->type = $type;
     }
 
     /**
@@ -26,6 +28,16 @@ class Calendar {
     {
         return $this->id;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+
 
     /**
      * @return mixed
