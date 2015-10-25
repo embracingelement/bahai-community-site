@@ -95,12 +95,8 @@ class Event {
         $this->contactEmail = $contactEmail;
     }
 
-    public function getFeatured(){
-        return $this->isFeatured() ? "featured" : "";
-    }
-
-    private function isFeatured(){
-        return strpos(strtolower($this->title), strtolower("Featured Event:"));
+    public function isFeatured(){
+        return strpos(strtolower($this->title), strtolower("Featured Event:")) !== false;
     }
 
     private function filterTitle($title){
@@ -141,6 +137,7 @@ class Event {
 
     private function formatDescription($description){
         //Do some niceness to the description
+        $description = html_entity_decode(htmlspecialchars_decode($description), ENT_QUOTES);
         //Make any URLs used in the description clickable
         $description = preg_replace('/&([a-z]{1,2})(acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml|caron);/i','$1',htmlentities(str_replace(array_keys  ($this->chr_map), array_values($this->chr_map), $description), ENT_QUOTES));
         $description = preg_replace('"\b(http://\S+)"', '<a href="$1">$1</a>', $description);

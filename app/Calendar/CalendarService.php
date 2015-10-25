@@ -2,6 +2,7 @@
 namespace Calendar;
 use Calendar\Event\Event;
 use Google_Service_Calendar;
+use Google_Service_Calendar_CalendarListEntry;
 use Google_Service_Calendar_Event;
 
 /**
@@ -20,16 +21,18 @@ class CalendarService {
         $this->googleService = new Google_Service_Calendar($client->getGoogleClient());
     }
 
-    function getUpcomingEvents(){
-        $calendarId = 'primary';
+    function getUpcomingEvents(Calendar $calendar, $options = array()){
         $optParams = array(
-            'maxResults' => 10,
-//            'orderBy' => 'startTime',
-//            'singleEvents' => TRUE,
+            'maxResults' => 50,
+            'orderBy' => 'startTime',
+            'singleEvents' => TRUE,
             'timeMin' => date('c'),
         );
 
-        $results = $this->googleService->events->listEvents($calendarId, $optParams);
+        $options = array_merge($optParams, $options);
+
+
+        $results = $this->googleService->events->listEvents($calendar->getId(), $options);
 
         $events = [];
 
@@ -40,6 +43,10 @@ class CalendarService {
         return $events;
     }
 
+    /**
+     * @param Google_Service_Calendar_Event $googleEvent
+     * @return Event
+     */
     function createEventFromGoogleEvent(Google_Service_Calendar_Event $googleEvent){
 //        print_r("<pre>");
 //        print_r($googleEvent);
@@ -56,5 +63,13 @@ class CalendarService {
         $event->setContactEmail($googleEvent->getCreator()->getEmail());
 
         return $event;
+    }
+
+
+    /**
+     * @return Google_Service_Calendar_CalendarListEntry[]
+     */
+    function getCurrentCalendars(){
+        return $this->googleService->calendarList->listCalendarList()->getItems();
     }
 }

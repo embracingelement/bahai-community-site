@@ -1,21 +1,49 @@
-<div class='scrolly {{ event.featured }}'>
-    <div class='scrollytitle text-left' lang='en'>{{ event.title }}</div>
-    <div class='scrollydate text-left'>{{ event.startDate }}</div>
+<div class='scrolly {{ featured }}'>
+    <div class='scrollytitle text-left' lang='en'>
+        {% if event.isFeatured() %}
+            <div class='featuredtitle'>Featured Event:</div>
+            {{ event.title | trim("Featured Event:") }}
+        {% else %}
+            {{ event.title }}
+        {% endif %}
+    </div>
+    <div class='scrollydate text-left'>{{ event.startDate | date('D M j g:ia')}}</div>
+
     <div class='text-left popoverex nooutline'>
-        <a tabindex='0' title='Location' data-toggle='popover' data-html='true' data-trigger='focus' data-content='<p>{{ event.location }}<br />".$defaultaddress."</p><p><a href=\"###MAPLINK###\" target=\"_blank\" id=\"{{ event.location }}\">Directions</a> | <a href=\"contact.php\" id=\"Contacts\">Contact Info</a></p>'>
-            <div class='scrollybody'>{{ event.location }}</div>
+        <a
+                tabindex='0'
+                title='Location'
+                data-toggle='popover'
+                data-html='true'
+                data-trigger='focus'
+                data-content='
+                    <p>
+                        {{ calendar.locationTitle }}
+                        </br>
+                        {{ calendar.location }}
+                    </p>
+                    <p>
+                        <a href="http://maps.google.com/?q={{ calendar.location }}" target="_blank">Directions</a> |
+                        <a href="contact.php" id="Contacts">Contact Info</a>
+                    </p>'>
+            <div class='scrollybody'>{{ calendar.locationTitle }}</div>
         </a>
     </div>
     <p class='text-center popoverex'>
         <a
                 tabindex='0'
-                id='{{ event.contactEmail }}-###DATE2###-{{ event.startDate | replace({" ":"-"}) }}-{{ event.title | replace({" ":"-"}) }}'
                 class='btn btn-default'
                 data-toggle='popover'
                 title='Details'
                 data-trigger='focus'
                 data-html='true'
-                data-content='{{ event.description }}<p>For more information, please e-mail {{ event.contactEmail }}: <a id=\"email-{{ event.contactEmail }}-###DATE2###-{{ event.startDate | replace({" ":"-"}) }}-{{ event.title | replace({" ":"-"}) }}\" href=\"mailto:{{ event.contactEmail }}?subject={{ event.title | replace({" ":"-"}) }}\" title=\"{{ event.contactEmail }}\">{{ event.contactEmail }}</a></p>'>
+                data-content='
+                    {{ event.description | raw }}
+                    <p style="margin-top: 20px;">For more information, please e-mail {{ calendar.contact }}:
+                        <a href="mailto:{{ event.contactEmail }}?subject={{ event.title }}" title="{{ event.contactEmail }}">
+                            {{ event.contactEmail }}
+                        </a>
+                    </p>'>
             Details
         </a>
     </p>

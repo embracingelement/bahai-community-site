@@ -10,6 +10,9 @@ namespace Calendar;
 
 class CalendarClient {
 
+    /**
+     * @var \Google_Client
+     */
     private $googleClient;
 
     function __construct(){
@@ -47,13 +50,16 @@ class CalendarClient {
 
         $client->setAccessToken($accessToken);
 
-        // Refresh the token if it's expired.
+        $this->refreshAuthToken($client);
+
+        $this->googleClient = $client;
+    }
+
+    private function refreshAuthToken(\Google_Client $client){
         if ($client->isAccessTokenExpired()) {
             $client->refreshToken($client->getRefreshToken());
             file_put_contents(CREDENTIALS_FILE, $client->getAccessToken());
         }
-
-        $this->googleClient = $client;
     }
 
     /**
