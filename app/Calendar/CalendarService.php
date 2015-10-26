@@ -25,17 +25,31 @@ class CalendarService {
         $calendarMap = [];
         /** @var Calendar $calendar */
         foreach($calendars as $calendar){
-            $mapKey = $calendar->getType();
+            $baseGroup = $calendar->getType();
 
-            if(!array_key_exists($mapKey,$calendarMap)){
-                $calendarMap[$mapKey] = [];
+            if(!array_key_exists($baseGroup,$calendarMap)){
+                $calendarMap[$baseGroup] = [];
             }
 
-            $calendarMap[$mapKey] = array_merge($calendarMap[$mapKey], $this->getUpcomingEvents($calendar));
+            $events = $this->getUpcomingEvents($calendar);
+
+            /** @var Event $event */
+            foreach($events as $event){
+                $neighborhood = explode(",",$event->getLocation())[0];
+
+                if(!array_key_exists($neighborhood,$calendarMap[$baseGroup])){
+                    $calendarMap[$baseGroup][$neighborhood] = [];
+                }
+                array_push($calendarMap[$baseGroup][$neighborhood], $event);
+            }
         }
 
-        foreach($calendarMap as $type => $events){
-            $calendarMap[$type] = $this->sortEventsByDate($events);
+        foreach($calendarMap as $type => $calendarType){
+            ksort($calendarMap[$type]);
+
+            foreach($calendarMap[$type] as $location => $events){
+                $calendarMap[$type][$location] = $this->sortEventsByDate($events);
+            }
         }
 
         return $calendarMap;
@@ -56,9 +70,9 @@ class CalendarService {
     function getUpcomingEvents(Calendar $calendar, $options = array()){
         $optParams = array(
             'maxResults' => 50,
-            'orderBy' => 'startTime',
-            'singleEvents' => TRUE,
-            'timeMin' => date('c'),
+//            'orderBy' => 'startTime',
+//            'singleEvents' => TRUE,
+            'timeMin' => date('c')
         );
 
         $options = array_merge($optParams, $options);
@@ -75,16 +89,25 @@ class CalendarService {
         return $events;
     }
 
+    function getUpcomingEventsBasic($calendarId){
+        $optParams = array(
+            'maxResults' => 50,
+            'orderBy' => 'startTime',
+            'singleEvents' => TRUE,
+            'timeMin' => date('c'),
+        );
+
+        return $this->googleService->events->listEvents($calendarId, $optParams);
+    }
+
     /**
      * @param Google_Service_Calendar_Event $googleEvent
      * @return Event
      */
     function createEventFromGoogleEvent(Google_Service_Calendar_Event $googleEvent){
-//        print_r("<pre>");
-//        print_r($googleEvent);
-        $start = $googleEvent->start->dateTime;
+        $start = $googleEvent->getStart()->dateTime;
         if (empty($start)) {
-            $start = $googleEvent->start->date;
+            $start = $googleEvent->getStart()->date;
         }
 
         $event = new Event();

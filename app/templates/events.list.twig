@@ -1,0 +1,33 @@
+{% for location, events in eventMap %}
+    <div class="text-left popoverex activitylistneighborhoodgroups">
+        <div class='activitylistneighborhood'>
+            {{ location }}
+        </div>
+        {% for event in events %}
+            <div class="activitylisttitle">
+                {{ event.getSplitLineTitle()| raw }}
+            </div>
+            <div class="activitylistdate">
+                {{ event.startDate | date('D M j g:ia') }}
+            </div>
+            <div class="activitylistdetails">
+                <a
+                        tabindex="0"
+                        class="btn btn-blue btn-sm"
+                        data-toggle="popover"
+                        data-trigger="focus"
+                        title="Details"
+                        data-html="true"
+                        data-content="
+                            <p>{{ event.description | raw }}</p>
+                            <p>For more information, please e-mail {{ event.getContactName() }}:
+                                <a href='mailto:{{ event.contactEmail }}?subject={{ event.title }}' title='{{ event.contactEmail }}'>
+                                    {{ event.contactEmail }}
+                                </a>
+                            </p>">
+                    Details
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endfor %}

@@ -1,65 +1,122 @@
 <?php
 
 use BCS\BahaiCommunitySiteApp;
+use Calendar\Calendar;
 
 require '../vendor/autoload.php';
 require '../app/Config/Definitions.php';
 
+function pr($object){
+    print_r("<pre>");
+    print_r($object);
+    print_r("</pre>");
+}
+
 $app = new BahaiCommunitySiteApp();
 $calendarService = $app->getCalendarService();
 $eventView = $app->getEventView();
-$labcCalendar = new \Calendar\Calendar("nadia@labahais.org","Bahai Center");
+$labcCalendar = new Calendar("nadia@labahais.org","Bahai Center");
 $labcCalendar->setLocationTitle("LA Baha'i Center");
 $labcCalendar->setLocation("5755 Rodeo Road, Los Angeles, CA 90016");
 $labcCalendar->setContact("Nadia");
-$encinoCalendar = new Calendar\Calendar("labc.org_k55hah7gd5ji1jhms75d7b6bh4@group.calendar.google.com","Bahai Center");
+$encinoCalendar = new Calendar("labc.org_k55hah7gd5ji1jhms75d7b6bh4@group.calendar.google.com","Bahai Center");
 $encinoCalendar->setContact("Nadia");
 $encinoCalendar->setLocationTitle("Encino Baha'i Community Center");
 $encinoCalendar->setLocation("4830 Genesta Ave, Encino, CA 91316");
-$unityCenterCalendar = new Calendar\Calendar("labc.org_se9o00h6euaf7hlsvcts0r5qag@group.calendar.google.com","Bahai Center");
+$unityCenterCalendar = new Calendar("labc.org_se9o00h6euaf7hlsvcts0r5qag@group.calendar.google.com","Bahai Center");
 $unityCenterCalendar->setContact("Nadia");
 $unityCenterCalendar->setLocationTitle("Unity Center");
 $unityCenterCalendar->setLocation("5753 Rodeo Road, Los Angeles, CA 90016");
 
+$startFirstTime = time();
+//$coreActivityCalendars = array(
+//    new Calendar("mona@labahais.org","Study Circles"),
+//    new Calendar("dominic@labahais.org","Study Circles"),
+//    new Calendar("kalim@labahais.org","Study Circles"),
+//    new Calendar("naveed@labahais.org","Study Circles"),
+//    new Calendar("neda@labahais.org","Children's Classes"),
+//    new Calendar("labc.org_49p2gc784mt1jptsk2oaoh7sp8@group.calendar.google.com","Children's Classes"),
+//    new Calendar("talisa@labahais.org","Children's Classes"),
+//    new Calendar("touba@labahais.org","Children's Classes"),
+//    new Calendar("viva@labahais.org","Children's Classes"),
+////    new Calendar("chitra@labahais.org","Children's Classes"),
+////    new Calendar("fariba@labahais.org","Jr. Youth"),
+//    new Calendar("tannaz@labahais.org","Jr. Youth"),
+////    new Calendar("nahaal@labahais.org","Jr. Youth"),
+//    new Calendar("esperanza@labahais.org","Jr. Youth"),
+////    new Calendar("arrian@labahais.org","Jr. Youth"),
+////    new Calendar("nilu@labahais.org","Jr. Youth"),
+//    new Calendar("negar@labahais.org","Teaching"),
+////    new Calendar("barbara@labahais.org","Teaching"),
+//    new Calendar("divi@labahais.org","Teaching"),
+////    new Calendar("glenda@labahais.org","Teaching"),
+//    new Calendar("ladan@labahais.org","Teaching"),
+//    new Calendar("erfan@labahais.org","Community Life"),
+//    new Calendar("hoda@labahais.org","Community Life"),
+////    new Calendar("jonathan@labahais.org","Community Life"),
+//    new Calendar("anne@labahais.org","Community Life"),
+//    new Calendar("touba@labahais.org","Community Life"),
+//    new Calendar("labc.org_dgcs32ebtuv1q5kmdd6f26r4g0@group.calendar.google.com","Community Life")
+//);
 
 $coreActivityCalendars = array(
-    new Calendar\Calendar("mona@labahais.org","Study Circles"),
-    new Calendar\Calendar("dominic@labahais.org","Study Circles"),
-    new Calendar\Calendar("kalim@labahais.org","Study Circles"),
-    new Calendar\Calendar("naveed@labahais.org","Study Circles"),
-    new Calendar\Calendar("neda@labahais.org","Children's Classes"),
-    new Calendar\Calendar("labc.org_49p2gc784mt1jptsk2oaoh7sp8@group.calendar.google.com","Children's Classes"),
-    new Calendar\Calendar("talisa@labahais.org","Children's Classes"),
-    new Calendar\Calendar("touba@labahais.org","Children's Classes"),
-    new Calendar\Calendar("viva@labahais.org","Children's Classes"),
-//    new Calendar\Calendar("chitra@labahais.org","Children's Classes"),
-//    new Calendar\Calendar("fariba@labahais.org","Jr. Youth"),
-    new Calendar\Calendar("tannaz@labahais.org","Jr. Youth"),
-//    new Calendar\Calendar("nahaal@labahais.org","Jr. Youth"),
-    new Calendar\Calendar("esperanza@labahais.org","Jr. Youth"),
-//    new Calendar\Calendar("arrian@labahais.org","Jr. Youth"),
-//    new Calendar\Calendar("nilu@labahais.org","Jr. Youth"),
-    new Calendar\Calendar("negar@labahais.org","Teaching"),
-//    new Calendar\Calendar("barbara@labahais.org","Teaching"),
-    new Calendar\Calendar("divi@labahais.org","Teaching"),
-//    new Calendar\Calendar("glenda@labahais.org","Teaching"),
-    new Calendar\Calendar("ladan@labahais.org","Teaching"),
-    new Calendar\Calendar("erfan@labahais.org","Community Life"),
-    new Calendar\Calendar("hoda@labahais.org","Community Life"),
-//    new Calendar\Calendar("jonathan@labahais.org","Community Life"),
-    new Calendar\Calendar("anne@labahais.org","Community Life"),
-    new Calendar\Calendar("touba@labahais.org","Community Life"),
-    new Calendar\Calendar("labc.org_dgcs32ebtuv1q5kmdd6f26r4g0@group.calendar.google.com","Community Life")
+    new Calendar("mona@labahais.org","Study Circles"),
+    new Calendar("tannaz@labahais.org","Study Circles"),
+    new Calendar("kalim@labahais.org","Study Circles"),
+    new Calendar("naveed@labahais.org","Study Circles"),
+    new Calendar("dominic@labahais.org","Study Circles"),
+    new Calendar("neda@labahais.org","Children's Classes"),
+    new Calendar("labc.org_49p2gc784mt1jptsk2oaoh7sp8@group.calendar.google.com","Children's Classes"), // CC - Ala
+    new Calendar("hodad@labahais.org","Children's Classes"),
+    new Calendar("viva@labahais.org","Children's Classes"),
+    new Calendar("labc.org_3ccu0eei4vi0v5h0go2q8s3gis@group.calendar.google.com","Children's Classes"), // CC - Jamal
+    new Calendar("chad@labahais.org","Jr. Youth"),
+    new Calendar("mac@labahais.org","Jr. Youth"),
+    new Calendar("roya@labahais.org","Jr. Youth"),
+    new Calendar("esperanza@labahais.org","Jr. Youth"),
+    new Calendar("negar@labahais.org","Teaching"),
+    new Calendar("divi@labahais.org","Teaching"),
+    new Calendar("amin@labahais.org","Teaching"),
+    new Calendar("ladan@labahais.org","Teaching"),
+    new Calendar("lida@labahais.org","Teaching"),
+////    new Calendar("labc.org_6kbr02c0eiov42ipcngrrjb41o@group.calendar.google.com","Teaching"),			// ATC - Ala
+    new Calendar("nadia@labahais.org","Community Life"),												// Center - LA
+    new Calendar("labc.org_k55hah7gd5ji1jhms75d7b6bh4@group.calendar.google.com","Community Life"),	// Center - Encino
+    new Calendar("erfan@labahais.org","Feast"),
+    new Calendar("nika@labahais.org","Feast"),
+//    new Calendar("anne@labahais.org","Feast"),
+//    new Calendar("touba@labahais.org","Feast"),
+//    new Calendar("labc.org_vd1oen3li3e4t8m4knb9hg7nec@group.calendar.google.com","Feast"),			// Center - Feast
+//    new Calendar("labc.org_dgcs32ebtuv1q5kmdd6f26r4g0@group.calendar.google.com","Community Life"),	// CET
+//    new Calendar("labc.org_0o3e0ajlg3tj7kqehj4sbmmmuk@group.calendar.google.com","Community Life"),	// Center - Neighborhood
+//    new Calendar("labc.org_qe1cin4numuf080rhh3oqnsn38@group.calendar.google.com","Community Life"),	// ACLC - Jamal
+//    new Calendar("labc.org_qh1m8alt2a2drrbbgaqtj23tfs@group.calendar.google.com","Community Life"),	// ACLC - Nur
+//    new Calendar("pardis@labahais.org","Teaching")
 );
+
 
 $coreActivityEventsMap = $calendarService->getAndGroupCalendarsByType($coreActivityCalendars);
 
+//pr($coreActivityEventsMap);
+$endFirstTime = time();
+print_r($endFirstTime - $startFirstTime);
+print_r("<br/></br>");
+//$startSecondTime = time();
+///** @var Calendar $coreCalendar */
+//foreach($coreActivityCalendars as $coreCalendar){
+//    $calendarService->getUpcomingEventsBasic($coreCalendar->getId());
+//}
+//$endSecondTime = time();
+//print_r($endSecondTime - $startSecondTime);
+//print_r("<br/></br>");
 //print_r("<pre>");
 //print_r($coreActivityEventsMap);
 
 $labcEvents = $calendarService->getUpcomingEvents($labcCalendar);
 $encinoEvents = $calendarService->getUpcomingEvents($encinoCalendar);
 $unityCenterEvents = $calendarService->getUpcomingEvents($unityCenterCalendar);
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -237,7 +294,7 @@ $unityCenterEvents = $calendarService->getUpcomingEvents($unityCenterCalendar);
                 <div class="container">
                     <div class="col-sm-4 activityicondiv"><span class="activityicon">C</span></div>
                     <div class="col-sm-8">
-                        <?php echo $eventView->getEventHTML($coreActivityEventsMap["Children's Classes"], new Calendar\Calendar("id","type")); ?>
+                        <?php echo $eventView->getEventListHTML($coreActivityEventsMap["Children's Classes"]); ?>
                     </div>
                 </div>
             </div>
@@ -245,7 +302,7 @@ $unityCenterEvents = $calendarService->getUpcomingEvents($unityCenterCalendar);
                 <div class="container">
                     <div class="col-sm-4 activityicondiv"><span class="activityicon">J</span></div>
                     <div class="col-sm-8">
-                        <?php echo $eventView->getEventHTML($coreActivityEventsMap["Jr. Youth"], new Calendar\Calendar("id","type")); ?>
+                        <?php echo $eventView->getEventListHTML($coreActivityEventsMap["Jr. Youth"]); ?>
                     </div>
                 </div>
             </div>
@@ -253,7 +310,7 @@ $unityCenterEvents = $calendarService->getUpcomingEvents($unityCenterCalendar);
                 <div class="container">
                     <div class="col-sm-4 activityicondiv"><span class="activityicon">S</span></div>
                     <div class="col-sm-8">
-                        <?php echo $eventView->getEventHTML($coreActivityEventsMap["Study Circles"], new Calendar\Calendar("id","type")); ?>
+                        <?php echo $eventView->getEventListHTML($coreActivityEventsMap["Study Circles"]); ?>
                     </div>
                 </div>
             </div>
@@ -261,7 +318,7 @@ $unityCenterEvents = $calendarService->getUpcomingEvents($unityCenterCalendar);
                 <div class="container">
                     <div class="col-sm-4 activityicondiv"><span class="activityicon">L</span></div>
                     <div class="col-sm-8">
-                        <?php echo $eventView->getEventHTML($coreActivityEventsMap["Community Life"], new Calendar\Calendar("id","type")); ?>
+                        <?php echo $eventView->getEventListHTML($coreActivityEventsMap["Community Life"]); ?>
                     </div>
                 </div>
             </div>

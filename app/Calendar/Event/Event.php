@@ -23,6 +23,21 @@ class Event {
         return $this->title;
     }
 
+    public function getSplitLineTitle(){
+        if(strpos($this->title,"(") !== false) {
+            $splitTitle = explode("(", $this->title);
+            return $splitTitle[0] . "<br/>(" . $splitTitle[1];
+        }elseif(strpos($this->title,":") !== false){
+            $splitTitle = explode(":",$this->title);
+            return $splitTitle[0]. ":<br/>" . $splitTitle[1];
+        }elseif(strpos($this->title,"-") !== false){
+            $splitTitle = explode("-",$this->title);
+            return $splitTitle[0]. "-<br/>" . $splitTitle[1];
+        }else{
+            return $this->title;
+        }
+    }
+
     /**
      * @param String $title
      */
@@ -93,6 +108,14 @@ class Event {
     public function setContactEmail($contactEmail)
     {
         $this->contactEmail = $contactEmail;
+    }
+
+    public function getContactName(){
+        if(strpos($this->contactEmail,"@labahais.org") !== false){
+            return ucfirst( explode("@",$this->contactEmail)[0] );
+        }else{
+            return $this->contactEmail;
+        }
     }
 
     public function isFeatured(){

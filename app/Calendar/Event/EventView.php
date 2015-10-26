@@ -69,4 +69,8 @@ class EventView {
         return $this->twig->render('events.none.twig');
     }
 
+    public function getEventListHTML($eventData){
+        return $this->twig->render('events.list.twig', array("eventMap"=>$eventData));
+    }
+
 }
