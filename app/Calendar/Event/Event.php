@@ -70,12 +70,16 @@ class Event {
         return $this->location;
     }
 
+    public function getLocationId(){
+        return crc32($this->location);
+    }
+
     /**
      * @param mixed $location
      */
     public function setLocation($location)
     {
-        $this->location = $location;
+        $this->location = $this->formatLocation($location);
     }
 
     /**
@@ -171,5 +175,51 @@ class Event {
         $description = htmlspecialchars($description, ENT_QUOTES);
 
         return $description;
+    }
+
+    private function formatLocation($location){
+        if (strpos($location, "Los Angeles,") === 0) {
+            $location = "Downtown, Los Angeles, CA, USA";
+        }
+
+        if (strpos($location, "LA,") === 0) {
+            $location = "Downtown, Los Angeles, CA, USA";
+        }
+
+        if (strpos($location, "Faith Los Angeles Center")) {
+            $location = "Los Angeles Baha'i Center, 5755 Rodeo Rd, Los Angeles, CA 90016, United States";
+        }
+
+        if (strpos($location, "BAHA&#39;I CENTER")) {
+            $location = "Los Angeles Baha'i Center, 5755 Rodeo Rd, Los Angeles, CA 90016, United States";
+        }
+
+        if (strpos($location, "755 Rodeo")) {
+            $location = "Los Angeles Baha'i Center, 5755 Rodeo Rd, Los Angeles, CA 90016, United States";
+        }
+
+        if (strpos($location, "830 Genesta")) {
+            $location = "Encino Baha'i Community Center, 4830 Genesta Avenue, Encino, CA 91316, United States";
+        }
+
+        if (strpos($location, "Luther King Jr")) {
+            $location = "Martin Luther King Jr / Western, Los Angeles, CA, United States";
+        }
+
+        if(strpos($location,",") == false){
+            $location .= ", Los Angeles, CA, USA";
+        }
+
+        if (empty($location)) {
+            $location = "Downtown, Los Angeles, CA, USA";
+        }
+
+        $location = html_entity_decode(htmlspecialchars_decode(trim($location)), ENT_QUOTES);
+
+        while (substr_count($location, "  ")) {
+            $location = str_replace("  "," ",$location);
+        }
+
+        return $location;
     }
 }

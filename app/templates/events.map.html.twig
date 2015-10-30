@@ -1,0 +1,21 @@
+{% for location in locations %}
+    <div style="display:none" id="{{ location.id }}-{{ type }}">
+        <div class="text-left popoverex">
+            <h4>{{ location.neighborhood }}</h4>
+            <table class="table" style="width:250px">
+                <tbody class="blue-striped">
+                {% for event in location.events %}
+                    <tr>
+                        <td>
+                            <h5>{{ event.getSplitLineTitle() | raw }}</h5>
+                            {{ event.startDate | date('D M j g:ia') }}
+                            <br />
+                            {% include "event.details.twig" %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endfor %}

@@ -38,17 +38,22 @@ class CalendarService {
                 $neighborhood = explode(",",$event->getLocation())[0];
 
                 if(!array_key_exists($neighborhood,$calendarMap[$baseGroup])){
-                    $calendarMap[$baseGroup][$neighborhood] = [];
+                    $calendarMap[$baseGroup][$neighborhood] = [
+                        "neighborhood"=>$neighborhood,
+                        "name"=>$event->getLocation(),
+                        "id"=> $event->getLocationId(),
+                        "events"=>[]
+                    ];
                 }
-                array_push($calendarMap[$baseGroup][$neighborhood], $event);
+                array_push($calendarMap[$baseGroup][$neighborhood]["events"], $event);
             }
         }
 
         foreach($calendarMap as $type => $calendarType){
             ksort($calendarMap[$type]);
 
-            foreach($calendarMap[$type] as $location => $events){
-                $calendarMap[$type][$location] = $this->sortEventsByDate($events);
+            foreach($calendarMap[$type] as $location => $locationObj){
+                $calendarMap[$type][$location]["events"] = $this->sortEventsByDate($locationObj["events"]);
             }
         }
 
@@ -69,9 +74,9 @@ class CalendarService {
 
     function getUpcomingEvents(Calendar $calendar, $options = array()){
         $optParams = array(
-            'maxResults' => 50,
-//            'orderBy' => 'startTime',
-//            'singleEvents' => TRUE,
+            'maxResults' => 10,
+            'orderBy' => 'startTime',
+            'singleEvents' => TRUE,
             'timeMin' => date('c')
         );
 
@@ -91,7 +96,7 @@ class CalendarService {
 
     function getUpcomingEventsBasic($calendarId){
         $optParams = array(
-            'maxResults' => 50,
+            'maxResults' => 10,
             'orderBy' => 'startTime',
             'singleEvents' => TRUE,
             'timeMin' => date('c'),

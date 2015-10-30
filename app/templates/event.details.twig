@@ -1,0 +1,18 @@
+<a
+    {% if class is defined %}
+        class="{{ class }}"
+    {% endif %}
+    tabindex="0"
+    data-toggle="popover"
+    data-trigger="focus"
+    title="Details"
+    data-html="true"
+    data-content="
+        <p>{{ event.description | raw }}</p>
+        <p>For more information, please e-mail {{ event.getContactName() }}:
+            <a href='mailto:{{ event.contactEmail }}?subject={{ event.title }}' title='{{ event.contactEmail }}'>
+                {{ event.contactEmail }}
+            </a>
+        </p>">
+    Details
+</a>

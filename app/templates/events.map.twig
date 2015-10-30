@@ -1,0 +1,10 @@
+[
+    {% for location in locations %}
+        {
+            "id" : "{{ location.id }}",
+            "name" : "{{ location.name }}",
+            "type": "{{ type }}",
+            "count" :{{ location.events | length }}
+        },
+    {% endfor %}
+]

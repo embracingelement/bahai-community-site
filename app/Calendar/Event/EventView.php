@@ -73,4 +73,12 @@ class EventView {
         return $this->twig->render('events.list.twig', array("eventMap"=>$eventData));
     }
 
+    public function getEventJSObject($locations, $type){
+        return $this->twig->render('events.map.twig', array("locations"=>$locations,"type"=>$type));
+    }
+
+    public function getEventMapHtml($locations, $type){
+        return $this->twig->render('events.map.html.twig', array("locations"=>$locations,"type"=>$type));
+    }
+
 }
