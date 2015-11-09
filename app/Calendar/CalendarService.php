@@ -4,6 +4,7 @@ use Calendar\Event\Event;
 use Google_Service_Calendar;
 use Google_Service_Calendar_CalendarListEntry;
 use Google_Service_Calendar_Event;
+use FastCache\FastCache;
 
 /**
  * Created by PhpStorm.
@@ -15,10 +16,12 @@ use Google_Service_Calendar_Event;
 class CalendarService {
     private $googleService;
     private $client;
+    private $cache;
 
     function __construct(CalendarClient $client){
         $this->client = $client;
         $this->googleService = new Google_Service_Calendar($client->getGoogleClient());
+        $this->cache = FastCache::file(strtotime('+1 minute'));
     }
 
     function getAndGroupCalendarsByType($calendars){
@@ -73,22 +76,28 @@ class CalendarService {
     }
 
     function getUpcomingEvents(Calendar $calendar, $options = array()){
-        $optParams = array(
-            'maxResults' => 10,
-            'orderBy' => 'startTime',
-            'singleEvents' => TRUE,
-            'timeMin' => date('c')
-        );
+        $events = $this->cache->get($calendar->getId());
 
-        $options = array_merge($optParams, $options);
+        if(is_null($events)) {
 
+            $optParams = array(
+                'maxResults' => 10,
+                'orderBy' => 'startTime',
+                'singleEvents' => TRUE,
+                'timeMin' => date('c')
+            );
 
-        $results = $this->googleService->events->listEvents($calendar->getId(), $options);
+            $options = array_merge($optParams, $options);
 
-        $events = [];
+            $results = $this->googleService->events->listEvents($calendar->getId(), $options);
 
-        foreach ($results->getItems() as $googleEvent) {
-            array_push($events, $this->createEventFromGoogleEvent($googleEvent));
+            $events = [];
+
+            foreach ($results->getItems() as $googleEvent) {
+                array_push($events, $this->createEventFromGoogleEvent($googleEvent));
+            }
+
+            $this->cache->set($calendar->getId(), $events);
         }
 
         return $events;

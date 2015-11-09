@@ -7,6 +7,7 @@ use Calendar\CalendarService;
 use Calendar\Event\EventAggregator;
 use Calendar\Event\EventView;
 use Config\Twig;
+use FastCache\FastCache;
 
 /**
  * Created by PhpStorm.
@@ -22,6 +23,8 @@ class BahaiCommunitySiteApp {
     private $eventAggregator;
 
     function __construct(){
+        FastCache::setup(['cache.path' => APP_ROOT . '/cache']);
+
         $twig = new Twig();
         $this->calendarClient = new CalendarClient();
         $this->calendarService = new CalendarService($this->calendarClient);
