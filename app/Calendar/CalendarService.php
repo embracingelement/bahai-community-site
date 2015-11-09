@@ -21,7 +21,7 @@ class CalendarService {
     function __construct(CalendarClient $client){
         $this->client = $client;
         $this->googleService = new Google_Service_Calendar($client->getGoogleClient());
-        $this->cache = FastCache::file(strtotime('+1 minute'));
+        $this->cache = FastCache::file(strtotime('+10 minute'));
     }
 
     function getAndGroupCalendarsByType($calendars){
@@ -78,7 +78,7 @@ class CalendarService {
     function getUpcomingEvents(Calendar $calendar, $options = array()){
         $events = $this->cache->get($calendar->getId());
 
-        if(is_null($events)) {
+        if(is_null($events) || CACHE_BREAK_OVERRIDE) {
 
             $optParams = array(
                 'maxResults' => 10,
