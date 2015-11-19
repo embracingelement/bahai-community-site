@@ -1,5 +1,5 @@
 {% for neighborhood in activityType.neighborhoods %}
-    <div style="display:none" id="{{ neighborhood.getId() }}-{{ activityType.name }}">
+    <div style="display:none" id="{{ neighborhood.getId() }}-{{ activityType.getId() }}">
         <div class="text-left popoverex">
             <h4>{{ neighborhood.name}}</h4>
             <table class="table" style="width:250px">
