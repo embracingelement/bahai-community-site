@@ -68,7 +68,7 @@ class CalendarService {
              * @var Neighborhood $neighborhood
              */
             $neighborhood->setEvents(
-                $this->sortEventsByDate( $neighborhood->getEvents() )
+                $this->sortEvents( $neighborhood->getEvents() )
             );
         }
 
@@ -103,7 +103,7 @@ class CalendarService {
         return $neighborhoodMap;
     }
 
-    private function sortEventsByDate($events){
+    private function sortEvents($events){
         $eventByDate = [];
         /** @var Event $event */
         foreach($events as $event){
@@ -112,7 +112,9 @@ class CalendarService {
 
         ksort($eventByDate);
 
-        return array_values($eventByDate);
+        $events = array_values($eventByDate);
+
+        return $this->sortByFeatured($events);
     }
 
     function getUpcomingEvents(Calendar &$calendar, $options = array()){
