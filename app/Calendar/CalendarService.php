@@ -143,6 +143,8 @@ class CalendarService {
                 }
             }
 
+            $events = $this->sortByFeatured($events);
+
             $this->cache->set($calendar->getId(), $events);
         }
 
@@ -180,6 +182,26 @@ class CalendarService {
         $event->setContactEmail($googleEvent->getCreator()->getEmail());
 
         return $event;
+    }
+
+    /**
+     * @param Event[] $events
+     * @return Event[]
+     */
+    private function sortByFeatured($events){
+        $featuredEvents = [];
+        $otherEvents = [];
+
+        /** @var Event $event */
+        foreach($events as $event){
+            if($event->isFeatured()){
+                $featuredEvents[] = $event;
+            }else{
+                $otherEvents[] = $event;
+            }
+        }
+
+        return array_merge($featuredEvents, $otherEvents);
     }
 
 
