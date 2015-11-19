@@ -3,7 +3,7 @@
         {
             "id" : "{{ neighborhood.getId() }}",
             "location" : "{{ neighborhood.location }}",
-            "type": "{{ activityType.name }}",
+            "type": "{{ activityType.getId() }}",
             "count" :{{ neighborhood.events | length }}
         },
     {% endfor %}
