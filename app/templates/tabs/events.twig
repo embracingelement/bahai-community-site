@@ -1,4 +1,4 @@
-<div class="tab-pane fade in {% if index == 0 %} active {% endif %}" id="{{ calendar.tabName }}">
+<div class="tab-pane fade {% if index == 0 %} in active {% endif %}" id="{{ calendar.getHash() }}">
     <a class="left-scroll" id="left-scroll-losangeles">
         <span class="glyphicon glyphicon-chevron-left"></span>
     </a>
@@ -9,6 +9,8 @@
     <div class="scrollable" id="scrollable-losangeles">
         {% for event in calendar.events %}
             {% include 'tabs/event.twig' %}
+        {% else %}
+            {% include 'tabs/events.none.twig' %}
         {% endfor %}
     </div>
 </div>

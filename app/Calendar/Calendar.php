@@ -65,5 +65,9 @@ class Calendar {
         return $this;
     }
 
+    public function getHash(){
+        return crc32($this->id);
+    }
+
 
 }

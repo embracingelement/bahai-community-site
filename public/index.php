@@ -24,7 +24,7 @@ $activityTypes = $calendarService->setNeighborhoods($activityTypes);
 
 $tabCalendars = $registeredCalendars->getTabCalendars();
 
-foreach( $tabCalendars as $index => $tabCalendar) {
+foreach( $tabCalendars as $tabCalendar) {
     $calendarService->getUpcomingEvents($tabCalendar);
 }
 ?>

@@ -115,7 +115,7 @@ class CalendarService {
         return array_values($eventByDate);
     }
 
-    function getUpcomingEvents(Calendar $calendar, $options = array()){
+    function getUpcomingEvents(Calendar &$calendar, $options = array()){
         $events = $this->cache->get($calendar->getId());
 
         if(is_null($events) || CACHE_BREAK_OVERRIDE) {
