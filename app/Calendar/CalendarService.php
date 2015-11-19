@@ -82,8 +82,11 @@ class CalendarService {
     private function addEventToNeighborhoodMap(Event $event, $neighborhoodMap){
         $neighborhoodName = explode(",",$event->getLocation())[0];
 
+
         if(!array_key_exists($neighborhoodName,$neighborhoodMap)){
-            $neighborhoodMap[$neighborhoodName] = new Neighborhood($neighborhoodName);
+            $neighborhood = new Neighborhood($neighborhoodName);
+            $neighborhood->setLocation($event->getLocation());
+            $neighborhoodMap[$neighborhoodName] = $neighborhood;
         }
 
         /**

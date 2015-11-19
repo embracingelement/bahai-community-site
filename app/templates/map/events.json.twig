@@ -2,7 +2,7 @@
     {% for neighborhood in  activityType.neighborhoods %}
         {
             "id" : "{{ neighborhood.getId() }}",
-            "name" : "{{ neighborhood.name }}",
+            "location" : "{{ neighborhood.location }}",
             "type": "{{ activityType.name }}",
             "count" :{{ neighborhood.events | length }}
         },

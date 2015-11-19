@@ -149,7 +149,7 @@ foreach( $tabCalendars as $index => $tabCalendar) {
                             <ul>
                                 <?php foreach($activityTypes as $activityType){ ?>
                                     <li class="mapfilter" white-space="nowrap">
-                                        <input type="radio" name="filterType" id="<?php echo $activityType->getLetterName(); ?>-filter" class="<?php echo $activityType->getLetterName(); ?>-filter"/>
+                                        <input type="radio" name="filterType" id="<?php echo $activityType->getLetterName(); ?>-filter" class="<?php echo $activityType->getLetterName(); ?>-filter" <?php if($activityType->getName() == "All Activities"){ ?>checked<?php } ?>/>
                                         <a class="<?php echo $activityType->getLetterName(); ?>-filter"> <?php echo $activityType->getName(); ?></a>
                                     </li>
                                 <?php } ?>
@@ -476,12 +476,12 @@ foreach( $tabCalendars as $index => $tabCalendar) {
     function theNext() {
         if (nextAddress < Aaddresses.length) {
             var locationId = Aaddresses[nextAddress]["id"];
-            var name = Aaddresses[nextAddress]["name"];
+            var location = Aaddresses[nextAddress]["location"];
             var type = Aaddresses[nextAddress]["type"];
             var count = Aaddresses[nextAddress]["count"];
             var id = locationId+'-'+type;
 
-            setTimeout("getAddress('" + name + "',theNext,'" + id + "'," + count + ")", delay);
+            setTimeout("getAddress('" + location + "',theNext,'" + id + "'," + count + ")", delay);
             nextAddress++;
         } else {
             // We're done. Show map bounds

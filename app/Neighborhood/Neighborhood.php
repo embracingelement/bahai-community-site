@@ -17,6 +17,10 @@ class Neighborhood {
      */
     private $name;
     /**
+     * @var String
+     */
+    private $location;
+    /**
      * @var Event[]
      */
     private $events = array();
@@ -55,6 +59,24 @@ class Neighborhood {
     public function setEvents($events)
     {
         $this->events = $events;
+        return $this;
+    }
+
+    /**
+     * @return String
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    /**
+     * @param String $location
+     * @return self
+     */
+    public function setLocation($location)
+    {
+        $this->location = $location;
         return $this;
     }
 
