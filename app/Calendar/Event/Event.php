@@ -174,6 +174,10 @@ class Event {
     }
 
     private function formatLocation($location){
+        if (empty($location)) {
+            $location = "Downtown, Los Angeles, CA, USA";
+        }
+
         if (strpos($location, "Los Angeles,") === 0) {
             $location = "Downtown, Los Angeles, CA, USA";
         }
@@ -206,9 +210,6 @@ class Event {
             $location .= ", Los Angeles, CA, USA";
         }
 
-        if (empty($location)) {
-            $location = "Downtown, Los Angeles, CA, USA";
-        }
 
         $location = html_entity_decode(htmlspecialchars_decode(trim($location)), ENT_QUOTES);
 
