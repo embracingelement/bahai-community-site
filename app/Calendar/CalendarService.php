@@ -1,10 +1,12 @@
 <?php
 namespace Calendar;
+use ActivityType\ActivityType;
 use Calendar\Event\Event;
 use Google_Service_Calendar;
 use Google_Service_Calendar_CalendarListEntry;
 use Google_Service_Calendar_Event;
 use FastCache\FastCache;
+use Neighborhood\Neighborhood;
 
 /**
  * Created by PhpStorm.
@@ -24,43 +26,78 @@ class CalendarService {
         $this->cache = FastCache::file(strtotime('+10 minute'));
     }
 
-    function getAndGroupCalendarsByType($calendars){
-        $calendarMap = [];
+    /**
+     * @param ActivityType[] $activityTypes
+     * @return ActivityType[]
+     */
+    function setNeighborhoods($activityTypes){
+        $allActivityType = new ActivityType("All Activities");
+        $allActivityType->setLetterName("A");
+        $allNeighborhoodMap = [];
+
         /** @var Calendar $calendar */
-        foreach($calendars as $calendar){
-            $baseGroup = $calendar->getType();
+        foreach($activityTypes as $activityType){
+            $neighborhoodMap = [];
 
-            if(!array_key_exists($baseGroup,$calendarMap)){
-                $calendarMap[$baseGroup] = [];
-            }
+            $calendars = $activityType->getCalendars();
+            foreach($calendars as $calendar){
+                $events = $this->getUpcomingEvents($calendar);
 
-            $events = $this->getUpcomingEvents($calendar);
-
-            /** @var Event $event */
-            foreach($events as $event){
-                $neighborhood = explode(",",$event->getLocation())[0];
-
-                if(!array_key_exists($neighborhood,$calendarMap[$baseGroup])){
-                    $calendarMap[$baseGroup][$neighborhood] = [
-                        "neighborhood"=>$neighborhood,
-                        "name"=>$event->getLocation(),
-                        "id"=> $event->getLocationId(),
-                        "events"=>[]
-                    ];
+                /** @var Event $event */
+                foreach($events as $event){
+                    $neighborhoodMap =  $this->addEventToNeighborhoodMap($event, $neighborhoodMap);
+                    $allNeighborhoodMap = $this->addEventToNeighborhoodMap($event, $allNeighborhoodMap);
                 }
-                array_push($calendarMap[$baseGroup][$neighborhood]["events"], $event);
             }
+
+            $activityType = $this->addNeighborhoodsToActivityType($activityType, $neighborhoodMap);
         }
 
-        foreach($calendarMap as $type => $calendarType){
-            ksort($calendarMap[$type]);
+        $allActivityType = $this->addNeighborhoodsToActivityType($allActivityType, $allNeighborhoodMap);
 
-            foreach($calendarMap[$type] as $location => $locationObj){
-                $calendarMap[$type][$location]["events"] = $this->sortEventsByDate($locationObj["events"]);
-            }
+        array_push($activityTypes, $allActivityType);
+
+        return $activityTypes;
+    }
+
+    private function addNeighborhoodsToActivityType(ActivityType $activityType, $neighborhoodMap){
+        ksort($neighborhoodMap);
+
+        foreach($neighborhoodMap as $neighborhood){
+            /**
+             * @var Neighborhood $neighborhood
+             */
+            $neighborhood->setEvents(
+                $this->sortEventsByDate( $neighborhood->getEvents() )
+            );
         }
 
-        return $calendarMap;
+        $neighborhoods = array_values($neighborhoodMap);
+
+        $activityType->setNeighborhoods($neighborhoods);
+
+        return $activityType;
+    }
+
+    private function addEventToNeighborhoodMap(Event $event, $neighborhoodMap){
+        $neighborhoodName = explode(",",$event->getLocation())[0];
+
+        if(!array_key_exists($neighborhoodName,$neighborhoodMap)){
+            $neighborhoodMap[$neighborhoodName] = new Neighborhood($neighborhoodName);
+        }
+
+        /**
+         * @var Neighborhood $neighborhood
+         */
+        $neighborhood = $neighborhoodMap[$neighborhoodName];
+        $neighborhoodEvents = $neighborhood->getEvents();
+        array_push($neighborhoodEvents, $event);
+
+        $neighborhood->setEvents(
+            $neighborhoodEvents
+        );
+
+        return $neighborhoodMap;
     }
 
     private function sortEventsByDate($events){
@@ -89,16 +126,24 @@ class CalendarService {
 
             $options = array_merge($optParams, $options);
 
-            $results = $this->googleService->events->listEvents($calendar->getId(), $options);
-
             $events = [];
 
-            foreach ($results->getItems() as $googleEvent) {
-                array_push($events, $this->createEventFromGoogleEvent($googleEvent));
+            try {
+                $results = $this->googleService->events->listEvents($calendar->getId(), $options);
+
+                foreach ($results->getItems() as $googleEvent) {
+                    array_push($events, $this->createEventFromGoogleEvent($googleEvent));
+                }
+            }catch (\Exception $e){
+                if(DEBUG) {
+                    pr($e);
+                }
             }
 
             $this->cache->set($calendar->getId(), $events);
         }
+
+        $calendar->setEvents($events);
 
         return $events;
     }

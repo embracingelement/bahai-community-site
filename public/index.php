@@ -13,73 +13,20 @@ function pr($object){
 }
 
 $app = new BahaiCommunitySiteApp();
+
 $calendarService = $app->getCalendarService();
 $eventView = $app->getEventView();
-$labcCalendar = new Calendar("nadia@labahais.org","Bahai Center");
-$labcCalendar->setLocationTitle("LA Baha'i Center");
-$labcCalendar->setLocation("5755 Rodeo Road, Los Angeles, CA 90016");
-$labcCalendar->setContact("Nadia");
-$encinoCalendar = new Calendar("labc.org_k55hah7gd5ji1jhms75d7b6bh4@group.calendar.google.com","Bahai Center");
-$encinoCalendar->setContact("Nadia");
-$encinoCalendar->setLocationTitle("Encino Baha'i Community Center");
-$encinoCalendar->setLocation("4830 Genesta Ave, Encino, CA 91316");
-$unityCenterCalendar = new Calendar("labc.org_se9o00h6euaf7hlsvcts0r5qag@group.calendar.google.com","Bahai Center");
-$unityCenterCalendar->setContact("Nadia");
-$unityCenterCalendar->setLocationTitle("Unity Center");
-$unityCenterCalendar->setLocation("5753 Rodeo Road, Los Angeles, CA 90016");
+$registeredCalendars = $app->getRegisteredCalendars();
 
-$startFirstTime = time();
+$activityTypes = $registeredCalendars->getActivityTypes();
 
-$coreActivityCalendars = array(
-    new Calendar("mona@labahais.org","Study Circles"),
-    new Calendar("tannaz@labahais.org","Study Circles"),
-    new Calendar("kalim@labahais.org","Study Circles"),
-    new Calendar("naveed@labahais.org","Study Circles"),
-    new Calendar("dominic@labahais.org","Study Circles"),
-    new Calendar("neda@labahais.org","Children's Classes"),
-    new Calendar("labc.org_49p2gc784mt1jptsk2oaoh7sp8@group.calendar.google.com","Children's Classes"), // CC - Ala
-    new Calendar("hodad@labahais.org","Children's Classes"),
-    new Calendar("viva@labahais.org","Children's Classes"),
-    new Calendar("labc.org_3ccu0eei4vi0v5h0go2q8s3gis@group.calendar.google.com","Children's Classes"), // CC - Jamal
-    new Calendar("chad@labahais.org","Jr. Youth"),
-    new Calendar("mac@labahais.org","Jr. Youth"),
-    new Calendar("roya@labahais.org","Jr. Youth"),
-    new Calendar("esperanza@labahais.org","Jr. Youth"),
-    new Calendar("negar@labahais.org","Teaching"),
-    new Calendar("divi@labahais.org","Teaching"),
-    new Calendar("amin@labahais.org","Teaching"),
-    new Calendar("ladan@labahais.org","Teaching"),
-    new Calendar("lida@labahais.org","Teaching"),
-////    new Calendar("labc.org_6kbr02c0eiov42ipcngrrjb41o@group.calendar.google.com","Teaching"),			// ATC - Ala
-    new Calendar("nadia@labahais.org","Community Life"),												// Center - LA
-    new Calendar("labc.org_k55hah7gd5ji1jhms75d7b6bh4@group.calendar.google.com","Community Life"),	// Center - Encino
-    new Calendar("erfan@labahais.org","Feast"),
-    new Calendar("nika@labahais.org","Feast"),
-//    new Calendar("anne@labahais.org","Feast"),
-    new Calendar("touba@labahais.org","Feast"),
-//    new Calendar("labc.org_vd1oen3li3e4t8m4knb9hg7nec@group.calendar.google.com","Feast"),			// Center - Feast
-//    new Calendar("labc.org_dgcs32ebtuv1q5kmdd6f26r4g0@group.calendar.google.com","Community Life"),	// CET
-//    new Calendar("labc.org_0o3e0ajlg3tj7kqehj4sbmmmuk@group.calendar.google.com","Community Life"),	// Center - Neighborhood
-//    new Calendar("labc.org_qe1cin4numuf080rhh3oqnsn38@group.calendar.google.com","Community Life"),	// ACLC - Jamal
-//    new Calendar("labc.org_qh1m8alt2a2drrbbgaqtj23tfs@group.calendar.google.com","Community Life"),	// ACLC - Nur
-//    new Calendar("pardis@labahais.org","Teaching")
-);
+$activityTypes = $calendarService->setNeighborhoods($activityTypes);
 
+$tabCalendars = $registeredCalendars->getTabCalendars();
 
-$coreActivityEventsMap = $calendarService->getAndGroupCalendarsByType($coreActivityCalendars);
-$allEvents = array_merge(
-    $coreActivityEventsMap["Children's Classes"],
-    $coreActivityEventsMap["Jr. Youth"],
-    $coreActivityEventsMap["Study Circles"],
-    $coreActivityEventsMap["Community Life"]
-);
-
-$endFirstTime = time();
-//pr($endFirstTime - $startFirstTime);
-
-$labcEvents = $calendarService->getUpcomingEvents($labcCalendar);
-$encinoEvents = $calendarService->getUpcomingEvents($encinoCalendar);
-$unityCenterEvents = $calendarService->getUpcomingEvents($unityCenterCalendar);
+foreach( $tabCalendars as $index => $tabCalendar) {
+    $calendarService->getUpcomingEvents($tabCalendar);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -159,53 +106,7 @@ $unityCenterEvents = $calendarService->getUpcomingEvents($unityCenterCalendar);
         <div class="container">
             <div class="rowtitle"><h2>Baha'i Center Events</h2></div>
             <div class="rowdescription">All events are open to the public and free to attend, unless otherwise noted.</div>
-
-            <ul class="nav nav-tabs centerthetabs" role="tablist">
-                <li class="active"><a href="#losangeles" role="tab" data-toggle="tab" id="bahaicenterevents-tabs-LA" title="Los Angeles Baha'i Center">LA</a></li>
-                <li><a href="#encino" role="tab" data-toggle="tab" id="bahaicenterevents-tabs-Encino" title="Encino Baha'i Community Center">Encino</a></li>
-                <li><a href="#unity" role="tab" data-toggle="tab" id="bahaicenterevents-tabs-unity" title="Unity Center">Unity Center</a></li>
-            </ul>
-            <div id="myTabContent" class="tab-content">
-
-                <div class="tab-pane fade in active" id="losangeles">
-                    <a class="left-scroll" id="left-scroll-losangeles">
-                        <span class="glyphicon glyphicon-chevron-left"></span>
-                    </a>
-                    <a class="right-scroll" id="right-scroll-losangeles">
-                        <span class="glyphicon glyphicon-chevron-right"></span>
-                    </a>
-
-                    <div class="scrollable" id="scrollable-losangeles">
-                        <?php echo $eventView->getEventHTML($labcEvents, $labcCalendar); ?>
-                    </div>
-
-                </div>
-                <div class="tab-pane fade" id="encino">
-                    <a class="left-scroll" id="left-scroll-encino">
-                        <span class="glyphicon glyphicon-chevron-left"></span>
-                    </a>
-                    <a class="right-scroll" id="right-scroll-encino">
-                        <span class="glyphicon glyphicon-chevron-right"></span>
-                    </a>
-
-                    <div class="scrollable" id="scrollable-encino">
-                        <?php echo $eventView->getEventHTML($encinoEvents, $encinoCalendar); ?>
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="unity">
-                    <a class="left-scroll" id="left-scroll-unity">
-                        <span class="glyphicon glyphicon-chevron-left"></span>
-                    </a>
-                    <a class="right-scroll" id="right-scroll-unity">
-                        <span class="glyphicon glyphicon-chevron-right"></span>
-                    </a>
-
-                    <div class="scrollable" id="scrollable-unity">
-                        <?php echo $eventView->getEventHTML($unityCenterEvents, $unityCenterCalendar); ?>
-                    </div>
-                </div>
-            </div>
-            <!-- <div class="rowdescription paddingtwenty lightgrey"><small>* Events at the Santa Monica Baha'i Center are organized by our sister community in Santa Monica. They are listed above for your convenience.</small></div> -->
+            <?php echo $eventView->getTabsHTML($tabCalendars) ?>
             <div class="rowdown"><h1><a href="#neighborhoodactivities" title="Scroll down for Neighborhood Activities" id="chevron-to-neighborhood-activities"><span class="glyphicon glyphicon-chevron-down"></span></a></h1></div>
         </div>
     </div>
@@ -223,10 +124,13 @@ $unityCenterEvents = $calendarService->getUpcomingEvents($unityCenterCalendar);
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">List View <b class="caret"></b></a>
                         <ul class="dropdown-menu text-left">
-                            <li><a href="#tab3" data-toggle="tab" id="contacts-communityoffices">Children's Classes</a></li>
-                            <li><a href="#tab4" data-toggle="tab" id="contacts-communityagencies">Junior Youth</a></li>
-                            <li><a href="#tab5" data-toggle="tab" id="contacts-communityreps">Study Circles</a></li>
-                            <li><a href="#tab6" data-toggle="tab" id="contacts-communityreps">Community Life</a></li>
+                            <?php foreach($activityTypes as $activityType){ ?>
+                                <li>
+                                    <a href="#map-tab-<?php echo $activityType->getId(); ?>" data-toggle="tab">
+                                        <?php echo $activityType->getName(); ?>
+                                    </a>
+                                </li>
+                            <?php } ?>
                         </ul>
                     </li>
                 </ul>
@@ -243,48 +147,31 @@ $unityCenterEvents = $calendarService->getUpcomingEvents($unityCenterCalendar);
                         <div class="filtersheader">Show the<br />following:</div>
                         <form>
                             <ul>
-                                <li class="mapfilter" white-space="nowrap"><input type="radio" name="filterType" id="c-filter" class="c-filter"><a class="c-filter"> Children's Classes</a></input></li>
-                                <li class="mapfilter" white-space="nowrap"><input type="radio" name="filterType" id="j-filter" class="j-filter"><a class="j-filter"> Junior Youth</a></input></li>
-                                <li class="mapfilter" white-space="nowrap"><input type="radio" name="filterType" id="s-filter" class="s-filter"><a class="s-filter"> Study Circles</a></input></li>
-                                <li class="mapfilter" white-space="nowrap"><input type="radio" name="filterType" id="d-filter" class="d-filter"><a class="d-filter"> Community Life</a></input></li>
-                                <li class="mapfilter filterselected" white-space="nowrap"><input type="radio" name="filterType" id="e-filter" class="e-filter" checked><a class="e-filter"> All Activities</a></input></li>
+                                <?php foreach($activityTypes as $activityType){ ?>
+                                    <li class="mapfilter" white-space="nowrap">
+                                        <input type="radio" name="filterType" id="<?php echo $activityType->getLetterName(); ?>-filter" class="<?php echo $activityType->getLetterName(); ?>-filter"/>
+                                        <a class="<?php echo $activityType->getLetterName(); ?>-filter"> <?php echo $activityType->getName(); ?></a>
+                                    </li>
+                                <?php } ?>
                             </ul>
                         </form>
                     </div>
                 </div>
             </div>
-            <div class="tab-pane blue" id="tab3">
-                <div class="container">
-                    <div class="col-sm-4 activityicondiv"><span class="activityicon">C</span></div>
-                    <div class="col-sm-8">
-                        <?php echo $eventView->getEventListHTML($coreActivityEventsMap["Children's Classes"]); ?>
+            <?php foreach($activityTypes as $activityType){ ?>
+                <div class="tab-pane blue" id="map-tab-<?php echo $activityType->getId(); ?>">
+                    <div class="container">
+                        <div class="col-sm-4 activityicondiv">
+                            <span class="activityicon">
+                                <?php echo $activityType->getLetterName(); ?>
+                            </span>
+                        </div>
+                        <div class="col-sm-8">
+                            <?php echo $eventView->getEventListHTML($activityType->getNeighborhoods()); ?>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="tab-pane blue" id="tab4">
-                <div class="container">
-                    <div class="col-sm-4 activityicondiv"><span class="activityicon">J</span></div>
-                    <div class="col-sm-8">
-                        <?php echo $eventView->getEventListHTML($coreActivityEventsMap["Jr. Youth"]); ?>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane blue" id="tab5">
-                <div class="container">
-                    <div class="col-sm-4 activityicondiv"><span class="activityicon">S</span></div>
-                    <div class="col-sm-8">
-                        <?php echo $eventView->getEventListHTML($coreActivityEventsMap["Study Circles"]); ?>
-                    </div>
-                </div>
-            </div>
-            <div class="tab-pane blue" id="tab6">
-                <div class="container">
-                    <div class="col-sm-4 activityicondiv"><span class="activityicon">L</span></div>
-                    <div class="col-sm-8">
-                        <?php echo $eventView->getEventListHTML($coreActivityEventsMap["Community Life"]); ?>
-                    </div>
-                </div>
-            </div>
+            <?php } ?>
         </div>
 
     </div>
@@ -321,11 +208,9 @@ $unityCenterEvents = $calendarService->getUpcomingEvents($unityCenterCalendar);
         $(this).addClass("filterselected").siblings().removeClass("filterselected");
     });
 </script>
-<?php echo $eventView->getEventMapHtml($allEvents, 'all'); ?>
-<?php echo $eventView->getEventMapHtml($coreActivityEventsMap["Children's Classes"], 'cc'); ?>
-<?php echo $eventView->getEventMapHtml($coreActivityEventsMap["Jr. Youth"],'jy'); ?>
-<?php echo $eventView->getEventMapHtml($coreActivityEventsMap["Study Circles"],'sc'); ?>
-<?php echo $eventView->getEventMapHtml($coreActivityEventsMap["Community Life"],'cl'); ?>
+<?php foreach($activityTypes as $activityType){ ?>
+    <?php echo $eventView->getEventMapHtml($activityType); ?>
+<?php } ?>
 <script type="text/javascript">
 
     //<![CDATA[
@@ -419,7 +304,7 @@ $unityCenterEvents = $calendarService->getUpcomingEvents($unityCenterCalendar);
                         '#FFFFFF';
         return {
             fillColor: color,
-            strokeWeight: 0,
+            strokeWeight: 0
         };
     });
 
@@ -564,67 +449,24 @@ $unityCenterEvents = $calendarService->getUpcomingEvents($unityCenterCalendar);
 
 
     // ======= Arrays of locations that we want to Geocode - The first is combined, the rest are activity specific.========
-    // C is for Children's Classes, J is for Junior Youth Groups, S is for Study Circles, and D is for Community Life
 
-    var addresses = <?php echo $eventView->getEventJSObject($allEvents,'all'); ?>;
-    var caddresses = <?php echo $eventView->getEventJSObject($coreActivityEventsMap["Children's Classes"],'cc'); ?>;
-    var jaddresses = <?php echo $eventView->getEventJSObject($coreActivityEventsMap["Jr. Youth"],'jy'); ?>;
-    var saddresses = <?php echo $eventView->getEventJSObject($coreActivityEventsMap["Study Circles"],'sc'); ?>;
-    var daddresses = <?php echo $eventView->getEventJSObject($coreActivityEventsMap["Community Life"], 'cl'); ?>;
-
-
+    <?php foreach($activityTypes as $activityType){ ?>
+        var <?php echo $activityType->getLetterName(); ?>addresses = <?php echo $eventView->getEventJSObject($activityType); ?>;
+        $(function() {
+            $(".<?php echo $activityType->getLetterName(); ?>-filter").click(function() {
+                document.getElementById('<?php echo $activityType->getLetterName(); ?>-filter').checked = true;
+                filterPins(<?php echo $activityType->getLetterName(); ?>addresses);
+            });
+        });
+    <?php } ?>
     // links to filtering buttons
-    $(function() {
-        $(".e-filter").click(function() {
-            document.getElementById('e-filter').checked = true;
-            filterPins(addresses);
-        });
-    });
-
-    $(function() {
-        $(".c-filter").click(function() {
-            document.getElementById('c-filter').checked = true;
-            filterPins(caddresses);
-        });
-    });
-
-    $(function() {
-        $(".j-filter").click(function() {
-            document.getElementById('j-filter').checked = true;
-            filterPins(jaddresses);
-        });
-    });
-
-    $(function() {
-        $(".s-filter").click(function() {
-            document.getElementById('s-filter').checked = true;
-            filterPins(saddresses);
-        });
-    });
-
-    $(function() {
-        $(".d-filter").click(function() {
-            document.getElementById('d-filter').checked = true;
-            filterPins(daddresses);
-        });
-    });
 
     function arrayCheck() {
-        if (!addresses) {
-            document.getElementById("e-filter").disabled = true;
-        }
-        if (!caddresses) {
-            document.getElementById("c-filter").disabled = true;
-        }
-        if (!jaddresses) {
-            document.getElementById("j-filter").disabled = true;
-        }
-        if (!saddresses) {
-            document.getElementById("s-filter").disabled = true;
-        }
-        if (!daddresses) {
-            document.getElementById("d-filter").disabled = true;
-        }
+        <?php foreach($activityTypes as $activityType){ ?>
+            if (!<?php echo $activityType->getLetterName(); ?>addresses) {
+                document.getElementById("<?php echo $activityType->getLetterName(); ?>-filter").disabled = true;
+            }
+        <?php } ?>
     }
 
     // ======= Global variable to remind us what to do next
@@ -632,11 +474,11 @@ $unityCenterEvents = $calendarService->getUpcomingEvents($unityCenterCalendar);
 
     // ======= Function to call the next Geocode operation when the reply comes back
     function theNext() {
-        if (nextAddress < addresses.length) {
-            var locationId = addresses[nextAddress]["id"];
-            var name = addresses[nextAddress]["name"];
-            var type = addresses[nextAddress]["type"];
-            var count = addresses[nextAddress]["count"];
+        if (nextAddress < Aaddresses.length) {
+            var locationId = Aaddresses[nextAddress]["id"];
+            var name = Aaddresses[nextAddress]["name"];
+            var type = Aaddresses[nextAddress]["type"];
+            var count = Aaddresses[nextAddress]["count"];
             var id = locationId+'-'+type;
 
             setTimeout("getAddress('" + name + "',theNext,'" + id + "'," + count + ")", delay);

@@ -1,0 +1,10 @@
+<ul class="nav nav-tabs centerthetabs" role="tablist">
+    {% for index, calendar in calendars %}
+       {% include 'tabs/tab.twig' %}
+    {% endfor %}
+</ul>
+<div id="myTabContent" class="tab-content">
+    {% for index, calendar in calendars %}
+        {% include 'tabs/events.twig' %}
+    {% endfor %}
+</div>

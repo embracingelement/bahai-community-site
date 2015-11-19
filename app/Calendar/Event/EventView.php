@@ -8,6 +8,8 @@
 
 namespace Calendar\Event;
 
+use ActivityType\ActivityType;
+use Calendar\TabCalendar;
 use Twig_Environment;
 
 class EventView {
@@ -66,19 +68,23 @@ class EventView {
     }
 
     private function generateEmptyHTML(){
-        return $this->twig->render('events.none.twig');
+        return $this->twig->render('tabs/events.none.twig');
     }
 
-    public function getEventListHTML($eventData){
-        return $this->twig->render('events.list.twig', array("eventMap"=>$eventData));
+    public function getTabsHTML($calendars = []){
+        return $this->twig->render('tabs/tabs.twig', array("calendars"=>$calendars));
     }
 
-    public function getEventJSObject($locations, $type){
-        return $this->twig->render('events.map.twig', array("locations"=>$locations,"type"=>$type));
+    public function getEventListHTML($neighborhoods){
+        return $this->twig->render('list/events.twig', array("neighborhoods"=>$neighborhoods));
     }
 
-    public function getEventMapHtml($locations, $type){
-        return $this->twig->render('events.map.html.twig', array("locations"=>$locations,"type"=>$type));
+    public function getEventJSObject(ActivityType $activityType){
+        return $this->twig->render('map/events.json.twig', array("activityType"=>$activityType));
+    }
+
+    public function getEventMapHtml(ActivityType $activityType){
+        return $this->twig->render('map/events.html.twig', array("activityType"=>$activityType));
     }
 
 }

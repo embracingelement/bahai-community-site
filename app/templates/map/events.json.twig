@@ -1,0 +1,10 @@
+[
+    {% for neighborhood in  activityType.neighborhoods %}
+        {
+            "id" : "{{ neighborhood.getId() }}",
+            "name" : "{{ neighborhood.name }}",
+            "type": "{{ activityType.name }}",
+            "count" :{{ neighborhood.events | length }}
+        },
+    {% endfor %}
+]

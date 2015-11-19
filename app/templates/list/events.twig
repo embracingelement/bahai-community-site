@@ -1,0 +1,10 @@
+{% for neighborhood in neighborhoods %}
+    <div class="text-left popoverex activitylistneighborhoodgroups">
+        <div class='activitylistneighborhood'>
+            {{ neighborhood.name }}
+        </div>
+        {% for event in neighborhood.events %}
+            {% include 'list/event.twig' %}
+        {% endfor %}
+    </div>
+{% endfor %}

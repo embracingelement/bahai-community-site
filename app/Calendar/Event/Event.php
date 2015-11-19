@@ -70,10 +70,6 @@ class Event {
         return $this->location;
     }
 
-    public function getLocationId(){
-        return crc32($this->location);
-    }
-
     /**
      * @param mixed $location
      */

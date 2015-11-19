@@ -1,4 +1,4 @@
-<div class='scrolly {{ featured }}'>
+<div class='scrolly {% if event.isFeatured() %} featured {% endif %}'>
     <div class='scrollytitle text-left' lang='en'>
         {% if event.isFeatured() %}
             <div class='featuredtitle'>Featured Event:</div>

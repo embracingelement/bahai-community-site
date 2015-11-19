@@ -2,53 +2,46 @@
 /**
  * Created by PhpStorm.
  * User: Admin
- * Date: 10/24/15
- * Time: 11:54 PM
+ * Date: 11/10/15
+ * Time: 10:47 PM
  */
 
-namespace Calendar;
+namespace Neighborhood;
 
 
 use Calendar\Event\Event;
 
-class Calendar {
+class Neighborhood {
     /**
      * @var String
      */
-    private $id;
+    private $name;
     /**
      * @var Event[]
      */
-    private $events;
-
+    private $events = array();
 
     /**
-     * @param String $id
+     * @param String $name
      */
-    function __construct($id){
-        $this->id = $id;
+    public function __construct($name){
+        $this->name = $name;
     }
 
     /**
      * @return String
      */
-    public function getId()
+    public function getName()
     {
-        return $this->id;
+        return $this->name;
+    }
+
+    public function getId(){
+        return crc32($this->name);
     }
 
     /**
-     * @param String $id
-     * @return self
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-        return $this;
-    }
-
-    /**
-     * @return Event[]
+     * @return \Calendar\Event\Event[]
      */
     public function getEvents()
     {
@@ -56,7 +49,7 @@ class Calendar {
     }
 
     /**
-     * @param Event[] $events
+     * @param \Calendar\Event\Event[] $events
      * @return self
      */
     public function setEvents($events)

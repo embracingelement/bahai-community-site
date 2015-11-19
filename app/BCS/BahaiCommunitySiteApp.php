@@ -3,6 +3,7 @@
 namespace BCS;
 
 use Calendar\CalendarClient;
+use Calendar\RegisteredCalendars;
 use Calendar\CalendarService;
 use Calendar\Event\EventAggregator;
 use Calendar\Event\EventView;
@@ -21,6 +22,7 @@ class BahaiCommunitySiteApp {
     private $calendarService;
     private $eventView;
     private $eventAggregator;
+    private $registeredCalendars;
 
     function __construct(){
         FastCache::setup(['cache.path' => APP_ROOT . '/cache']);
@@ -30,10 +32,11 @@ class BahaiCommunitySiteApp {
         $this->calendarService = new CalendarService($this->calendarClient);
         $this->eventView = new EventView($twig->getTwigEnvironment());
         $this->eventAggregator = new EventAggregator();
+        $this->registeredCalendars = new RegisteredCalendars();
     }
 
     /**
-     * @return \Calendar\CalendarService
+     * @return CalendarService
      */
     public function getCalendarService()
     {
@@ -46,6 +49,14 @@ class BahaiCommunitySiteApp {
     public function getEventView()
     {
         return $this->eventView;
+    }
+
+    /**
+     * @return RegisteredCalendars
+     */
+    public function getRegisteredCalendars()
+    {
+        return $this->registeredCalendars;
     }
 
 
