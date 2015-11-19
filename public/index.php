@@ -399,12 +399,12 @@ foreach( $tabCalendars as $tabCalendar) {
             var i;
             for (i = 0; i < filteredArray.length; i++) {
                 var locationId = filteredArray[i]["id"];
-                var name = filteredArray[i]["name"];
+                var location = filteredArray[i]["location"];
                 var type = filteredArray[i]["type"];
                 var count = filteredArray[i]["count"];
                 var id = locationId+'-'+type;
 
-                setTimeout(getAddress(name, null, id, count), 100);
+                setTimeout(getAddress(location, null, id, count), 100);
             }
         }
 
