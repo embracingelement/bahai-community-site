@@ -3,14 +3,8 @@
 use BCS\BahaiCommunitySiteApp;
 use Calendar\Calendar;
 
-require '../vendor/autoload.php';
-require '../app/Config/Definitions.php';
-
-function pr($object){
-    print_r("<pre>");
-    print_r($object);
-    print_r("</pre>");
-}
+require __DIR__.'/../vendor/autoload.php';
+require __DIR__.'/../app/Config/Definitions.php';
 
 $app = new BahaiCommunitySiteApp();
 
@@ -344,7 +338,25 @@ foreach( $tabCalendars as $tabCalendar) {
         "Cheviot Hills, Los Angeles, CA, USA": [34.0403397, -118.40420140000003],
         "University of California, Los Angeles, Los Angeles, CA 90095, United States": [34.068921, -118.44518110000001],
         "Rancho Park, Los Angeles, CA, USA": [34.0454302, -118.42069149999998],
-        "Pacific Palisades, Los Angeles, CA, USA": [34.03563310000001, -118.5155901]
+        "Pacific Palisades, Los Angeles, CA, USA": [34.03563310000001, -118.5155901],
+        "Leimert Park, Los Angeles, CA, USA": [34.0106702, -118.3234759],
+        "Encino Baha&#039;i Community Center, 4830 Genesta Avenue, Encino, CA 91316, United States": [34.1587729, -118.50274100000001],
+        "North Hollywood, Los Angeles, CA, USA": [34.187044, -118.3812562],
+        "UCLA": [34.068921, -118.44518110000001],
+        "Silver Lake, Los Angeles, CA, USA": [34.0869409, -118.2702036],
+        "San Pedro, Los Angeles, CA, USA": [33.7360619, -118.2922461],
+        "Kenneth Hahn State Recreation Area, 4100 South La Cienega Boulevard, Los Angeles, CA 90056, United States": [34.0082583, -118.36454939999999],
+        "Toluca Lake, Los Angeles, CA, USA": [34.1501794, -118.35496089999998],
+        "East Hollywood, Los Angeles, CA, USA": [34.091341, -118.29358910000002],
+        "Palms, Los Angeles, CA, USA": [34.0244133, -118.4075474],
+        "Stoner Park Playground, Nebraska Avenue, Los Angeles, CA 90025, United States": [34.0399729, -118.45278400000001],
+        "Koreatown, Los Angeles, CA, USA": [34.0609876, -118.3023579],
+        "Beverly Hills Postal Center, 8306 Wilshire Boulevard, Beverly Hills, CA 90211, United States": [34.0637826, -118.37237119999998],
+        "Villas at Park La Brea Apartments, 5555 West 6th Street, Los Angeles, CA 90036, United States": [34.0653787, -118.348726],
+        "Wilshire Boulevard, Wilshire Blvd, Los Angeles, CA, USA": [34.062134, -118.30496099999999],
+        "Inglewood Park Cemetery, 720 E Florence Ave, Inglewood, CA 90302, United States": [33.966536, -118.3388683],
+        "Lafayette Recreation Center, Los Angeles, CA 90005, United States": [34.0621208, -118.2837237],
+        "Sun Valley, Los Angeles, CA, USA": [34.2279298, -118.3812562]
     };
 
     // ====== Geocoding ======
