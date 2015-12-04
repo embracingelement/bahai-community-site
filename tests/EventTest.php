@@ -13,10 +13,9 @@ require __DIR__ . '/../vendor/autoload.php';
 class EventTest extends PHPUnit_Framework_TestCase {
 
 
-    public function testCreation(Event $event)
+    public function testCreation()
     {
-        $event->
-//        $event = new \Event();
-        $this->assertInstanceOf("Event",$event,"should be an instance of an Event");
+        $event = new Event();
+        $this->assertInstanceOf(get_class($event), $event, "should be an instance of an Event");
     }
 }
