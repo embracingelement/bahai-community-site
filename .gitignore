@@ -5,3 +5,4 @@ composer.lock
 app/templates/cache/*
 credentials
 app/cache/*
+public/index.html

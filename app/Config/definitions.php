@@ -11,13 +11,18 @@ if(
     $cacheBreak = true;
 }
 
+$debug = true;
+if(!empty($argv) && !empty($argv[2]) && $argv[2] == "debug_off"){
+    $debug = false;
+}
+
 function pr($object){
     print_r("<pre>");
     print_r($object);
     print_r("</pre>");
 }
 
-define('DEBUG',  FALSE);
+define('DEBUG',  $debug);
 define('CACHE_BREAK_OVERRIDE', $cacheBreak);
 define('APP_ROOT',  __DIR__ . '/..');
 define('REPO_ROOT',  APP_ROOT . '/..');

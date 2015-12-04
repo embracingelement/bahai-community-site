@@ -20,6 +20,7 @@ $tabCalendars = $registeredCalendars->getTabCalendars();
 
 foreach( $tabCalendars as $tabCalendar) {
     $calendarService->getUpcomingEvents($tabCalendar);
+//    pr($tabCalendar->getEvents());
 }
 ?>
 <!DOCTYPE html>

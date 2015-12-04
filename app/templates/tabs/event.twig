@@ -2,7 +2,7 @@
     <div class='scrollytitle text-left' lang='en'>
         {% if event.isFeatured() %}
             <div class='featuredtitle'>Featured Event:</div>
-            {{ event.title | trim("Featured Event:") }}
+            {{ event.featuredTitleStripped() }}
         {% else %}
             {{ event.title }}
         {% endif %}

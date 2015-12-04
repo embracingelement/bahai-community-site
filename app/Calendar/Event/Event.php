@@ -122,6 +122,10 @@ class Event {
         return strpos(strtolower($this->title), strtolower("Featured Event:")) !== false;
     }
 
+    public function featuredTitleStripped(){
+        return ltrim($this->title, "Featured Event:");
+    }
+
     private function filterTitle($title){
         $title = html_entity_decode(htmlspecialchars_decode($title), ENT_QUOTES);
         $title = str_replace(" - Holy Day on which work is to be suspended", "", $title);
