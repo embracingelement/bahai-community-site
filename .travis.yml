@@ -5,4 +5,3 @@ php:
 
 install:
   - composer install
-  - phpunit --no-configuration tests/ auto
