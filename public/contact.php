@@ -7,13 +7,16 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Contact - Los Angeles Baha'i Community</title>
+    <title>Contact - Baha'i Community of Los Angeles</title>
 
     <!-- Bootstrap core CSS -->
 	<link href="css/bootstrap_revised.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="css/home.css?v7" rel="stylesheet">
+    <link href="css/home.css?v16" rel="stylesheet">
+
+    <!-- BOOTSTRAP TOUR -->
+    <link type="text/css" rel="stylesheet" href="css/bootstrap-tour.css" />
 
 	<link href='http://fonts.googleapis.com/css?family=Roboto+Slab:700,100,400|Roboto:900,100,300,700,400' rel='stylesheet' type='text/css'>
 	
@@ -25,7 +28,7 @@
 
 		ga('create', 'UA-56552635-2', 'auto');
 		ga('send', 'pageview');
-
+		
 	</script>
 </head>
 
@@ -59,7 +62,7 @@
 			<div class="container">
 				<div class="rowtitle"><h2>Contacts</h2></div>
 				<div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 text-left rowdescription">
-					<p>The Los Angeles Baha'i Community is administered by the Spiritual Assembly of the Baha'is of Los Angeles, a nine-person council democratically elected annually by adult Baha'is living within the city limits of Los Angeles.</p>
+					<p>The Baha'i Community of Los Angeles is administered by the Spiritual Assembly of the Baha'is of Los Angeles, a nine-person council democratically elected annually by adult Baha'is living within the city limits of Los Angeles.</p>
 					<p>The Spiritual Assembly serves as the official contact for the Baha'i Community, and can be reached through its Secretariat.</p>
 					<p>Other direct contacts are listed below for your convenience.</p>
 				</div>
@@ -191,9 +194,9 @@
 										</td>
 										<td>
 											<p>Erfan<br/>(North Valley)<br/><small>erfan@labahais.org</small></p>
-											<p>Hoda<br/>(South Valley)<br/><small>hoda@labahais.org</small></p>
-											<p>Touba<br/>(East LA)<br/><small>touba@labahais.org</small></p>
-											<p>Anne<br/>(West LA)<br/><small>anne@labahais.org</small></p>
+											<p>Nika<br/>(South Valley)<br/><small>nika@labahais.org</small></p>
+											<p>Touba<br/>(East Metro)<br/><small>touba@labahais.org</small></p>
+											<p>Talisa<br/>(West Metro)<br/><small>talisa@labahais.org</small></p>
 										</td>
 									</tr>
 									<tr>
@@ -204,9 +207,10 @@
 										</td>
 										<td>
 											<p>Negar<br/><small>negar@labahais.org</small></p>
-											<p>Divi<br/>(Valley)<br/><small>divi@labahais.org</small></p>
-											<p>Glenda<br/>(East LA)<br/><small>glenda@labahais.org</small></p>
-											<p>Ladan<br/>(West LA)<br/><small>ladan@labahais.org</small></p>
+											<p>Lida<br/>(North Valley)<br/><small>lida@labahais.org</small></p>
+											<p>Divi<br/>(South Valley)<br/><small>divi@labahais.org</small></p>
+											<p>Amin<br/>(East Metro)<br/><small>amin@labahais.org</small></p>
+											<p>Ladan<br/>(West Metro)<br/><small>ladan@labahais.org</small></p>
 										</td>
 									</tr>
 									<tr>
@@ -215,10 +219,10 @@
 											<li>Coordinates all children's classes in Los Angeles.</li>
 										</td>
 										<td>
+											<p>Viva<br/><small>viva@labahais.org</small></p>
 											<p>Neda<br/>(Valley)<br/><small>neda@labahais.org</small></p>
-											<p>Viva<br/>(East LA)<br/><small>viva@labahais.org</small></p>
-											<p>Maya<br/>(King Estates)<br/><small>maya@labahais.org</small></p>
-											<p>Talisa<br/>(West LA)<br/><small>talisa@labahais.org</small></p>
+											<p>Touba<br/>(East Metro)<br/><small>touba@labahais.org</small></p>
+											<p>Hoda<br/>(West Metro)<br/><small>hodad@labahais.org</small></p>
 										</td>
 									</tr>
 									<tr>
@@ -227,11 +231,10 @@
 											<li>Coordinates all junior youth groups in Los Angeles.</li>
 										</td>
 										<td>
-											<p>Nilu<br/><small>nilu@labahais.org</small></p>
-											<p>Fariba<br/>(South Valley)<br/><small>fariba@labahais.org</small></p>
-											<p>Tannaz<br/>(Canoga Park)<br/><small>tannaz@labahais.org</small></p>
-											<p>Esperanza<br/>(King Estates)<br/><small>esperanza@labahais.org</small></p>
-											<p>Arrian<br/>(West LA)<br/><small>arrian@labahais.org</small></p>
+											<p>Esperanza<br/><small>esperanza@labahais.org</small></p>
+											<p>Chad<br/>(South Valley)<br/><small>chad@labahais.org</small></p>
+											<p>Mac<br/>(East Metro)<br/><small>mac@labahais.org</small></p>
+											<p>Roya<br/>(West Metro)<br/><small>roya@labahais.org</small></p>
 										</td>
 									</tr>
 									<tr>
@@ -240,11 +243,11 @@
 											<li>Coordinates all Baha'i study circles in Los Angeles.</li>
 										</td>
 										<td>
-											<p>Kasra<br/><small>kasra@labahais.org</small></p>
-											<p>Mona<br/>(Valley)<br/><small>mona@labahais.org</small></p>
-											<p>Justin<br/>(East LA)<br/><small>justin@labahais.org</small></p>
-											<p>Naveed<br/>(King Estates)<br/><small>naveed@labahais.org</small></p>
-											<p>Kalim<br/>(West LA)<br/><small>kalim@labahais.org</small></p>
+											<p>Tannaz<br/><small>tannaz@labahais.org</small></p>
+											<p>Dominic<br/>(North Valley)<br/><small>dominic@labahais.org</small></p>
+											<p>Mona<br/>(South Valley)<br/><small>mona@labahais.org</small></p>
+											<p>Naveed<br/>(East Metro)<br/><small>naveed@labahais.org</small></p>
+											<p>Kalim<br/>(West Metro)<br/><small>kalim@labahais.org</small></p>
 										</td>
 									</tr>
 								</table>
@@ -338,7 +341,7 @@
 										<td>
 											<strong>Unit Conventions</strong>
 											<ul>
-												<li>Organizes and administers the annual election of delegates to represent the Los Angeles Baha'i Community at the United States National Convention.</li>
+												<li>Organizes and administers the annual election of delegates to represent the Baha'i Community of Los Angeles at the United States National Convention.</li>
 												<li>Provides an opportunity for community members to consult on local and regional matters.</li>
 											</ul>
 										</td>
@@ -379,18 +382,21 @@
 								<tbody class="blue-striped agencieslist">
 									<tr>
 										<td>
-											<strong>United Nations Association</strong>
-										</td>
-										<td>
-											Barbara<br/><small>barbara@labahais.org</small>
-										</td>
-									</tr>
-									<tr>
-										<td>
 											<strong>Inter-Religious Council</strong>
 										</td>
 										<td>
-											Randy<br/><small>randy@labahais.org</small>
+											Randy<br/><small>randy@labc.org</small>
+										</td>
+									</tr>
+									<tr>
+										<td colspan=2><em>Please contact the Los Angeles Baha'i Center if you wish to contact any of the Representatives listed below.</em></td>
+									</tr>
+									<tr>
+										<td>
+											<strong>United Nations Association</strong>
+										</td>
+										<td>
+											Barbara
 										</td>
 									</tr>
 									<tr>
@@ -398,7 +404,7 @@
 											<strong>USC Religious Directors Association</strong>
 										</td>
 										<td>
-											Tim<br/><small>tim@labahais.org</small>
+											Tim
 										</td>
 									</tr>
 									<tr>
@@ -406,7 +412,7 @@
 											<strong>Women's Interfaith Committee</strong>
 										</td>
 										<td>
-											Allison<br/><small>allison@labahais.org</small>
+											Allison
 										</td>
 									</tr>
 									<tr>
@@ -414,7 +420,7 @@
 											<strong>Valley Interfaith Council</strong>
 										</td>
 										<td>
-											Key<br/><small>key@labahais.org</small>
+											Key
 										</td>
 									</tr>
 								</tbody>
@@ -429,6 +435,8 @@
 	<!-- JavaScript -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/bootstrap-tour.js" ></script>
+    <script type="text/javascript" src="js/walkthrough-contact.js?v4" ></script>
 	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
@@ -480,7 +488,7 @@
 		    // Load a GeoJSON from the same server as our demo.
 		    map.data.loadGeoJson('maps/apc-combined.json');
 			map.data.loadGeoJson('maps/el-segundo-la-county-neighborhood-current.geojson');
-			map.data.loadGeoJson('maps/glendale-la-county-neighborhood-current.geojson');
+			// map.data.loadGeoJson('maps/aminle-la-county-neighborhood-current.geojson');
 			map.data.loadGeoJson('maps/hidden-hills-la-county-neighborhood-current.geojson');
 			map.data.loadGeoJson('maps/huntington-park-la-county-neighborhood-current.geojson');
 			map.data.loadGeoJson('maps/inglewood-la-county-neighborhood-current.geojson');
@@ -519,8 +527,8 @@
 		        var APC = feature.getProperty('APC');
 		        var color = APC == "North Valley" ? '#99CC66' :
 		            APC == "South Valley" ? '#336600' :
-		            APC == "West LA" ? '#6699CC' :
-		            APC == "East LA" ? '#003366' :
+		            APC == "West Metro" ? '#6699CC' :
+		            APC == "East Metro" ? '#003366' :
 		            '#FFFFFF';
 		        return {
 		            fillColor: color,
@@ -538,8 +546,8 @@
 		        var APC = event.feature.getProperty('APC');
 		        var color = APC == "North Valley" ? '#FFFF00' :
 		            APC == "South Valley" ? '#FFFF00' :
-		            APC == "West LA" ? '#FFFF00' :
-		            APC == "East LA" ? '#FFFF00' :
+		            APC == "West Metro" ? '#FFFF00' :
+		            APC == "East Metro" ? '#FFFF00' :
 		            '#FFFF99';
 		        map.data.revertStyle();
 		        map.data.overrideStyle(event.feature, {
@@ -565,7 +573,7 @@
 						cityname == "Calabasas" ? "calabasasbahaisecretary@gmail.com" :
 						cityname == "Monterey Park" ? "bahaisofmpark@gmail.com" :
 						cityname == "Burbank" ? "burbankbahais@gmail.com" :
-						cityname == "Glendale" ? "glendalelsa@gmail.com" :
+						cityname == "Aminle" ? "aminlelsa@gmail.com" :
 						cityname == "Pasadena" ? "lsa@pasadenabahai.org" :
 						cityname == "Rancho Palos Verdes" ? "ranchopalosverdesbahais@yahoo.com" :
 						"";
@@ -573,26 +581,26 @@
 					var citycontact = "";
 					
 					if (cityemail != "") {
-						citycontact = "<p>For more information on the " + event.feature.getProperty("name") + " Baha'i Community, please send an e-mail to <a id='contacts-map-" + event.feature.getProperty("name") + "-email' target='_blank' href='mailto:" + cityemail + "'>" + cityemail + "</a>.</p>";
+						citycontact = "<p>For more information on the Baha'i Community of " + event.feature.getProperty("name") + ", please send an e-mail to <a id='contacts-map-" + event.feature.getProperty("name") + "-email' target='_blank' href='mailto:" + cityemail + "'>" + cityemail + "</a>.</p>";
 					}
 				
 					infoWindow.setContent("<div class='text-left infowindow' id='contacts-map-" + event.feature.getProperty("name").replace(" ", "-") + "'><p><h4>" + event.feature.getProperty("name") + "</h4></p><p>For practical purposes, Baha'i communities are organized by city boundary lines, and " + event.feature.getProperty("name") + " is an incorporated stand-alone city adjacent to, but outside of, the City of Los Angeles.</p>" + citycontact + "</div>");
 				}
 		        else {
 					var areaname = event.feature.getProperty("APC");
-					var areacontacts = areaname == "East LA" ?
+					var areacontacts = areaname == "East Metro" ?
 																"<table class='table'>" +
 																"<tbody class='blue-striped' id='contacts-map-eastla-coordinators'>" +
-																"<tr><td>Children's Classes</td><td><a target='_blank' href='mailto:viva@labahais.org'>Viva</a><br /><a target='_blank' href='mailto:maya@labahais.org'>Maya</a> (King Estates)</td></tr>" +
-																"<tr><td>Junior Youth Groups</td><td><a target='_blank' href='mailto:esperanza@labahais.org'>Esperanza</a> (King Estates)</td></tr>" + 
-																"<tr><td>Study Circles</td><td><a target='_blank' href='mailto:justin@labahais.org'>Justin</a><br /><a target='_blank' href='mailto:naveed@labahais.org'>Naveed</a> (King Estates)</td></tr>" + 
-																"<tr><td>Devotional Gatherings</td><td><a target='_blank' href='mailto:glenda@labahais.org'>Glenda</a></td></tr>" + 
+																"<tr><td>Children's Classes</td><td><a target='_blank' href='mailto:touba@labahais.org'>Touba</a></td></tr>" +
+																"<tr><td>Junior Youth Groups</td><td><a target='_blank' href='mailto:mac@labahais.org'>Mac</a></td></tr>" + 
+																"<tr><td>Study Circles</td><td><a target='_blank' href='mailto:naveed@labahais.org'>Naveed</a></td></tr>" + 
+																"<tr><td>Devotional Gatherings</td><td><a target='_blank' href='mailto:amin@labahais.org'>Amin</a></td></tr>" + 
 																"</tbody></table>" :
-						areaname == "West LA" ?
+						areaname == "West Metro" ?
 																"<table class='table'>" +
 																"<tbody class='blue-striped' id='contacts-map-westla-coordinators'>" +
-																"<tr><td>Children's Classes</td><td><a target='_blank' href='mailto:talisa@labahais.org'>Talisa</a></td></tr>" +
-																"<tr><td>Junior Youth Groups</td><td><a target='_blank' href='mailto:arrian@labahais.org'>Arrian</a></td></tr>" + 
+																"<tr><td>Children's Classes</td><td><a target='_blank' href='mailto:hodad@labahais.org'>Hoda</a></td></tr>" +
+																"<tr><td>Junior Youth Groups</td><td><a target='_blank' href='mailto:roya@labahais.org'>Roya</a></td></tr>" + 
 																"<tr><td>Study Circles</td><td><a target='_blank' href='mailto:kalim@labahais.org'>Kalim</a></td></tr>" + 
 																"<tr><td>Devotional Gatherings</td><td><a target='_blank' href='mailto:ladan@labahais.org'>Ladan</a></td></tr>" + 
 																"</tbody></table>" :
@@ -602,23 +610,23 @@
 																"<tr><td>Children's Classes</td><td><a target='_blank' href='mailto:neda@labahais.org'>Neda</a></td></tr>" +
 																"<tr><td>Junior Youth Groups</td><td></td></tr>" + 
 																"<tr><td>Study Circles</td><td><a target='_blank' href='mailto:mona@labahais.org'>Mona</a></td></tr>" + 
-																"<tr><td>Devotional Gatherings</td><td></td></tr>" + 
+																"<tr><td>Devotional Gatherings</td><td><a target='_blank' href='mailto:lida@labahais.org'>Lida</a></td></tr>" + 
 																"</tbody></table>" :
 						areaname == "South Valley" ?
 																"<table class='table'>" +
 																"<tbody class='blue-striped' id='contacts-map-southvalley-coordinators'>" +
 																"<tr><td>Children's Classes</td><td><a target='_blank' href='mailto:neda@labahais.org'>Neda</a></td></tr>" +
-																"<tr><td>Junior Youth Groups</td><td><a target='_blank' href='mailto:fariba@labahais.org'>Fariba</a><br /><a target='_blank' href='mailto:tannaz@labahais.org'>Tannaz</a> (Canoga Park)</td></tr>" + 
-																"<tr><td>Study Circles</td><td><a target='_blank' href='mailto:mona@labahais.org'>Mona</a></td></tr>" + 
+																"<tr><td>Junior Youth Groups</td><td><a target='_blank' href='mailto:chad@labahais.org'>Chad</a></td></tr>" + 
+																"<tr><td>Study Circles</td><td><a target='_blank' href='mailto:dominic@labahais.org'>Dominic</a></td></tr>" + 
 																"<tr><td>Devotional Gatherings</td><td><a target='_blank' href='mailto:divi@labahais.org'>Divi</a></td></tr>" + 
 																"</tbody></table>" :
 
 						"";
 					
-					var feastcontact = areaname == "East LA" ? "Touba" :
-						areaname == "West LA" ? "Anne" :
+					var feastcontact = areaname == "East Metro" ? "Touba" :
+						areaname == "West Metro" ? "Talisa" :
 						areaname == "North Valley" ? "Erfan" :
-						areaname == "South Valley" ? "Hoda" :
+						areaname == "South Valley" ? "Nika" :
 						"";
 					
 					if (feastcontact != "") {
