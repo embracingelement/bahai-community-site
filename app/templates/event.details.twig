@@ -8,7 +8,7 @@
     title="Details"
     data-html="true"
     data-content="
-        <p>{{ event.description | raw }}</p>
+        <p>{{ event.getDescriptionLineBreaks() | raw }}</p>
         <p>For more information, please e-mail {{ event.getContactName() }}:
             <a href='mailto:{{ event.contactEmail }}?subject={{ event.title }}' title='{{ event.contactEmail }}'>
                 {{ event.contactEmail }}

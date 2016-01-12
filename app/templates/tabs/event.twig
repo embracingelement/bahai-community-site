@@ -38,7 +38,7 @@
                 data-trigger='focus'
                 data-html='true'
                 data-content='
-                    {{ event.description | raw }}
+                    {{ event.getDescriptionLineBreaks() | raw }}
                     <p style="margin-top: 20px;">For more information, please e-mail {{ calendar.contact }}:
                         <a href="mailto:{{ event.contactEmail }}?subject={{ event.title }}" title="{{ event.contactEmail }}">
                             {{ event.contactEmail }}
