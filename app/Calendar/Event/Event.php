@@ -24,11 +24,14 @@ class Event {
     }
 
     public function getSplitLineTitle(){
-        $title = $this->title;
-        $title = str_replace("(","<br/>(", $title);
-        $title = str_replace(":","<br/>:", $title);
-        $title = str_replace("-","<br/>-", $title);
-        return $title;
+        return $this->splitWithBreaks($this->title);
+    }
+
+    private function splitWithBreaks($string){
+        $string = str_replace("(","<br/>(", $string);
+        $string = str_replace(":","<br/>:", $string);
+        $string = str_replace("-","<br/>-", $string);
+        return $string;
     }
 
     /**
@@ -116,7 +119,7 @@ class Event {
     }
 
     public function featuredTitleStripped(){
-        return ltrim($this->title, "Featured Event:");
+        return $this->splitWithBreaks(ltrim($this->title, "Featured Event:"));
     }
 
     private function filterTitle($title){

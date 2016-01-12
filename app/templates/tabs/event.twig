@@ -2,9 +2,9 @@
     <div class='scrollytitle text-left' lang='en'>
         {% if event.isFeatured() %}
             <div class='featuredtitle'>Featured Event:</div>
-            {{ event.featuredTitleStripped() }}
+            {{ event.featuredTitleStripped()  | raw }}
         {% else %}
-            {{ event.title }}
+            {{ event.getSplitLineTitle()  | raw }}
         {% endif %}
     </div>
     <div class='scrollydate text-left'>{{ event.startDate | date('D M j g:ia')}}</div>
