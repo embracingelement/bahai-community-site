@@ -141,7 +141,7 @@ class CalendarService {
                 }
             }catch (\Exception $e){
                 if(DEBUG) {
-                    pr($e);
+//                    pr($e);
                 }
             }
 

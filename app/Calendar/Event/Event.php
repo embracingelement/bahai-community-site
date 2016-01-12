@@ -24,18 +24,11 @@ class Event {
     }
 
     public function getSplitLineTitle(){
-        if(strpos($this->title,"(") !== false) {
-            $splitTitle = explode("(", $this->title);
-            return $splitTitle[0] . "<br/>(" . $splitTitle[1];
-        }elseif(strpos($this->title,":") !== false){
-            $splitTitle = explode(":",$this->title);
-            return $splitTitle[0]. ":<br/>" . $splitTitle[1];
-        }elseif(strpos($this->title,"-") !== false){
-            $splitTitle = explode("-",$this->title);
-            return $splitTitle[0]. "-<br/>" . $splitTitle[1];
-        }else{
-            return $this->title;
-        }
+        $title = $this->title;
+        $title = str_replace("(","<br/>(", $title);
+        $title = str_replace(":","<br/>:", $title);
+        $title = str_replace("-","<br/>-", $title);
+        return $title;
     }
 
     /**
