@@ -18,10 +18,7 @@ class Twig {
 
     function __construct(){
         $this->twigLoader = new Twig_Loader_Filesystem(APP_ROOT.'/templates');
-        $this->twigEnvironment = new Twig_Environment($this->twigLoader, array(
-            'cache' => APP_ROOT.'/templates/cache',
-            'debug' => DEBUG
-        ));
+        $this->twigEnvironment = new Twig_Environment($this->twigLoader);
     }
 
     /**

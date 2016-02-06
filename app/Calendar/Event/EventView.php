@@ -18,8 +18,8 @@ class EventView {
         $this->twig = $twig;
     }
 
-    public function getTabsHTML($calendars = []){
-        return $this->twig->render('tabs/tabs.twig', array("calendars"=>$calendars));
+    public function getTabsHTML($tabs = []){
+        return $this->twig->render('tabs/tabs.twig', array("tabs"=>$tabs));
     }
 
     public function getEventListHTML($neighborhoods){

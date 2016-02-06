@@ -9,7 +9,9 @@
 namespace Calendar;
 
 
-class TabCalendar extends Calendar{
+use Calendar\Event\Event;
+
+class Tab{
     /**
      * @var String
      */
@@ -26,6 +28,14 @@ class TabCalendar extends Calendar{
      * @var String
      */
     private $tabName;
+    /**
+     * @var Calendar[]
+     */
+    private $calendars;
+    /**
+     * @var Event[]
+     */
+    private $events;
 
     /**
      * @return String
@@ -98,6 +108,44 @@ class TabCalendar extends Calendar{
         $this->tabName = $tabName;
         return $this;
     }
+
+    /**
+     * @return Calendar[]
+     */
+    public function getCalendars()
+    {
+        return $this->calendars;
+    }
+
+    /**
+     * @param Calendar[] $calendars
+     * @return self
+     */
+    public function setCalendars($calendars)
+    {
+        $this->calendars = $calendars;
+        return $this;
+    }
+
+    /**
+     * @return Event[]
+     */
+    public function getEvents()
+    {
+        return $this->events;
+    }
+
+    /**
+     * @param Event[] $events
+     * @return self
+     */
+    public function setEvents($events)
+    {
+        $this->events = $events;
+        return $this;
+    }
+
+
 
 
 

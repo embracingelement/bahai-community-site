@@ -29,7 +29,7 @@ class Event {
 
     private function splitWithBreaks($string){
         $string = str_replace("(","<br/>(", $string);
-        $string = str_replace(":","<br/>:", $string);
+        $string = str_replace(":",":<br/>", $string);
         $string = preg_replace('/([^\d]\s?)(-)(\s?[^\d])/',"$1<br/>$2$3", $string);
         return $string;
     }

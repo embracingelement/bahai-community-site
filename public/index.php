@@ -16,10 +16,14 @@ $activityTypes = $registeredCalendars->getActivityTypes();
 
 $activityTypes = $calendarService->setNeighborhoods($activityTypes);
 
-$tabCalendars = $registeredCalendars->getTabCalendars();
+$tabs = $registeredCalendars->getTabs();
 
-foreach( $tabCalendars as $tabCalendar) {
-    $calendarService->getUpcomingEvents($tabCalendar);
+foreach( $tabs as $tab) {
+    foreach($tab->getCalendars() as $calendar){
+        $calendarService->getUpcomingEvents($calendar);
+    }
+    $tab->setEvents($calendarService->mergeCalendarsEvents($tab->getCalendars()));
+
 }
 ?>
 <!DOCTYPE html>
@@ -100,7 +104,7 @@ foreach( $tabCalendars as $tabCalendar) {
         <div class="container">
             <div class="rowtitle"><h2>Baha'i Center Events</h2></div>
             <div class="rowdescription">All events are open to the public and free to attend, unless otherwise noted.</div>
-            <?php echo $eventView->getTabsHTML($tabCalendars) ?>
+            <?php echo $eventView->getTabsHTML($tabs) ?>
             <div class="rowdown"><h1><a href="#neighborhoodactivities" title="Scroll down for Neighborhood Activities" id="chevron-to-neighborhood-activities"><span class="glyphicon glyphicon-chevron-down"></span></a></h1></div>
         </div>
     </div>

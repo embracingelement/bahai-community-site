@@ -117,6 +117,22 @@ class CalendarService {
         return $this->sortByFeatured($events);
     }
 
+    /**
+     * @param Calendar[] $calendars
+     * @return Event[]
+     */
+    public function mergeCalendarsEvents($calendars){
+        /** @var Event[] $events */
+        $events = [];
+
+        /** @var Calendar $calendar */
+        foreach($calendars as $calendar){
+            array_merge($events, $calendar->getEvents());
+        }
+
+        return $this->sortEvents($events);
+    }
+
     function getUpcomingEvents(Calendar &$calendar, $options = array()){
         $events = $this->cache->get($calendar->getId());
 
