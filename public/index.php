@@ -297,8 +297,8 @@ foreach( $tabs as $tab) {
         var APC = feature.getProperty('APC');
         var color = APC == "North Valley" ? '#99CC66' :
             APC == "South Valley" ? '#336600' :
-                APC == "West LA" ? '#6699CC' :
-                    APC == "East LA" ? '#003366' :
+                APC == "West Metro" ? '#6699CC' :
+                    APC == "East Metro" ? '#003366' :
                         '#FFFFFF';
         return {
             fillColor: color,
