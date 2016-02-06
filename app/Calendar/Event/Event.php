@@ -30,7 +30,7 @@ class Event {
     private function splitWithBreaks($string){
         $string = str_replace("(","<br/>(", $string);
         $string = str_replace(":",":<br/>", $string);
-        $string = preg_replace('/([^\d]\s?)(-)(\s?[^\d])/',"$1<br/>$2$3", $string);
+        $string = preg_replace('/([^\d]\s?)(-)(\s?[^\d])/',"$1$2<br/>$3", $string);
         return $string;
     }
 
@@ -131,7 +131,8 @@ class Event {
         $title = str_replace(" - Holy Day on which work is to be suspended", "", $title);
         $title = str_replace("Commemoration", "Commemora-tion", $title);
         $title = str_replace("Commemorating", "Commemorat-ing", $title);
-
+		$title = str_replace("Conversational", "Conversa-tional", $title);
+		
         return $title;
     }
 
