@@ -146,7 +146,7 @@ class Tab{
     }
 
     public function getHash(){
-        return crc32($this->id);
+        return crc32($this->tabName);
     }
 
 
