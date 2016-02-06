@@ -127,7 +127,7 @@ class CalendarService {
 
         /** @var Calendar $calendar */
         foreach($calendars as $calendar){
-            array_merge($events, $calendar->getEvents());
+            $events = array_merge($events, $calendar->getEvents());
         }
 
         return $this->sortEvents($events);
