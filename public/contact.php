@@ -220,7 +220,7 @@
 										</td>
 										<td>
 											<p>Viva<br/><small>viva@labahais.org</small></p>
-											<p>Neda<br/>(Valley)<br/><small>neda@labahais.org</small></p>
+											<p>Mandana<br/>(Valley)<br/><small>mandana@labahais.org</small></p>
 											<p>Touba<br/>(East Metro)<br/><small>touba@labahais.org</small></p>
 											<p>Hoda<br/>(West Metro)<br/><small>hodad@labahais.org</small></p>
 										</td>
@@ -607,7 +607,7 @@
 						areaname == "North Valley" ?
 																"<table class='table'>" +
 																"<tbody class='blue-striped' id='contacts-map-northvalley-coordinators'>" +
-																"<tr><td>Children's Classes</td><td><a target='_blank' href='mailto:neda@labahais.org'>Neda</a></td></tr>" +
+																"<tr><td>Children's Classes</td><td><a target='_blank' href='mailto:mandana@labahais.org'>Mandana</a></td></tr>" +
 																"<tr><td>Junior Youth Groups</td><td></td></tr>" + 
 																"<tr><td>Study Circles</td><td><a target='_blank' href='mailto:mona@labahais.org'>Mona</a></td></tr>" + 
 																"<tr><td>Devotional Gatherings</td><td><a target='_blank' href='mailto:lida@labahais.org'>Lida</a></td></tr>" + 
@@ -615,7 +615,7 @@
 						areaname == "South Valley" ?
 																"<table class='table'>" +
 																"<tbody class='blue-striped' id='contacts-map-southvalley-coordinators'>" +
-																"<tr><td>Children's Classes</td><td><a target='_blank' href='mailto:neda@labahais.org'>Neda</a></td></tr>" +
+																"<tr><td>Children's Classes</td><td><a target='_blank' href='mailto:mandana@labahais.org'>Mandana</a></td></tr>" +
 																"<tr><td>Junior Youth Groups</td><td><a target='_blank' href='mailto:chad@labahais.org'>Chad</a></td></tr>" + 
 																"<tr><td>Study Circles</td><td><a target='_blank' href='mailto:dominic@labahais.org'>Dominic</a></td></tr>" + 
 																"<tr><td>Devotional Gatherings</td><td><a target='_blank' href='mailto:divi@labahais.org'>Divi</a></td></tr>" + 

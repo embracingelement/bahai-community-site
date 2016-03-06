@@ -63,8 +63,8 @@ class RegisteredCalendars
         $childrensClasses
             ->setLetterName("C")
             ->setCalendars(array(
-                new Calendar("neda@labahais.org"),
-                new Calendar("labc.org_49p2gc784mt1jptsk2oaoh7sp8@group.calendar.google.com"),
+                new Calendar("mandana@labahais.org"),
+                new Calendar("labc.org_2qsns32dv36fc6alg6fa06e0mk@group.calendar.google.com"), // CC - Ala
                 new Calendar("hodad@labahais.org"),
                 new Calendar("viva@labahais.org"),
                 new Calendar("labc.org_3ccu0eei4vi0v5h0go2q8s3gis@group.calendar.google.com")
