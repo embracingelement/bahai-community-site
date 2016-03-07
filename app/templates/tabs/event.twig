@@ -18,15 +18,15 @@
                 data-trigger='focus'
                 data-content='
                     <p>
-                        {{ calendar.locationTitle }}
+                        {{ tab.locationTitle }}
                         </br>
-                        {{ calendar.location }}
+                        {{ tab.location }}
                     </p>
                     <p>
-                        <a href="http://maps.google.com/?q={{ calendar.location }}" target="_blank">Directions</a> |
+                        <a href="http://maps.google.com/?q={{ tab.location }}" target="_blank">Directions</a> |
                         <a href="contact.php" id="Contacts">Contact Info</a>
                     </p>'>
-            <div class='scrollybody'>{{ calendar.locationTitle }}</div>
+            <div class='scrollybody'>{{ tab.locationTitle }}</div>
         </a>
     </div>
     <p class='text-center popoverex'>
@@ -39,7 +39,7 @@
                 data-html='true'
                 data-content='
                     {{ event.getDescriptionLineBreaks() | raw }}
-                    <p style="margin-top: 20px;">For more information, please e-mail {{ calendar.contact }}:
+                    <p style="margin-top: 20px;">For more information, please e-mail {{ tab.contact }}:
                         <a href="mailto:{{ event.contactEmail }}?subject={{ event.title }}" title="{{ event.contactEmail }}">
                             {{ event.contactEmail }}
                         </a>
