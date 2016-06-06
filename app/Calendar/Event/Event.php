@@ -28,9 +28,9 @@ class Event {
     }
 
     private function splitWithBreaks($string){
-        $string = str_replace("(","<br/>(", $string);
-        $string = str_replace(":",":<br/>", $string);
-        $string = preg_replace('/([^\d]\s?)(-)(\s?[^\d])/',"$1$2<br/>$3", $string);
+        $string = str_replace("(","<br />(", $string);
+        $string = str_replace(":",":<br />", $string);
+        $string = preg_replace('/([^\d]\s?)(-)(\s?[^\d])/',"$1$2<wbr>$3", $string);
         return $string;
     }
 
@@ -131,8 +131,8 @@ class Event {
         $title = str_replace(" - Holy Day on which work is to be suspended", "", $title);
         $title = str_replace("Commemoration", "Commemora-tion", $title);
         $title = str_replace("Commemorating", "Commemorat-ing", $title);
-		$title = str_replace("Conversational", "Conversa-tional", $title);
-		
+		$title = str_replace("Conversational", "Conver-sational", $title);
+		$title = preg_replace('/&([a-z]{1,2})(acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml|caron);/i','$1',htmlentities(str_replace(array_keys  ($this->chr_map), array_values($this->chr_map), $title), ENT_QUOTES));
         return $title;
     }
 

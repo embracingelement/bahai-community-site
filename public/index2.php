@@ -16,14 +16,10 @@ $activityTypes = $registeredCalendars->getActivityTypes();
 
 $activityTypes = $calendarService->setNeighborhoods($activityTypes);
 
-$tabs = $registeredCalendars->getTabs();
+$tabCalendars = $registeredCalendars->getTabCalendars();
 
-foreach( $tabs as $tab) {
-    foreach($tab->getCalendars() as $calendar){
-        $calendarService->getUpcomingEvents($calendar);
-    }
-    $tab->setEvents($calendarService->mergeCalendarsEvents($tab->getCalendars()));
-
+foreach( $tabCalendars as $tabCalendar) {
+    $calendarService->getUpcomingEvents($tabCalendar);
 }
 ?>
 <!DOCTYPE html>
@@ -104,7 +100,7 @@ foreach( $tabs as $tab) {
         <div class="container">
             <div class="rowtitle"><h2>Baha'i Center Events</h2></div>
             <div class="rowdescription">All events are open to the public and free to attend, unless otherwise noted.</div>
-            <?php echo $eventView->getTabsHTML($tabs) ?>
+            <?php echo $eventView->getTabsHTML($tabCalendars) ?>
             <div class="rowdown"><h1><a href="#neighborhoodactivities" title="Scroll down for Neighborhood Activities" id="chevron-to-neighborhood-activities"><span class="glyphicon glyphicon-chevron-down"></span></a></h1></div>
         </div>
     </div>
@@ -205,11 +201,6 @@ foreach( $tabs as $tab) {
     $(".mapfilter").click(function(){
         $(this).addClass("filterselected").siblings().removeClass("filterselected");
     });
-    function scrolloverabit() {
-		// $(".scrollable").scrollLeft(4);
-		$('#scrollable-losangeles').animate({scrollLeft: $('#scrollable-losangeles').scrollLeft()+4}, 250);
-    };
-    window.onload = scrolloverabit;
 </script>
 <?php foreach($activityTypes as $activityType){ ?>
     <?php echo $eventView->getEventMapHtml($activityType); ?>
@@ -552,6 +543,12 @@ foreach( $tabs as $tab) {
         $(".tooltipex a").tooltip();
         arrayCheck();
     });
+</script>
+<script>
+    // function scrolloverabit() {
+    // 	$(".scrollable").scrollLeft(145);
+    // };
+    // window.onload = scrolloverabit;
 </script>
 <!-- Start of StatCounter Code for Default Guide -->
 <script type="text/javascript">
