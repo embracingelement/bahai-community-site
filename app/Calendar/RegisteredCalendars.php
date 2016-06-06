@@ -41,18 +41,9 @@ class RegisteredCalendars
             ->setTabName("Encino")
             ->setCalendars([$tabCalendars['encinoCenter']]);
 
-        $unityCenterTab = new Tab();
-        $unityCenterTab
-            ->setContact("Nadia")
-            ->setLocationTitle("Unity Center")
-            ->setLocation("5753 Rodeo Road, Los Angeles, CA 90016")
-            ->setTabName("Unity Center")
-            ->setCalendars([$tabCalendars['unityCenter']]);
-
         $this->tabs = array(
             $labcTab,
-            $encinoTab,
-            $unityCenterTab
+            $encinoTab
         );
     }
 

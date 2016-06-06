@@ -81,9 +81,6 @@ foreach( $tabs as $tab) {
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav" style="background: rgba(255,255,255,0.8);">
                 <li class="active"><a href="index.php" id="menu-home">Home</a></li>
-                <li class="disabled"><a href="">About Us</a></li>
-                <li class="disabled"><a href="">The Baha'i Faith</a></li>
-                <li class="disabled"><a href="">Get Involved</a></li>
                 <li><a href="contact.php" id="menu-contacts">Contacts</a></li>
             </ul>
         </div><!-- /.navbar-collapse -->
