@@ -25,6 +25,17 @@ foreach( $tabs as $tab) {
     $tab->setEvents($calendarService->mergeCalendarsEvents($tab->getCalendars()));
 
 }
+
+$allUpcomingEvents = [];
+foreach($activityTypes as $activityType){
+    if($activityType->getName() == "All Activities"){
+        foreach($activityType->getNeighborhoods() as $neighborhood){
+            $allUpcomingEvents = array_merge($allUpcomingEvents, $neighborhood->getEvents());
+        }
+    }
+}
+
+$sortedAllEvents = $calendarService->sortEvents($allUpcomingEvents);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,7 +54,7 @@ foreach( $tabs as $tab) {
     <link href="css/bootstrap_revised.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="css/home.css?v16" rel="stylesheet">
+    <link href="css/home.css?v17" rel="stylesheet">
 
     <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:700,100,400|Roboto:900,100,300,700,400' rel='stylesheet' type='text/css'>
 
@@ -82,6 +93,7 @@ foreach( $tabs as $tab) {
             <ul class="nav navbar-nav" style="background: rgba(255,255,255,0.8);">
                 <li class="active"><a href="index.php" id="menu-home">Home</a></li>
                 <li><a href="contact.php" id="menu-contacts">Contacts</a></li>
+                <li><a href="http://www.bahai.org" id="menu-bahai-faith" class="bahai-faith" target="_blank">The Baha'i Faith</a></li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
@@ -99,9 +111,9 @@ foreach( $tabs as $tab) {
 
     <div class="row paddingfifty text-center">
         <div class="container">
-            <div class="rowtitle"><h2>Baha'i Center Events</h2></div>
+            <div class="rowtitle"><h2>Upcoming Events</h2></div>
             <div class="rowdescription">All events are open to the public and free to attend, unless otherwise noted.</div>
-            <?php echo $eventView->getTabsHTML($tabs) ?>
+            <?php echo $eventView->getUpcomingHTML($sortedAllEvents) ?>
             <div class="rowdown"><h1><a href="#neighborhoodactivities" title="Scroll down for Neighborhood Activities" id="chevron-to-neighborhood-activities"><span class="glyphicon glyphicon-chevron-down"></span></a></h1></div>
         </div>
     </div>

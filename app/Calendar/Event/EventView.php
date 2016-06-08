@@ -22,6 +22,10 @@ class EventView {
         return $this->twig->render('tabs/tabs.twig', array("tabs"=>$tabs));
     }
 
+    public function getUpcomingHTML($events = []){
+        return $this->twig->render('upcoming/events.twig',array("events"=>$events));
+    }
+
     public function getEventListHTML($neighborhoods){
         return $this->twig->render('list/events.twig', array("neighborhoods"=>$neighborhoods));
     }

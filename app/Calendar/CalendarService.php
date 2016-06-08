@@ -103,7 +103,7 @@ class CalendarService {
         return $neighborhoodMap;
     }
 
-    private function sortEvents($events){
+    public function sortEvents($events){
         $eventByDate = [];
         /** @var Event $event */
         foreach($events as $event){
@@ -169,6 +169,20 @@ class CalendarService {
         $calendar->setEvents($events);
 
         return $events;
+    }
+
+    /**
+     * @return Calendar[]
+     */
+    function getMyCalendars(){
+        $items = $this->googleService->calendarList->listCalendarList()->getItems();
+        /** @var Calendar[] $calendars */
+        $calendars = [];
+        foreach($items as $item){
+            array_push($calendars, new Calendar($item->id));
+        }
+
+        return $calendars;
     }
 
     function getUpcomingEventsBasic($calendarId){

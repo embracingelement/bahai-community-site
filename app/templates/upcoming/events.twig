@@ -1,0 +1,52 @@
+<ul class="nav nav-tabs centerthetabs" role="tablist">
+</ul>
+<div id="myTabContent" class="tab-content">
+    <div class="tab-pane fade in active">
+        <a class="left-scroll" id="left-scroll-losangeles">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+        <a class="right-scroll" id="right-scroll-losangeles">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+        </a>
+
+        <div class="scrollable" id="scrollable-losangeles">
+            {% for event in events %}
+                <div class='scrolly {% if event.isFeatured() %} featured {% endif %}'>
+                    <div class='scrollytitle text-left' lang='en'>
+                        {% if event.isFeatured() %}
+                            <div class='featuredtitle'>Featured Event:</div>
+                            {{ event.featuredTitleStripped()  | raw }}
+                        {% else %}
+                            {{ event.getSplitLineTitle()  | raw }}
+                        {% endif %}
+                    </div>
+                    <div class='scrollydate text-left'>{{ event.startDate | date('D M j g:ia')}}</div>
+
+                    <div class='text-left popoverex nooutline'>
+                        <a
+                                tabindex='0'
+                                title='Location'
+                                data-toggle='popover'
+                                data-html='true'
+                                data-trigger='focus'
+                                data-content='
+                    <p>
+                        {{ event.location }}
+                    </p>
+                    <p>
+                        <a href="http://maps.google.com/?q={{ event.location }}" target="_blank">Directions</a> |
+                        <a href="contact.php" id="Contacts">Contact Info</a>
+                    </p>'>
+                            <div class='scrollybody'>{{ event.location }}</div>
+                        </a>
+                    </div>
+                    <p class='text-center popoverex'>
+                        {% include 'event.details.twig' with {'class': "btn btn-blue btn-sm"} %}
+                    </p>
+                </div>
+            {% else %}
+                <p>There are no events upcoming. How odd.</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
