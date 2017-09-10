@@ -108,12 +108,11 @@ $sortedAllEvents = $calendarService->sortEvents($allUpcomingEvents);
                     universal peace and universal brotherhood."</h4>
             </div>
         </div></div>
-
     <div class="row paddingfifty text-center">
         <div class="container">
-            <div class="rowtitle"><h2>Upcoming Events</h2></div>
+            <div class="rowtitle"><h2>Baha'i Center & Neighborhood Events</h2></div>
             <div class="rowdescription">All events are open to the public and free to attend, unless otherwise noted.</div>
-            <?php echo $eventView->getUpcomingHTML($sortedAllEvents) ?>
+            <?php echo $eventView->getTabsHTML($tabs, $sortedAllEvents) ?>
             <div class="rowdown"><h1><a href="#neighborhoodactivities" title="Scroll down for Neighborhood Activities" id="chevron-to-neighborhood-activities"><span class="glyphicon glyphicon-chevron-down"></span></a></h1></div>
         </div>
     </div>
@@ -185,23 +184,19 @@ $sortedAllEvents = $calendarService->sortEvents($allUpcomingEvents);
 </div>
 
 <script type="text/javascript">
-    $('#left-scroll-losangeles').click(function () {
-        $('#scrollable-losangeles').animate({scrollLeft: $('#scrollable-losangeles').scrollLeft()-285}, 250);
+    <?php foreach($tabs as $tab){ ?>
+        $('#left-scroll-<?php echo $tab->getHash() ?>').click(function () {
+            $('#scrollable-<?php echo $tab->getHash() ?>').animate({scrollLeft: $('#scrollable-<?php echo $tab->getHash() ?>').scrollLeft()-285}, 250);
+        });
+        $('#right-scroll-<?php echo $tab->getHash() ?>').click(function () {
+            $('#scrollable-<?php echo $tab->getHash() ?>').animate({scrollLeft: $('#scrollable-<?php echo $tab->getHash() ?>').scrollLeft()+285}, 250);
+        });
+    <?php } ?>
+    $('#left-scroll-upcoming').click(function () {
+        $('#scrollable-upcoming').animate({scrollLeft: $('#scrollable-upcoming').scrollLeft()-285}, 250);
     });
-    $('#right-scroll-losangeles').click(function () {
-        $('#scrollable-losangeles').animate({scrollLeft: $('#scrollable-losangeles').scrollLeft()+285}, 250);
-    });
-    $('#left-scroll-encino').click(function () {
-        $('#scrollable-encino').animate({scrollLeft: $('#scrollable-encino').scrollLeft()-285}, 250);
-    });
-    $('#right-scroll-encino').click(function () {
-        $('#scrollable-encino').animate({scrollLeft: $('#scrollable-encino').scrollLeft()+285}, 250);
-    });
-    $('#left-scroll-unity').click(function () {
-        $('#scrollable-unity').animate({scrollLeft: $('#scrollable-unity').scrollLeft()-285}, 250);
-    });
-    $('#right-scroll-unity').click(function () {
-        $('#scrollable-unity').animate({scrollLeft: $('#scrollable-unity').scrollLeft()+285}, 250);
+    $('#right-scroll-upcoming').click(function () {
+        $('#scrollable-upcoming').animate({scrollLeft: $('#scrollable-upcoming').scrollLeft()+285}, 250);
     });
 
     $('#chevron-to-neighborhood-activities').click(function(){

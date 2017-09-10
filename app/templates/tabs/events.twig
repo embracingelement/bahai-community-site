@@ -1,12 +1,12 @@
 <div class="tab-pane fade {% if index == 0 %} in active {% endif %}" id="{{ tab.getHash() }}">
-    <a class="left-scroll" id="left-scroll-losangeles">
+    <a class="left-scroll" id="left-scroll-{{ tab.getHash() }}">
         <span class="glyphicon glyphicon-chevron-left"></span>
     </a>
-    <a class="right-scroll" id="right-scroll-losangeles">
+    <a class="right-scroll" id="right-scroll-{{ tab.getHash() }}">
         <span class="glyphicon glyphicon-chevron-right"></span>
     </a>
 
-    <div class="scrollable" id="scrollable-losangeles">
+    <div class="scrollable" id="scrollable-{{ tab.getHash() }}">
         {% for event in tab.events %}
             {% include 'tabs/event.twig' %}
         {% else %}

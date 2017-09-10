@@ -6,7 +6,7 @@ $cacheBreak = false;
 if(
     (!empty($_REQUEST) && array_key_exists('break_cache', $_REQUEST) && $_REQUEST['break_cache'] == "true")
     ||
-    (!empty($argv) && !empty($argv[1]) && $argv[1] == "break_cache")
+    (!empty($argv) && $argv[1] == "break_cache")
 ){
     $cacheBreak = true;
 }

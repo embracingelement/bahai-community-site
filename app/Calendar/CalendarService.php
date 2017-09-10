@@ -142,7 +142,8 @@ class CalendarService {
                 'maxResults' => 10,
                 'orderBy' => 'startTime',
                 'singleEvents' => TRUE,
-                'timeMin' => date('c')
+                'timeMin' => date('c'),
+                'timeMax' => date('c',strtotime('+1 month'))
             );
 
             $options = array_merge($optParams, $options);
@@ -172,14 +173,13 @@ class CalendarService {
     }
 
     /**
-     * @return Calendar[]
+     * @return array
      */
-    function getMyCalendars(){
+    function getMyCalendarsIdMap(){
         $items = $this->googleService->calendarList->listCalendarList()->getItems();
-        /** @var Calendar[] $calendars */
         $calendars = [];
         foreach($items as $item){
-            array_push($calendars, new Calendar($item->id));
+            $calendars[$item->summary] =$item->id;
         }
 
         return $calendars;
@@ -191,6 +191,7 @@ class CalendarService {
             'orderBy' => 'startTime',
             'singleEvents' => TRUE,
             'timeMin' => date('c'),
+            'timeMax' => date('c',strtotime('+1 month'))
         );
 
         return $this->googleService->events->listEvents($calendarId, $optParams);

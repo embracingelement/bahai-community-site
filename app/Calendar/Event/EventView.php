@@ -18,8 +18,8 @@ class EventView {
         $this->twig = $twig;
     }
 
-    public function getTabsHTML($tabs = []){
-        return $this->twig->render('tabs/tabs.twig', array("tabs"=>$tabs));
+    public function getTabsHTML($tabs = [], $upcoming){
+        return $this->twig->render('tabs/tabs.twig', array("tabs"=>$tabs,"upcoming"=>$upcoming));
     }
 
     public function getUpcomingHTML($events = []){
