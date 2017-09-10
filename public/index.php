@@ -50,6 +50,8 @@ $sortedAllEvents = $calendarService->sortEvents($allUpcomingEvents);
 
     <title>Los Angeles Baha'i Community</title>
 
+    <link href="favicon.png" rel="shortcut icon" type="image/x-icon" />
+
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap_revised.min.css" rel="stylesheet">
 
