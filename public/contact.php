@@ -46,11 +46,9 @@
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<ul class="nav navbar-nav" style="background: rgba(255,255,255,0.8);">
-					<li><a href="index.php">Home</a></li>
-					<li class="disabled"><a href="" id="menu-home">About Us</a></li>
-					<li class="disabled"><a href="">The Baha'i Faith</a></li>
-					<li class="disabled"><a href="">Get Involved</a></li>
-					<li class="active"><a href="contact.php" id="menu-contacts">Contacts</a></li>
+					<li class="active"><a href="index.php" id="menu-home">Home</a></li>
+					<li><a href="contact.php" id="menu-contacts">Contacts</a></li>
+					<li><a href="http://www.bahai.org" id="menu-bahai-faith" class="bahai-faith" target="_blank">The Baha'i Faith</a></li>
 				</ul>
 			</div><!-- /.navbar-collapse -->
 		</div><!-- /.container-fluid -->
@@ -206,7 +204,7 @@
 											<li>Coordinates all devotional gatherings in Los Angeles.</li>
 										</td>
 										<td>
-											<p>Negar<br/><small>negar@labahais.org</small></p>
+											<p>May Talebi<br/><small>maytalebi@gmail.com</small></p>
 											<p>Lida<br/>(North Valley)<br/><small>lida@labahais.org</small></p>
 											<p>Divi<br/>(South Valley)<br/><small>divi@labahais.org</small></p>
 											<p>Amin<br/>(East Metro)<br/><small>amin@labahais.org</small></p>
@@ -219,10 +217,9 @@
 											<li>Coordinates all children's classes in Los Angeles.</li>
 										</td>
 										<td>
-											<p>Viva<br/><small>viva@labahais.org</small></p>
-											<p>Mandana<br/>(Valley)<br/><small>mandana@labahais.org</small></p>
-											<p>Touba<br/>(East Metro)<br/><small>touba@labahais.org</small></p>
-											<p>Hoda<br/>(West Metro)<br/><small>hodad@labahais.org</small></p>
+											<p>Touba Selph<br/><small>touba@labahais.org</small></p>
+											<p>Shiva Ghardashem<br/><small>shiva_khs@yahoo.com</small></p>
+											<p>Carmel (Saba) Rashidi<br/><small>carmel.rashidi@gmail.com  </small></p>
 										</td>
 									</tr>
 									<tr>
@@ -231,10 +228,9 @@
 											<li>Coordinates all junior youth groups in Los Angeles.</li>
 										</td>
 										<td>
-											<p>Esperanza<br/><small>esperanza@labahais.org</small></p>
-											<p>Chad<br/>(South Valley)<br/><small>chad@labahais.org</small></p>
-											<p>Mac<br/>(East Metro)<br/><small>mac@labahais.org</small></p>
-											<p>Roya<br/>(West Metro)<br/><small>roya@labahais.org</small></p>
+											<p>Esperanza Ochoa<br/><small>esperanza@labahais.org</small></p>
+											<p>Shahruz Moshtael<br/><small>shahruzm@gmail.com</small></p>
+											<p>Mac Heravian<br/><small>mac@labahais.org</small></p>
 										</td>
 									</tr>
 									<tr>
@@ -243,11 +239,10 @@
 											<li>Coordinates all Baha'i study circles in Los Angeles.</li>
 										</td>
 										<td>
-											<p>Tannaz<br/><small>tannaz@labahais.org</small></p>
-											<p>Dominic<br/>(North Valley)<br/><small>dominic@labahais.org</small></p>
-											<p>Mona<br/>(South Valley)<br/><small>mona@labahais.org</small></p>
-											<p>Naveed<br/>(East Metro)<br/><small>naveed@labahais.org</small></p>
-											<p>Kalim<br/>(West Metro)<br/><small>kalim@labahais.org</small></p>
+											<p>Tannaz Ebrahimi<br/><small>tannaz@labahais.org</small></p>
+											<p>Mona Iman<br/><small>mona@labahais.org</small></p>
+											<p>Grania McCall<br/><small>graniamary@gmail.com</small></p>
+											<p>Kalim Chandler<br/><small>kalim@labahais.org</small></p>
 										</td>
 									</tr>
 								</table>

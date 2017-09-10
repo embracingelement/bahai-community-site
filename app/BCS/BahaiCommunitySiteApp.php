@@ -32,7 +32,7 @@ class BahaiCommunitySiteApp {
         $this->calendarService = new CalendarService($this->calendarClient);
         $this->eventView = new EventView($twig->getTwigEnvironment());
         $this->eventAggregator = new EventAggregator();
-        $this->registeredCalendars = new RegisteredCalendars();
+        $this->registeredCalendars = new RegisteredCalendars($this->calendarService);
     }
 
     /**

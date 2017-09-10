@@ -3,6 +3,7 @@
 namespace Calendar;
 
 use ActivityType\ActivityType;
+use Calendar\CalendarService;
 
 class RegisteredCalendars
 {
@@ -16,8 +17,14 @@ class RegisteredCalendars
      */
     private $activityTypes;
 
-    function __construct()
+    /**
+     * @var CalendarService
+     */
+    private $calendarService;
+
+    function __construct(CalendarService $calendarService)
     {
+        $this->calendarService = $calendarService;
         $this->setTabs();
         $this->setActivityTypes();
     }
@@ -49,6 +56,7 @@ class RegisteredCalendars
 
     function setActivityTypes(){
         $tabCalendars = $this->getTabCalendars();
+        $myCalendarIdsMap = $this->calendarService->getMyCalendarsIdMap();
 
         $childrensClasses = new ActivityType("Children's Classes");
         $childrensClasses
@@ -58,17 +66,19 @@ class RegisteredCalendars
                 new Calendar("labc.org_2qsns32dv36fc6alg6fa06e0mk@group.calendar.google.com"), // CC - Ala
                 new Calendar("hodad@labahais.org"),
                 new Calendar("viva@labahais.org"),
-                new Calendar("labc.org_3ccu0eei4vi0v5h0go2q8s3gis@group.calendar.google.com")
+                new Calendar("labc.org_3ccu0eei4vi0v5h0go2q8s3gis@group.calendar.google.com"),
+                new Calendar($myCalendarIdsMap["Children's Classes"])
             ));
 
-        $juniorYouthGroups = new ActivityType("Junior Youth");
+        $juniorYouthGroups = new ActivityType("Junior Youth Groups");
         $juniorYouthGroups
             ->setLetterName("J")
             ->setCalendars(array(
                 new Calendar("esperanza@labahais.org"),
                 new Calendar("chad@labahais.org"),
                 new Calendar("roya@labahais.org"),
-                new Calendar("mac@labahais.org")
+                new Calendar("mac@labahais.org"),
+                new Calendar($myCalendarIdsMap["Junior Youth Groups"])
             ));
 
         $studyCircles = new ActivityType("Study Circles");
@@ -79,7 +89,8 @@ class RegisteredCalendars
                 new Calendar("dominic@labahais.org"),
                 new Calendar("kalim@labahais.org"),
                 new Calendar("naveed@labahais.org"),
-                new Calendar("tannaz@labahais.org")
+                new Calendar("tannaz@labahais.org"),
+                new Calendar($myCalendarIdsMap["Study Circles"])
             ));
 
         $feasts = new ActivityType("Nineteen Day Feasts");
@@ -91,7 +102,8 @@ class RegisteredCalendars
                 new Calendar("nika@labahais.org"),
                 new Calendar("touba@labahais.org"),
                 new Calendar("labc.org_vd1oen3li3e4t8m4knb9hg7nec@group.calendar.google.com"),
-                $tabCalendars['labcFeast']
+                $tabCalendars['labcFeast'],
+                new Calendar($myCalendarIdsMap["Nineteen Day Feasts"])
             ));
 
         $communityLife = new ActivityType("Community Life");
@@ -111,6 +123,8 @@ class RegisteredCalendars
                 new Calendar("labc.org_qh1m8alt2a2drrbbgaqtj23tfs@group.calendar.google.com"),    // ACLC - Nur
                 new Calendar("labc.org_dh6enfb120t9kf7lmvppkfdop4@group.calendar.google.com"),
                 $tabCalendars['labc'], $tabCalendars['encinoCenter'], $tabCalendars['unityCenter']// ACLC - Kamal
+                ,
+                new Calendar($myCalendarIdsMap["Community Life"])
             ));
 
         $this->activityTypes = array(

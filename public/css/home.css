@@ -48,6 +48,11 @@ body {
 	color: #FFF;
 }
 
+.darkblue {
+	background-color: #036;
+	color: #FFF;
+}
+
 .lightgrey {
 	color: #aaa;
 }
@@ -171,11 +176,11 @@ body {
 	overflow-x: initial;
 	white-space: normal;
 	vertical-align: top;
-	background-color: #9CF;
+	background-color: #69C;
 }
 
 .featured {
-	background: #9CF url(featuredstripe.png) top left no-repeat;
+	background: #69C url(featuredstripe.png) top left no-repeat;
 }
 
 .featuredtitle {

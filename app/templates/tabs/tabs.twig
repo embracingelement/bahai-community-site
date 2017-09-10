@@ -2,9 +2,15 @@
     {% for index, tab in tabs %}
        {% include 'tabs/tab.twig' %}
     {% endfor %}
+    <li>
+        <a href="#all-upcoming" role="tab" data-toggle="tab" title="All Upcoming Events Across Neighborhoods">
+            Neighborhoods
+        </a>
+    </li>
 </ul>
 <div id="myTabContent" class="tab-content">
     {% for index, tab in tabs %}
         {% include 'tabs/events.twig' %}
     {% endfor %}
+    {% include 'upcoming/events.twig' %}
 </div>
