@@ -15,4 +15,3 @@ A folder called credentials in the folder about the root of this repo.
 Working through step one. Is necessary for completion of site setup.
 
 chmod -R 777 /path/to/credentials
-chmod -R 777 /path/to/bahai-community-site/app/templates/cache/
