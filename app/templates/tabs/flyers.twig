@@ -1,0 +1,20 @@
+<div class="tab-pane fade in active" id="flyers">
+    <a class="left-scroll" id="left-scroll-flyers">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <a class="right-scroll" id="right-scroll-flyers">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
+
+    <div class="scrollable" id="scrollable-flyers">
+        {% for flyer in flyers %}
+            <div class='scrolly scrolly-flyer'>
+                <a href="{{ flyer.getFlyer() }}" target="_blank" class="flyer-link">
+                    <img src="{{ flyer.getThumbnail() }}" alt="" class="flyer-thumbnail">
+                </a>
+            </div>
+        {% else %}
+            <p>There are currently no flyers for upcoming events.</p>
+        {% endfor %}
+    </div>
+</div>

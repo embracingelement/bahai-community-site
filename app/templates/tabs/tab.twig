@@ -1,4 +1,4 @@
-<li {% if index == 0 %} class="active" {% endif %} >
+<li {% if index == 0 and flyers is empty %} class="active" {% endif %} >
     <a href="#{{ tab.getHash() }}" role="tab" data-toggle="tab" title="{{ tab.locationTitle }}">
         {{ tab.tabName }}
     </a>

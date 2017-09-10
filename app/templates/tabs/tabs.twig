@@ -1,4 +1,11 @@
 <ul class="nav nav-tabs centerthetabs" role="tablist">
+    {% if flyers is not empty %}
+        <li class="active">
+            <a href="#flyers" role="tab" data-toggle="tab" title="Current Flyers">
+                Flyers
+            </a>
+        </li>
+    {% endif %}
     {% for index, tab in tabs %}
        {% include 'tabs/tab.twig' %}
     {% endfor %}
@@ -9,6 +16,9 @@
     </li>
 </ul>
 <div id="myTabContent" class="tab-content">
+    {% if flyers is not empty %}
+        {% include 'tabs/flyers.twig' %}
+    {% endif %}
     {% for index, tab in tabs %}
         {% include 'tabs/events.twig' %}
     {% endfor %}

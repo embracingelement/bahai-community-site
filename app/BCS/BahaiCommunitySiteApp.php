@@ -9,6 +9,7 @@ use Calendar\Event\EventAggregator;
 use Calendar\Event\EventView;
 use Config\Twig;
 use FastCache\FastCache;
+use Flyer\FlyerService;
 
 /**
  * Created by PhpStorm.
@@ -23,6 +24,7 @@ class BahaiCommunitySiteApp {
     private $eventView;
     private $eventAggregator;
     private $registeredCalendars;
+    private $flyerService;
 
     function __construct(){
         FastCache::setup(['cache.path' => APP_ROOT . '/cache']);
@@ -33,6 +35,7 @@ class BahaiCommunitySiteApp {
         $this->eventView = new EventView($twig->getTwigEnvironment());
         $this->eventAggregator = new EventAggregator();
         $this->registeredCalendars = new RegisteredCalendars($this->calendarService);
+        $this->flyerService = new FlyerService(PUBLIC_ROOT . '/img/flyers');
     }
 
     /**
@@ -59,5 +62,11 @@ class BahaiCommunitySiteApp {
         return $this->registeredCalendars;
     }
 
-
+    /**
+     * @return FlyerService
+     */
+    public function getFlyerService()
+    {
+        return $this->flyerService;
+    }
 }

@@ -25,6 +25,7 @@ function pr($object){
 define('DEBUG',  $debug);
 define('CACHE_BREAK_OVERRIDE', $cacheBreak);
 define('APP_ROOT',  __DIR__ . '/..');
+define('PUBLIC_ROOT',  __DIR__ . '/../../public');
 define('REPO_ROOT',  APP_ROOT . '/..');
 define('CREDENTIALS_PATH', REPO_ROOT . '/credentials');
 define('APPLICATION_NAME', 'Bahai Community Website');

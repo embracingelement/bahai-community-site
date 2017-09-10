@@ -11,6 +11,7 @@ $app = new BahaiCommunitySiteApp();
 $calendarService = $app->getCalendarService();
 $eventView = $app->getEventView();
 $registeredCalendars = $app->getRegisteredCalendars();
+$flyerService = $app->getFlyerService();
 
 $activityTypes = $registeredCalendars->getActivityTypes();
 
@@ -36,6 +37,8 @@ foreach($activityTypes as $activityType){
 }
 
 $sortedAllEvents = $calendarService->sortEvents($allUpcomingEvents);
+
+$flyers = $flyerService->getFlyers();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -114,7 +117,7 @@ $sortedAllEvents = $calendarService->sortEvents($allUpcomingEvents);
         <div class="container">
             <div class="rowtitle"><h2>Baha'i Center & Neighborhood Events</h2></div>
             <div class="rowdescription">All events are open to the public and free to attend, unless otherwise noted.</div>
-            <?php echo $eventView->getTabsHTML($tabs, $sortedAllEvents) ?>
+            <?php echo $eventView->getTabsHTML($tabs, $sortedAllEvents, $flyers) ?>
             <div class="rowdown"><h1><a href="#neighborhoodactivities" title="Scroll down for Neighborhood Activities" id="chevron-to-neighborhood-activities"><span class="glyphicon glyphicon-chevron-down"></span></a></h1></div>
         </div>
     </div>
@@ -199,6 +202,12 @@ $sortedAllEvents = $calendarService->sortEvents($allUpcomingEvents);
     });
     $('#right-scroll-upcoming').click(function () {
         $('#scrollable-upcoming').animate({scrollLeft: $('#scrollable-upcoming').scrollLeft()+285}, 250);
+    });
+    $('#left-scroll-flyers').click(function () {
+        $('#scrollable-flyers').animate({scrollLeft: $('#scrollable-flyers').scrollLeft()-285}, 250);
+    });
+    $('#right-scroll-flyers').click(function () {
+        $('#scrollable-flyers').animate({scrollLeft: $('#scrollable-flyers').scrollLeft()+285}, 250);
     });
 
     $('#chevron-to-neighborhood-activities').click(function(){
