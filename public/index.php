@@ -4,7 +4,7 @@ use BCS\BahaiCommunitySiteApp;
 use Calendar\Calendar;
 
 require __DIR__.'/../vendor/autoload.php';
-require __DIR__.'/../app/Config/Definitions.php';
+require __DIR__.'/../app/Config/definitions.php';
 
 $app = new BahaiCommunitySiteApp();
 
