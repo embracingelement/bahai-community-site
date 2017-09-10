@@ -1,3 +1,23 @@
+<?php
+include_once("../app/Config/membership.php");
+function echoAgencyMembershipHTML($people){
+    if(!empty($people)){
+        foreach($people as $person){
+            /** @var Person $person */
+            echo "<p>";
+            echo $person->getName();
+            echo "<br/>";
+            if($person->getFocus()){
+                echo "(".$person->getFocus().")";
+                echo "<br/>";
+            }
+            echo "<small>".$person->getEmail()."</small>";
+            echo "</p>";
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,6 +28,8 @@
     <meta name="author" content="">
 
     <title>Contact - Baha'i Community of Los Angeles</title>
+
+    <link href="favicon.png" rel="shortcut icon" type="image/x-icon" />
 
     <!-- Bootstrap core CSS -->
 	<link href="css/bootstrap_revised.min.css" rel="stylesheet">
@@ -192,10 +214,7 @@
 											</ul>
 										</td>
 										<td>
-											<p>Erfan<br/>(North Valley)<br/><small>erfan@labahais.org</small></p>
-											<p>Nika<br/>(South Valley)<br/><small>nika@labahais.org</small></p>
-											<p>Touba<br/>(East Metro)<br/><small>touba@labahais.org</small></p>
-											<p>Talisa<br/>(West Metro)<br/><small>talisa@labahais.org</small></p>
+                                            <?php echoAgencyMembershipHTML($memberships["Area Community Life Committee"]) ?>
 										</td>
 									</tr>
 									<tr>
@@ -205,11 +224,7 @@
 											<li>Coordinates all devotional gatherings in Los Angeles.</li>
 										</td>
 										<td>
-											<p>May Talebi<br/><small>maytalebi@gmail.com</small></p>
-											<p>Lida<br/>(North Valley)<br/><small>lida@labahais.org</small></p>
-											<p>Divi<br/>(South Valley)<br/><small>divi@labahais.org</small></p>
-											<p>Amin<br/>(East Metro)<br/><small>amin@labahais.org</small></p>
-											<p>Ladan<br/>(West Metro)<br/><small>ladan@labahais.org</small></p>
+                                            <?php echoAgencyMembershipHTML($memberships["Cluster Teaching Committee"]) ?>
 										</td>
 									</tr>
 									<tr>
@@ -218,9 +233,7 @@
 											<li>Coordinates all children's classes in Los Angeles.</li>
 										</td>
 										<td>
-											<p>Touba Selph<br/><small>touba@labahais.org</small></p>
-											<p>Shiva Ghardashem<br/><small>shiva_khs@yahoo.com</small></p>
-											<p>Carmel (Saba) Rashidi<br/><small>carmel.rashidi@gmail.com  </small></p>
+                                            <?php echoAgencyMembershipHTML($memberships["Children's Class Coordinators"]) ?>
 										</td>
 									</tr>
 									<tr>
@@ -229,9 +242,7 @@
 											<li>Coordinates all junior youth groups in Los Angeles.</li>
 										</td>
 										<td>
-											<p>Esperanza Ochoa<br/><small>esperanza@labahais.org</small></p>
-											<p>Shahruz Moshtael<br/><small>shahruzm@gmail.com</small></p>
-											<p>Mac Heravian<br/><small>mac@labahais.org</small></p>
+                                            <?php echoAgencyMembershipHTML($memberships["Jr. Youth Group Coordinators"]) ?>
 										</td>
 									</tr>
 									<tr>
@@ -240,10 +251,7 @@
 											<li>Coordinates all Baha'i study circles in Los Angeles.</li>
 										</td>
 										<td>
-											<p>Tannaz Ebrahimi<br/><small>tannaz@labahais.org</small></p>
-											<p>Mona Iman<br/><small>mona@labahais.org</small></p>
-											<p>Grania McCall<br/><small>graniamary@gmail.com</small></p>
-											<p>Kalim Chandler<br/><small>kalim@labahais.org</small></p>
+                                            <?php echoAgencyMembershipHTML($memberships["Study Circle Coordinators"]) ?>
 										</td>
 									</tr>
 								</table>
