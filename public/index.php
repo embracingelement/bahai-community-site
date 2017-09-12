@@ -13,10 +13,6 @@ $eventView = $app->getEventView();
 $registeredCalendars = $app->getRegisteredCalendars();
 $flyerService = $app->getFlyerService();
 
-$activityTypes = $registeredCalendars->getActivityTypes();
-
-$activityTypes = $calendarService->setNeighborhoods($activityTypes);
-
 $tabs = $registeredCalendars->getTabs();
 
 foreach( $tabs as $tab) {
@@ -27,16 +23,24 @@ foreach( $tabs as $tab) {
 
 }
 
-$allUpcomingEvents = [];
-foreach($activityTypes as $activityType){
-    if($activityType->getName() == "All Activities"){
-        foreach($activityType->getNeighborhoods() as $neighborhood){
-            $allUpcomingEvents = array_merge($allUpcomingEvents, $neighborhood->getEvents());
+include_once("../app/Config/membership.php");
+
+function echoAgencyMembershipHTML($people){
+    if(!empty($people)){
+        foreach($people as $person){
+            /** @var Person $person */
+            echo "<p>";
+            echo $person->getName();
+            echo "<br/>";
+            if($person->getFocus()){
+                echo "(".$person->getFocus().")";
+                echo "<br/>";
+            }
+            echo "<small>".$person->getEmail()."</small>";
+            echo "</p>";
         }
     }
 }
-
-$sortedAllEvents = $calendarService->sortEvents($allUpcomingEvents);
 
 $flyers = $flyerService->getFlyers();
 ?>
@@ -97,8 +101,10 @@ $flyers = $flyerService->getFlyers();
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav" style="background: rgba(255,255,255,0.8);">
-                <li class="active"><a href="index.php" id="menu-home">Home</a></li>
-                <li><a href="contact.php" id="menu-contacts">Contacts</a></li>
+                <li class="active"><a href="#events" id="menu-home">Events</a></li>
+<!--                <li><a href="#communitylist" id="menu-contacts">Mailing List</a></li>-->
+                <li><a href="#communitycontacts" id="menu-contacts">Contacts</a></li>
+                <li><a href="#communitymap" id="menu-contacts">Map</a></li>
                 <li><a href="http://www.bahai.org" id="menu-bahai-faith" class="bahai-faith" target="_blank">The Baha'i Faith</a></li>
             </ul>
         </div><!-- /.navbar-collapse -->
@@ -114,78 +120,235 @@ $flyers = $flyerService->getFlyers();
                     universal peace and universal brotherhood."</h4>
             </div>
         </div></div>
-    <div class="row paddingfifty text-center">
+    <div class="row paddingfifty text-center" id="events">
         <div class="container">
-            <div class="rowtitle"><h2>Baha'i Center & Neighborhood Events</h2></div>
+            <div class="rowtitle"><h2>Community Events</h2></div>
             <div class="rowdescription">All events are open to the public and free to attend, unless otherwise noted.</div>
             <?php echo $eventView->getTabsHTML($tabs, $sortedAllEvents, $flyers) ?>
-            <div class="rowdown"><h1><a href="#neighborhoodactivities" title="Scroll down for Neighborhood Activities" id="chevron-to-neighborhood-activities"><span class="glyphicon glyphicon-chevron-down"></span></a></h1></div>
         </div>
     </div>
-    <div class="row blue paddingfifty text-center" id="neighborhoodactivities">
+<!--    <div class="row darkblue paddingfifty text-center" id="communitylist">-->
+<!--        <div class="container">-->
+<!--            <div class="rowtitle"><h2>Community Mailing List</h2></div>-->
+<!--            <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 text-left rowdescription"><p></p></div>-->
+<!--        </div>-->
+<!--    </div>-->
+    <div class="row paddingfifty text-center" id="communitycontacts">
         <div class="container">
-            <div class="rowtitle"><h2>Neighborhood Activities</h2></div>
-            <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 text-left rowdescription"><p>Baha'is believe that the peace and security of humankind can only be achieved through spiritual means, so they are working to transform the spiritual lives of their neighborhoods through four core activities: moral education classes for children, empowerment and leadership training for junior youth, service and study groups for youth and adults, and devotional gatherings where communities can pray and meditate together.</p><p>Other activities are also listed below for your convenience.</p><p>All events are open to the public and free to attend, unless otherwise noted.</p></div>
+            <div class="rowtitle"><h2>Community Contacts</h2></div>
+            <div class="row text-center">
+                <div class="tabbable">
+                    <div class="container">
+                        <ul class="nav nav-tabs centerthetabs">
+                            <li class="active"><a href="#tab3" data-toggle="tab" id="contacts-communityoffices">Community Offices</a></li>
+                            <li><a href="#tab4" data-toggle="tab" id="contacts-communityagencies">Community Agencies</a></li>
+                            <li><a href="#tab5" data-toggle="tab" id="contacts-communityreps">Community Representatives</a></li>
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab3">
+                            <div class="container">
+                                <table class="table table-expanded table-no-border text-left">
+
+                                    <tbody class="blue-striped agencieslist">
+                                    <tr>
+                                        <td>
+                                            <strong>Secretariat</strong>
+                                            <ul>
+
+                                                <li>correspondence intended for the Spiritual Assembly</li>
+                                                <li>administrative assistance with Baha'i marriages</li>
+                                                <li>Baha'i burial information</li>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            Deborah<br/><small>secretariat@labc.org</small><br/><small>323.933.8291 x104</small>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Membership Information Services</strong>
+                                            <ul>
+                                                <li>Baha'is moving into or out of Los Angeles</li>
+                                                <li>changing mailing address and/or contact information</li>
+                                                <li>email list management</li>
+                                                <li>Baha'i births and deaths</li>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            Nadia<br/><small>mis@labc.org</small><br/><small>323.933.8291 x102</small>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Center Scheduling and Operations</strong>
+                                            <ul>
+                                                <li>Los Angeles Baha'i Center</li>
+                                                <li>Encino Baha'i Community Center</li>
+                                                <li>Unity Center</li>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            Nadia<br/><small>mis@labc.org</small><br/><small>323.933.8291 x102</small>
+                                        </td>
+                                    </tr>									<tr>
+                                        <td>
+                                            <strong>Treasurer's Office</strong>
+                                            <ul>
+                                                <li>Baha'i Fund</li>
+                                            </ul>
+                                            Please note:
+                                            <ul>
+                                                <li>Only Baha'is may contribute to the Baha'i Fund.</li>
+                                                <li>Donations from groups and individuals who are not Baha'i are neither solicited nor accepted.</li>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            Dena<br/><small>treasurer@labc.org</small><br/><small>323.933.8291 x107</small>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab4">
+                            <div class="container">
+                                <table class="table table-expanded table-no-border text-left">
+
+                                    <tbody class="blue-striped agencieslist">
+                                    <tr>
+                                        <td>
+                                            <strong>Office of Public Information</strong>
+                                            <ul>
+                                                <li>Coordinates media requests.</li>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            Randy<br/><small>randy@labc.org</small>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Community Life</strong>
+                                            <ul>
+                                                <li>Increases the vitality of the spiritual and social life of the community.</li>
+                                                <li>Welcomes new Baha'is.</li>
+                                                <li>Organizes neighborhood-wide and area-wide Nineteen Day Feasts.</li>
+                                                <li>Organizes neighborhood-wide Holy Day events for the Ascension of Baha'u'llah, the Ascension of `Abdu'l-Baha, and the 9th Day of Ridvan.</li>
+                                                <li>Organizes area-wide social activities.</li>
+                                                <li>Tends to the needs of the sick and ailing.</li>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <?php echoAgencyMembershipHTML($memberships["Area Community Life Committee"]) ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Teaching</strong>
+                                            <li>Facilitates and oversees gatherings for reflection on, and review of, efforts to transform the spiritual life of Los Angeles neighborhoods.</li>
+                                            <li>Coordinates all devotional gatherings in Los Angeles.</li>
+                                        </td>
+                                        <td>
+                                            <?php echoAgencyMembershipHTML($memberships["Cluster Teaching Committee"]) ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Children's Classes</strong>
+                                            <li>Coordinates all children's classes in Los Angeles.</li>
+                                        </td>
+                                        <td>
+                                            <?php echoAgencyMembershipHTML($memberships["Children's Class Coordinators"]) ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Junior Youth Groups</strong>
+                                            <li>Coordinates all junior youth groups in Los Angeles.</li>
+                                        </td>
+                                        <td>
+                                            <?php echoAgencyMembershipHTML($memberships["Jr. Youth Group Coordinators"]) ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Study Circles</strong>
+                                            <li>Coordinates all Baha'i study circles in Los Angeles.</li>
+                                        </td>
+                                        <td>
+                                            <?php echoAgencyMembershipHTML($memberships["Study Circle Coordinators"]) ?>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab5">
+                            <div class="container">
+                                <table class="table table-expanded table-no-border text-left">
+
+                                    <tbody class="blue-striped agencieslist">
+                                    <tr>
+                                        <td>
+                                            <strong>Inter-Religious Council</strong>
+                                        </td>
+                                        <td>
+                                            Randy<br/><small>randy@labc.org</small>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan=2><em>Please contact the Los Angeles Baha'i Center if you wish to contact any of the Representatives listed below.</em></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>United Nations Association</strong>
+                                        </td>
+                                        <td>
+                                            Barbara
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>USC Religious Directors Association</strong>
+                                        </td>
+                                        <td>
+                                            Tim
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Women's Interfaith Committee</strong>
+                                        </td>
+                                        <td>
+                                            Allison
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Valley Interfaith Council</strong>
+                                        </td>
+                                        <td>
+                                            Key
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="row blue text-center">
-        <div class="tabbable">
-            <div class="container">
-                <ul class="nav nav-tabs blue-nav-tabs centerthetabs">
-                    <li class="active"><a href="#tab1" role="tab" data-toggle="tab" id="activities-activitiesmap">Map View</a></li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">List View <b class="caret"></b></a>
-                        <ul class="dropdown-menu text-left">
-                            <?php foreach($activityTypes as $activityType){ ?>
-                                <li>
-                                    <a href="#map-tab-<?php echo $activityType->getId(); ?>" data-toggle="tab">
-                                        <?php echo $activityType->getName(); ?>
-                                    </a>
-                                </li>
-                            <?php } ?>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
+    <div class="row blue paddingfifty text-center" id="communitymap">
+        <div class="container">
+            <div class="rowtitle"><h2>Community Map</h2></div>
+            <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 text-left rowdescription"><p>The Baha'i Community of Los Angeles owns and operates two Centers - the Los Angeles Baha'i Center and the Encino Baha'i Community Center - as indicated by the pins on the map below.</p><p>Additionally, the community is geographically subdivided into four areas - Ala, Nur, Kamal, and Jamal - as indicated by the shaded areas on the map below.</p><p>Click anywhere on the map for more information.</p></div>
         </div>
     </div>
     <div class="row text-center">
-        <div class="tab-content">
-            <div class="tab-pane active" id="tab1">
-                <div id="map-canvas"></div>
-                <div class="filters text-left">
-                    <button type="button" class="close" data-toggle="collapse" data-target="#filterinput" style="margin-right:-20px; margin-top: -5px;" aria-expanded="true" aria-controls="filterinput"><span class="caret"></span></button>
-                    <div id="filterinput" class="collapse in">
-                        <div class="filtersheader">Show the<br />following:</div>
-                        <form>
-                            <ul>
-                                <?php foreach($activityTypes as $activityType){ ?>
-                                    <li class="mapfilter" white-space="nowrap">
-                                        <input type="radio" name="filterType" id="<?php echo $activityType->getLetterName(); ?>-filter" class="<?php echo $activityType->getLetterName(); ?>-filter" <?php if($activityType->getName() == "All Activities"){ ?>checked<?php } ?>/>
-                                        <a class="<?php echo $activityType->getLetterName(); ?>-filter"> <?php echo $activityType->getName(); ?></a>
-                                    </li>
-                                <?php } ?>
-                            </ul>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <?php foreach($activityTypes as $activityType){ ?>
-                <div class="tab-pane blue" id="map-tab-<?php echo $activityType->getId(); ?>">
-                    <div class="container">
-                        <div class="col-sm-4 activityicondiv">
-                            <span class="activityicon">
-                                <?php echo $activityType->getLetterName(); ?>
-                            </span>
-                        </div>
-                        <div class="col-sm-8">
-                            <?php echo $eventView->getEventListHTML($activityType->getNeighborhoods()); ?>
-                        </div>
-                    </div>
-                </div>
-            <?php } ?>
-        </div>
-
+        <div id="map-canvas"></div>
     </div>
 </div>
 
@@ -218,345 +381,295 @@ $flyers = $flyerService->getFlyers();
         return false;
     });
 
-    $(".mapfilter").click(function(){
-        $(this).addClass("filterselected").siblings().removeClass("filterselected");
-    });
     function scrolloverabit() {
 		// $(".scrollable").scrollLeft(4);
 		$('#scrollable-losangeles').animate({scrollLeft: $('#scrollable-losangeles').scrollLeft()+4}, 250);
     };
     window.onload = scrolloverabit;
 </script>
-<?php foreach($activityTypes as $activityType){ ?>
-    <?php echo $eventView->getEventMapHtml($activityType); ?>
-<?php } ?>
-<script type="text/javascript">
 
-    //<![CDATA[
-    // delay between geocode requests - at the time of writing, 100 miliseconds seems to work well
-    var delay = 100;
-    var markers = [];
+<script>
+		var map;
 
-    // ====== Create map objects ======
-    var infowindow = new google.maps.InfoWindow();
-    var latlng = new google.maps.LatLng(34.052156, -118.378969);
-    var mapOptions = {
-        zoom: 10,
-        center: {
-            lat: 34.052156,
-            lng: -118.378969
-        },
-        panControl: false,
-        zoomControl: true,
-        mapTypeControl: false,
-        scaleControl: false,
-        streetViewControl: false,
-        overviewMapControl: false,
-        scrollwheel: false,
-        disableDoubleClickZoom: true
-    };
-    var geo = new google.maps.Geocoder();
-    var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
-    var bounds = new google.maps.LatLngBounds();
-    var styles = [{
-        "stylers": [{
-            "hue": "#99CCFF"
-        }, {
-            "saturation": -50
-        }]
-    }, {
-        "featureType": "road",
-        "elementType": "geometry",
-        "stylers": [{
-            "lightness": 100
-        }, {
-            "visibility": "simplified"
-        }]
-    }, {
-        "featureType": "transit",
-        "stylers": [{
-            "visibility": "off"
-        }]
-    }, {
-        "featureType": "poi",
-        "stylers": [{
-            "visibility": "off"
-        }]
-    }, {
-        "featureType": "road",
-        "elementType": "labels.icon",
-        "stylers": [{
-            "visibility": "off"
-        }]
-    }, {
-        "featureType": "road",
-        "elementType": "labels.text",
-        "stylers": [{
-            "visibility": "simplified"
-        }]
-    }, {
-        "featureType": "administrative.neighborhood",
-        "stylers": [{
-            "visibility": "off"
-        }]
-    }, {
-        "featureType": "administrative.land_parcel"
-    }, {
-        "featureType": "landscape.man_made"
-    }];
-    map.setOptions({
-        styles: styles
-    });
+		var labcLatlng = new google.maps.LatLng(34.021854,-118.371388);		
+		var encinoLatlng = new google.maps.LatLng(34.158773,-118.502741);
+		var santamonicaLatlng = new google.maps.LatLng(34.0346509,-118.4658966);
 
-    // Load a GeoJSON from the same server as our demo.
-    map.data.loadGeoJson('maps/apc-combined.json');
-
-    // Load GeoJSON.
-    map.data.loadGeoJson('https://storage.googleapis.com/maps-devrel/google.json');
-
-    map.data.setStyle(function(feature) {
-        var APC = feature.getProperty('APC');
-        var color = APC == "North Valley" ? '#99CC66' :
-            APC == "South Valley" ? '#336600' :
-                APC == "West Metro" ? '#6699CC' :
-                    APC == "East Metro" ? '#003366' :
-                        '#FFFFFF';
-        return {
-            fillColor: color,
-            strokeWeight: 0
-        };
-    });
+		function initialize() {
+		    var mapOptions = {
+		        zoom: 10,
+		        center: {
+		            lat: 34.052156,
+		            lng: -118.378969
+		        },
+		        panControl: false,
+		        zoomControl: true,
+		        mapTypeControl: false,
+		        scaleControl: false,
+		        streetViewControl: false,
+		        overviewMapControl: false,
+		        scrollwheel: false,
+		        disableDoubleClickZoom: true
+		    };
+			
+		    // Create a simple map.
+		    map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
 
+		    // Load a GeoJSON from the same server as our demo.
+		    map.data.loadGeoJson('maps/apc-combined.json');
+			map.data.loadGeoJson('maps/el-segundo-la-county-neighborhood-current.geojson');
+			// map.data.loadGeoJson('maps/aminle-la-county-neighborhood-current.geojson');
+			map.data.loadGeoJson('maps/hidden-hills-la-county-neighborhood-current.geojson');
+			map.data.loadGeoJson('maps/huntington-park-la-county-neighborhood-current.geojson');
+			map.data.loadGeoJson('maps/inglewood-la-county-neighborhood-current.geojson');
+			map.data.loadGeoJson('maps/lomita-la-county-neighborhood-current.geojson');
+			map.data.loadGeoJson('maps/long-beach-la-county-neighborhood-current.geojson');
+			map.data.loadGeoJson('maps/lynwood-la-county-neighborhood-current.geojson');
+			// map.data.loadGeoJson('maps/montebello-la-county-neighborhood-current.geojson');
+			map.data.loadGeoJson('maps/monterey-park-la-county-neighborhood-current.geojson');
+			map.data.loadGeoJson('maps/pasadena-la-county-neighborhood-current.geojson');
+			map.data.loadGeoJson('maps/rancho-palos-verdes-la-county-neighborhood-current.geojson');
+			map.data.loadGeoJson('maps/san-fernando-la-county-neighborhood-current.geojson');
+			map.data.loadGeoJson('maps/santa-monica-la-county-neighborhood-current.geojson');
+			map.data.loadGeoJson('maps/south-gate-la-county-neighborhood-current.geojson');
+			map.data.loadGeoJson('maps/south-pasadena-la-county-neighborhood-current.geojson');
+			map.data.loadGeoJson('maps/torrance-la-county-neighborhood-current.geojson');
+			map.data.loadGeoJson('maps/vernon-la-county-neighborhood-current.geojson');
+			map.data.loadGeoJson('maps/west-hollywood-la-county-neighborhood-current.geojson');
+			map.data.loadGeoJson('maps/alhambra-la-county-neighborhood-current.geojson');
+			map.data.loadGeoJson('maps/beverly-hills-la-county-neighborhood-current.geojson');
+			map.data.loadGeoJson('maps/burbank-la-county-neighborhood-current.geojson');
+			map.data.loadGeoJson('maps/calabasas-la-county-neighborhood-current.geojson');
+			map.data.loadGeoJson('maps/carson-la-county-neighborhood-current.geojson');
+			map.data.loadGeoJson('maps/commerce-la-county-neighborhood-current.geojson');
+			map.data.loadGeoJson('maps/culver-city-la-county-neighborhood-current.geojson');
+			map.data.loadGeoJson('maps/gardena-la-county-neighborhood-current.geojson');
 
-    // ====== Lat-Lng Coordinates ======
-    // using this table to check against so there are less reqs to Maps API
-    var coords = {
-        // Search: [Lat, Lng],
-        "Beverly Hills, CA, USA": [34.0736204, -118.4003563],
-        "Encino, Los Angeles, CA, USA": [34.1517492, -118.5214282],
-        "Canoga Park, Los Angeles, CA, USA": [34.208254, -118.60586089999998],
-        "Panorama City, Los Angeles, CA, USA": [34.227617, -118.44242500000001],
-        "Brentwood, Los Angeles, CA, USA": [34.0521011, -118.4732464],
-        "Los Angeles Baha&#039;i Center, 5755 Rodeo Rd, Los Angeles, CA 90016, United States": [34.0220233, -118.37147319999997], // this may not work
-        "Marina del Rey, CA, USA": [33.9802893, -118.4517449],
-        "Downtown, Los Angeles, CA, USA": [34.0522342, -118.2436849],
-        "West Los Angeles, Los Angeles, CA, USA": [34.0412085, -118.44259599999998],
-        "Martin Luther King Jr / Western, Los Angeles, CA, United States": [34.011005, -118.309418],
-        "Woodland Hills, Los Angeles, CA, USA": [34.165357, -118.60897520000003],
-        "Granada Hills, Los Angeles, CA, USA": [34.2793576, -118.50215270000001],
-        "Sherman Oaks, Los Angeles, CA, USA": [34.1489719, -118.45135700000003],
-        "West Hills, Los Angeles, CA, USA": [34.1973122, -118.64398089999997],
-        "Park La Brea Apartments, 6200 W 3rd St, Los Angeles, CA 90036, United States": [34.0701777, -118.35501369999997],
-        "Park La Brea Apartments, 6200 West 3rd Street, Los Angeles, CA 90036, United States": [34.0701777, -118.35501369999997],
-        "Mar Vista Recreation Center, 11430 Woodbine St, Los Angeles, CA 90066, United States": [34.0175914, -118.42835839999998],
-        "Reseda, Los Angeles, CA, USA": [34.2011141, -118.53605170000003],
-        "Mar Vista Recreation Center, 11430 Woodbine Street, Los Angeles, CA 90066, United States": [34.0175914, -118.42835839999998],
-        "Tarzana, Los Angeles, CA, USA": [34.1494848, -118.5506158],
-        "Chatsworth, Los Angeles, CA, USA": [34.2506356, -118.61481000000003],
-        "Porter Ranch, Los Angeles, CA, USA": [34.2822134, -118.5506158],
-        "Winnetka, Los Angeles, CA, USA": [34.2048586, -118.57396210000002],
-        "View Park-Windsor Hills, CA, USA": [33.993611, -118.34694400000001],
-        "Westwood, Los Angeles, CA, USA": [34.0635016, -118.44551639999997],
-        "Northridge, Los Angeles, CA, USA": [34.2381251, -118.530123],
-        "Cheviot Hills, Los Angeles, CA 90064, USA": [34.0403397, -118.40420140000003],
-        "Cheviot Hills, Los Angeles, CA, USA": [34.0403397, -118.40420140000003],
-        "University of California, Los Angeles, Los Angeles, CA 90095, United States": [34.068921, -118.44518110000001],
-        "Rancho Park, Los Angeles, CA, USA": [34.0454302, -118.42069149999998],
-        "Pacific Palisades, Los Angeles, CA, USA": [34.03563310000001, -118.5155901],
-        "Leimert Park, Los Angeles, CA, USA": [34.0106702, -118.3234759],
-        "Encino Baha&#039;i Community Center, 4830 Genesta Avenue, Encino, CA 91316, United States": [34.1587729, -118.50274100000001],
-        "North Hollywood, Los Angeles, CA, USA": [34.187044, -118.3812562],
-        "UCLA": [34.068921, -118.44518110000001],
-        "Silver Lake, Los Angeles, CA, USA": [34.0869409, -118.2702036],
-        "San Pedro, Los Angeles, CA, USA": [33.7360619, -118.2922461],
-        "Kenneth Hahn State Recreation Area, 4100 South La Cienega Boulevard, Los Angeles, CA 90056, United States": [34.0082583, -118.36454939999999],
-        "Toluca Lake, Los Angeles, CA, USA": [34.1501794, -118.35496089999998],
-        "East Hollywood, Los Angeles, CA, USA": [34.091341, -118.29358910000002],
-        "Palms, Los Angeles, CA, USA": [34.0244133, -118.4075474],
-        "Stoner Park Playground, Nebraska Avenue, Los Angeles, CA 90025, United States": [34.0399729, -118.45278400000001],
-        "Koreatown, Los Angeles, CA, USA": [34.0609876, -118.3023579],
-        "Beverly Hills Postal Center, 8306 Wilshire Boulevard, Beverly Hills, CA 90211, United States": [34.0637826, -118.37237119999998],
-        "Villas at Park La Brea Apartments, 5555 West 6th Street, Los Angeles, CA 90036, United States": [34.0653787, -118.348726],
-        "Wilshire Boulevard, Wilshire Blvd, Los Angeles, CA, USA": [34.062134, -118.30496099999999],
-        "Inglewood Park Cemetery, 720 E Florence Ave, Inglewood, CA 90302, United States": [33.966536, -118.3388683],
-        "Lafayette Recreation Center, Los Angeles, CA 90005, United States": [34.0621208, -118.2837237],
-        "Sun Valley, Los Angeles, CA, USA": [34.2279298, -118.3812562]
-    };
+		    // Load GeoJSON.
+		    map.data.loadGeoJson('https://storage.googleapis.com/maps-devrel/google.json');
 
-    // ====== Geocoding ======
-    function getAddress(search, next, formattedcontentId, numberofevents) {
-        if (search in coords) {
-            var loc = coords[search];
-            createMarker(formattedcontentId, loc[0], loc[1], numberofevents);
-            // console.log("No request for " + search);
-        } else {
-            geo.geocode({
-                address: search
-            }, function(results, status) {
-                // If that was successful
-                if (status == google.maps.GeocoderStatus.OK) {
-                    // console.log("Searched for " + search);
-                    // Lets assume that the first marker is the one we want
-                    var p = results[0].geometry.location;
-                    var lat = p.lat();
-                    var lng = p.lng();
-                    // uncomment next line to find coordinates for searches
-                    // console.log("Search: " + search + " . Lat: " + lat + " Lng: " + lng);
-                    // Output the data
-                    // Create a marker
-                    createMarker(formattedcontentId, lat, lng, numberofevents);
-                }
-                // ====== Decode the error status ======
-                else {
-                    // === if we were sending the requests too fast, try this one again and increase the delay
-                    if (status == google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
-                        nextAddress--;
-                        delay++;
-                    } else {
-                        var reason = "Code " + status;
-                    }
-                }
+		    infoWindow = new google.maps.InfoWindow({
+		        content: "",
+				maxWidth: 400
+		    });
 
-            });
-        }
-        // filterPins passes in null
-        if (next != null) {
-            next();
-        }
-
-    }
+		    map.data.setStyle(function(feature) {
+		        var APC = feature.getProperty('APC');
+		        var color = APC == "North Valley" ? '#99CC66' :
+		            APC == "South Valley" ? '#336600' :
+		            APC == "West Metro" ? '#6699CC' :
+		            APC == "East Metro" ? '#003366' :
+		            '#FFFFFF';
+		        return {
+		            fillColor: color,
+		            strokeWeight: 0,
+		        };
 
 
-    // ======= Filtering pins function
-    function filterPins(filteredArray) {
-        if (filteredArray) {
-            clearMarkers();
-            deleteMarkers();
-            var i;
-            for (i = 0; i < filteredArray.length; i++) {
-                var locationId = filteredArray[i]["id"];
-                var location = filteredArray[i]["location"];
-                var type = filteredArray[i]["type"];
-                var count = filteredArray[i]["count"];
-                var id = locationId+'-'+type;
+		    });
 
-                setTimeout(getAddress(location, null, id, count), 100);
-            }
-        }
+		    // Set mouseover event for each feature.
+		    // When the user hovers, tempt them to click by outlining the letters.
+		    // Call revertStyle() to remove all overrides. This will use the style rules
+		    // defined in the function passed to setStyle()
+		    map.data.addListener('mouseover', function(event) {
+		        var APC = event.feature.getProperty('APC');
+		        var color = APC == "North Valley" ? '#FFFF00' :
+		            APC == "South Valley" ? '#FFFF00' :
+		            APC == "West Metro" ? '#FFFF00' :
+		            APC == "East Metro" ? '#FFFF00' :
+		            '#FFFF99';
+		        map.data.revertStyle();
+		        map.data.overrideStyle(event.feature, {
+		            fillColor: color,
+		            strokeWeight: 4
+		        });
+		    });
 
+		    map.data.addListener('mouseout', function(event) {
+		        map.data.revertStyle();
+		    });
 
-    }
+		    map.data.addListener('click', function(event) {
+		        //show an infowindow on click
+				if (event.feature.getProperty("APC") == undefined) {
+					var cityname = event.feature.getProperty("name");
+					var cityemail = cityname == "Santa Monica" ? "info@santamonicabahai.org" :
+						cityname == "Beverly Hills" ? "payam@beverlyhillsbahai.org" :
+						cityname == "Culver City" ? "lsaculvercity@gmail.com" :
+						cityname == "Inglewood" ? "inglewoodlsa@gmail.com" :
+						cityname == "Carson" ? "carsoncalsa@gmail.com" :
+						cityname == "Long Beach" ? "longbeachlsa@gmail.com" :
+						cityname == "Calabasas" ? "calabasasbahaisecretary@gmail.com" :
+						cityname == "Monterey Park" ? "bahaisofmpark@gmail.com" :
+						cityname == "Burbank" ? "burbankbahais@gmail.com" :
+						cityname == "Aminle" ? "aminlelsa@gmail.com" :
+						cityname == "Pasadena" ? "lsa@pasadenabahai.org" :
+						cityname == "Rancho Palos Verdes" ? "ranchopalosverdesbahais@yahoo.com" :
+						"";
+					
+					var citycontact = "";
+					
+					if (cityemail != "") {
+						citycontact = "<p>For more information on the Baha'i Community of " + event.feature.getProperty("name") + ", please send an e-mail to <a id='contacts-map-" + event.feature.getProperty("name") + "-email' target='_blank' href='mailto:" + cityemail + "'>" + cityemail + "</a>.</p>";
+					}
+				
+					infoWindow.setContent("<div class='text-left infowindow' id='contacts-map-" + event.feature.getProperty("name").replace(" ", "-") + "'><p><h4>" + event.feature.getProperty("name") + "</h4></p><p>For practical purposes, Baha'i communities are organized by city boundary lines, and " + event.feature.getProperty("name") + " is an incorporated stand-alone city adjacent to, but outside of, the City of Los Angeles.</p>" + citycontact + "</div>");
+				}
+		        else {
+					var areaname = event.feature.getProperty("APC");
+					var areacontacts = areaname == "East Metro" ?
+																"<table class='table'>" +
+																"<tbody class='blue-striped' id='contacts-map-eastla-coordinators'>" +
+																"<tr><td>Children's Classes</td><td><a target='_blank' href='mailto:touba@labahais.org'>Touba</a></td></tr>" +
+																"<tr><td>Junior Youth Groups</td><td><a target='_blank' href='mailto:mac@labahais.org'>Mac</a></td></tr>" + 
+																"<tr><td>Study Circles</td><td><a target='_blank' href='mailto:naveed@labahais.org'>Naveed</a></td></tr>" + 
+																"<tr><td>Devotional Gatherings</td><td><a target='_blank' href='mailto:amin@labahais.org'>Amin</a></td></tr>" + 
+																"</tbody></table>" :
+						areaname == "West Metro" ?
+																"<table class='table'>" +
+																"<tbody class='blue-striped' id='contacts-map-westla-coordinators'>" +
+																"<tr><td>Children's Classes</td><td><a target='_blank' href='mailto:hodad@labahais.org'>Hoda</a></td></tr>" +
+																"<tr><td>Junior Youth Groups</td><td><a target='_blank' href='mailto:roya@labahais.org'>Roya</a></td></tr>" + 
+																"<tr><td>Study Circles</td><td><a target='_blank' href='mailto:kalim@labahais.org'>Kalim</a></td></tr>" + 
+																"<tr><td>Devotional Gatherings</td><td><a target='_blank' href='mailto:ladan@labahais.org'>Ladan</a></td></tr>" + 
+																"</tbody></table>" :
+						areaname == "North Valley" ?
+																"<table class='table'>" +
+																"<tbody class='blue-striped' id='contacts-map-northvalley-coordinators'>" +
+																"<tr><td>Children's Classes</td><td><a target='_blank' href='mailto:mandana@labahais.org'>Mandana</a></td></tr>" +
+																"<tr><td>Junior Youth Groups</td><td></td></tr>" + 
+																"<tr><td>Study Circles</td><td><a target='_blank' href='mailto:mona@labahais.org'>Mona</a></td></tr>" + 
+																"<tr><td>Devotional Gatherings</td><td><a target='_blank' href='mailto:lida@labahais.org'>Lida</a></td></tr>" + 
+																"</tbody></table>" :
+						areaname == "South Valley" ?
+																"<table class='table'>" +
+																"<tbody class='blue-striped' id='contacts-map-southvalley-coordinators'>" +
+																"<tr><td>Children's Classes</td><td><a target='_blank' href='mailto:mandana@labahais.org'>Mandana</a></td></tr>" +
+																"<tr><td>Junior Youth Groups</td><td><a target='_blank' href='mailto:chad@labahais.org'>Chad</a></td></tr>" + 
+																"<tr><td>Study Circles</td><td><a target='_blank' href='mailto:dominic@labahais.org'>Dominic</a></td></tr>" + 
+																"<tr><td>Devotional Gatherings</td><td><a target='_blank' href='mailto:divi@labahais.org'>Divi</a></td></tr>" + 
+																"</tbody></table>" :
 
-    // Sets the map on all markers in the array.
-    function setAllMap(map) {
-        for (var i = 0; i < markers.length; i++) {
-            markers[i].setMap(map);
-        }
-    }
+						"";
+					
+					var feastcontact = areaname == "East Metro" ? "Touba" :
+						areaname == "West Metro" ? "Talisa" :
+						areaname == "North Valley" ? "Erfan" :
+						areaname == "South Valley" ? "Nika" :
+						"";
+					
+					if (feastcontact != "") {
+						// feastcontact = "<p>If you're a Baha'i living in this area and want more information about area and neighborhood Nineteen Day Feasts, please contact " + feastcontact + " at <a target='_blank' id='contacts-map-" + feastcontact.toLowerCase() + "@labahais.org' href='mailto:" + feastcontact.toLowerCase() + "@labahais.org'>" + feastcontact.toLowerCase() + "@labahais.org</a>.</p>";
+					}
+				
+					infoWindow.setContent("<div class='text-left infowindow' id='contacts-map-" + event.feature.getProperty("APC").replace(" ", "-") + "'><p><h4>Los Angeles - \"" + event.feature.getProperty("APC").replace("East Metro", "Jamal").replace("West Metro", "Kamal").replace("North Valley", "Ala").replace("South Valley", "Nur") + "\" Area<br /><small>" + event.feature.getProperty("NAME_ALF") + "</small></h4></p><p>Baha'is are working to transform the spiritual life of Los Angeles through children's classes, junior youth groups, study circles, and devotional gatherings.</p>To get involved with one of these activities in the \"" + event.feature.getProperty("APC").replace("East Metro", "Jamal").replace("West Metro", "Kamal").replace("North Valley", "Ala").replace("South Valley", "Nur") + "\" area of Los Angeles, please contact Nadia at <a href='mailto:nadia@labahais.org'>nadia@labahais.org</a>.</p></div>"); //+ event.feature.getProperty("APC") + " coordinator:</p>" + areacontacts + feastcontact + "</div>");
+				}
+		        var anchor = new google.maps.MVCObject();
+		        anchor.set("position", event.latLng);
+		        infoWindow.open(map, anchor);
+		    });
 
-    // Removes the markers from the map, but keeps them in the array.
-    function clearMarkers() {
-        setAllMap(null);
-    }
+		    var styles = [{
+		        "stylers": [{
+		            "hue": "#99CCFF"
+		        }, {
+		            "saturation": -50
+		        }]
+		    }, {
+		        "featureType": "road",
+		        "elementType": "geometry",
+		        "stylers": [{
+		            "lightness": 100
+		        }, {
+		            "visibility": "simplified"
+		        }]
+		    }, {
+		        "featureType": "transit",
+		        "stylers": [{
+		            "visibility": "off"
+		        }]
+		    }, {
+		        "featureType": "poi",
+		        "stylers": [{
+		            "visibility": "off"
+		        }]
+		    }, {
+		        "featureType": "road",
+		        "elementType": "labels.icon",
+		        "stylers": [{
+		            "visibility": "off"
+		        }]
+		    }, {
+		        "featureType": "road",
+		        "elementType": "labels.text",
+		        "stylers": [{
+		            "visibility": "simplified"
+		        }]
+		    }, {
+		        "featureType": "administrative.neighborhood",
+		        "stylers": [{
+		            "visibility": "off"
+		        }]
+		    }, {
+		        "featureType": "administrative.land_parcel"
+		    }, {
+		        "featureType": "landscape.man_made"
+		    }];
 
-    // Deletes all markers in the array by removing references to them.
-    function deleteMarkers() {
-        clearMarkers();
-        markers = [];
-    }
+		    map.setOptions({
+		        styles: styles
+		    });
+			
+			var labcmarker = new google.maps.Marker({
+				position: labcLatlng,
+				map: map,
+				icon: "http://chart.apis.google.com/chart?chst=d_map_spin&chld=1.25|0|FFFF00|9|_|LA",
+				title:"Los Angeles Baha'i Center"
+			});
+			
+			// To add the marker to the map, call setMap();
+			labcmarker.setMap(map);
+			
+			var encinomarker = new google.maps.Marker({
+				position: encinoLatlng,
+				map: map,
+				icon: "http://chart.apis.google.com/chart?chst=d_map_spin&chld=1.25|0|FFFF00|9|_|Encino",
+				title:"Encino Baha'i Community Center"
+			});
 
+			// To add the marker to the map, call setMap();
+			encinomarker.setMap(map);
+			
+			var santamonicamarker = new google.maps.Marker({
+				position: santamonicaLatlng,
+				map: map,
+				icon: "http://chart.apis.google.com/chart?chst=d_map_spin&chld=1.25|0|FFFF00|9|_|Santa|Monica",
+				title:"Santa Monica Baha'i Center"
+			});
 
-    // ======= Function to create a marker
-    function createMarker(contentId, lat, lng, numberofevents) {
-        var content = document.getElementById(contentId).innerHTML;
-        var marker = new google.maps.Marker({
-            position: new google.maps.LatLng(lat, lng),
-            map: map,
-            // icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld='+numberofevents+'|FFFF00|000000'
-            icon: 'http://chart.apis.google.com/chart?chst=d_map_spin&chld=0.75|0|FFFF00|12|_|'+numberofevents
-        });
-        markers.push(marker);
-        google.maps.event.addListener(marker, 'click', function() {
-            infowindow.setContent(content);
-            infowindow.open(map, marker);
-        });
-        bounds.extend(marker.position);
-    }
+			// To add the marker to the map, call setMap();
+			santamonicamarker.setMap(map);
+		
+			google.maps.event.addListener(labcmarker, 'click', function() {
+				infoWindow.setContent("<div class='text-left infowindow' id='contacts-map-labcpin'><p><h4>Los Angeles Baha'i Center</h4></p><p>5755 Rodeo Road<br/>Los Angeles, CA<br/>90016<br/>Tel: 323.933.8291</p><p><strong>Bookstore</strong><br/>Hours:<br />11am-6pm Tue-Fri<br />11am-3pm Sun<br />Closed Sat & Mon<br/>Tel: 323.933.8291 x109<br/>Web: <a href='http://books.labc.org/' target='_blank'>books.labc.org</a></p><p><strong>Unity Center</strong><br />5753 Rodeo Road<br/>Los Angeles, CA<br/>90016-5013</p></div>");
+				infoWindow.open(map,labcmarker);
+			});
+			google.maps.event.addListener(encinomarker, 'click', function() {
+				infoWindow.setContent("<div class='text-left infowindow' id='contacts-map-encinopin'><p><h4>Encino Baha'i Community Center</h4></p><p>4830 Genesta Ave<br/>Encino, CA<br/>91316<br/>Tel: 818.981.7550</p></div>");
+				infoWindow.open(map,encinomarker);
+			});
+			google.maps.event.addListener(santamonicamarker, 'click', function() {
+				infoWindow.setContent("<div class='text-left infowindow' id='contacts-map-santamonicapin'><p><h4>Santa Monica Baha'i Center</h4></p><p><em>The Santa Monica Baha'i Center is owned and operated by our sister community in Santa Monica. Its contact information is provided here for your convenience.</em></p><p>3102 Colorado Avenue<br/>Santa Monica, CA<br/>90404<br/>Tel: 310.394.7971<br />Web: <a href='http://www.santamonicabahai.org' target='_blank'>www.santamonicabahai.org</a><br />E-mail: <a href='mailto:info@santamonicabahai.org'>info@santamonicabahai.org</a></p></div>");
+				infoWindow.open(map,santamonicamarker);
+			});
+		}
 
-
-    // ======= Arrays of locations that we want to Geocode - The first is combined, the rest are activity specific.========
-
-    <?php foreach($activityTypes as $activityType){ ?>
-        var <?php echo $activityType->getLetterName(); ?>addresses = <?php echo $eventView->getEventJSObject($activityType); ?>;
-        $(function() {
-            $(".<?php echo $activityType->getLetterName(); ?>-filter").click(function() {
-                document.getElementById('<?php echo $activityType->getLetterName(); ?>-filter').checked = true;
-                filterPins(<?php echo $activityType->getLetterName(); ?>addresses);
-            });
-        });
-    <?php } ?>
-    // links to filtering buttons
-
-    function arrayCheck() {
-        <?php foreach($activityTypes as $activityType){ ?>
-            if (!<?php echo $activityType->getLetterName(); ?>addresses) {
-                document.getElementById("<?php echo $activityType->getLetterName(); ?>-filter").disabled = true;
-            }
-        <?php } ?>
-    }
-
-    // ======= Global variable to remind us what to do next
-    var nextAddress = 0;
-
-    // ======= Function to call the next Geocode operation when the reply comes back
-    function theNext() {
-        if (nextAddress < Aaddresses.length) {
-            var locationId = Aaddresses[nextAddress]["id"];
-            var location = Aaddresses[nextAddress]["location"];
-            var type = Aaddresses[nextAddress]["type"];
-            var count = Aaddresses[nextAddress]["count"];
-            var id = locationId+'-'+type;
-
-            setTimeout("getAddress('" + location + "',theNext,'" + id + "'," + count + ")", delay);
-            nextAddress++;
-        } else {
-            // We're done. Show map bounds
-            map.fitBounds(bounds);
-        }
-    }
-
-
-    // ======= Call that function for the first time =======
-
-    google.maps.event.addListener(infowindow, 'domready', function() {
-        $(".popoverex a").popover({
-            placement: 'top',
-            html: true,
-            container: 'body'
-        });
-    });
-
-    theNext();
-
-    // This Javascript is based on code provided by the
-    // Community Church Javascript Team
-    // http://www.bisphamchurch.org.uk/
-    // http://econym.org.uk/gmap/
-    //]]>
-
-    $(function() {
-        $("#activities-activitiesmap").click(function() {
-            $("#activities-activitiesmap").animate({"height" : "80%"}, 500,function(){
-                google.maps.event.trigger(map, 'resize');
-                map.fitBounds(bounds);
-                // map.setCenter(latlng);
-                //  initialize();
-            });
-
-        });
-    });
+		google.maps.event.addDomListener(window, 'load', initialize);
 </script>
+
+
 <script type="text/javascript">
     $(document).ready(function(){
         $(".popoverex a").popover({
