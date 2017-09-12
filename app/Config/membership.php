@@ -7,12 +7,6 @@
  */
 include_once(__DIR__."/../Person.php");
 
-function pr($object){
-    print_r("<pre>");
-    print_r($object);
-    print_r("</pre>");
-}
-
 $raw_memberships = array_map('str_getcsv', file(__DIR__.'/../membership/membership.csv'));
 
 $memberships = [];

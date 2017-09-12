@@ -430,7 +430,7 @@ body {
 	background-color: rgba(255, 255, 255, 0.5)
 }
 #scrollable-flyers{
-    height: 550px;
+    height: 350px;
 }
 .scrolly-flyer{
 	background-color: transparent;
@@ -440,7 +440,7 @@ body {
 }
 
 .scrolly-flyer .flyer-thumbnail{
-	max-height: 540px;
+	height: 340px;
 }
 
 .scrolly-flyer .flyer-link{

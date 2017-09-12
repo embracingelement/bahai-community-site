@@ -2,18 +2,13 @@
     {% if flyers is not empty %}
         <li class="active">
             <a href="#flyers" role="tab" data-toggle="tab" title="Current Flyers">
-                Flyers
+                <span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
             </a>
         </li>
     {% endif %}
     {% for index, tab in tabs %}
        {% include 'tabs/tab.twig' %}
     {% endfor %}
-    <li>
-        <a href="#all-upcoming" role="tab" data-toggle="tab" title="All Upcoming Events Across Neighborhoods">
-            Neighborhoods
-        </a>
-    </li>
 </ul>
 <div id="myTabContent" class="tab-content">
     {% if flyers is not empty %}

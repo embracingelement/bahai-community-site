@@ -4,17 +4,14 @@ use BCS\BahaiCommunitySiteApp;
 use Calendar\Calendar;
 
 require __DIR__.'/../vendor/autoload.php';
-require __DIR__.'/../app/Config/Definitions.php';
+require __DIR__.'/../app/Config/definitions.php';
 
 $app = new BahaiCommunitySiteApp();
 
 $calendarService = $app->getCalendarService();
 $eventView = $app->getEventView();
 $registeredCalendars = $app->getRegisteredCalendars();
-
-$activityTypes = $registeredCalendars->getActivityTypes();
-
-$activityTypes = $calendarService->setNeighborhoods($activityTypes);
+$flyerService = $app->getFlyerService();
 
 $tabs = $registeredCalendars->getTabs();
 
@@ -26,16 +23,26 @@ foreach( $tabs as $tab) {
 
 }
 
-$allUpcomingEvents = [];
-foreach($activityTypes as $activityType){
-    if($activityType->getName() == "All Activities"){
-        foreach($activityType->getNeighborhoods() as $neighborhood){
-            $allUpcomingEvents = array_merge($allUpcomingEvents, $neighborhood->getEvents());
+include_once("../app/Config/membership.php");
+
+function echoAgencyMembershipHTML($people){
+    if(!empty($people)){
+        foreach($people as $person){
+            /** @var Person $person */
+            echo "<p>";
+            echo $person->getName();
+            echo "<br/>";
+            if($person->getFocus()){
+                echo "(".$person->getFocus().")";
+                echo "<br/>";
+            }
+            echo "<small>".$person->getEmail()."</small>";
+            echo "</p>";
         }
     }
 }
 
-$sortedAllEvents = $calendarService->sortEvents($allUpcomingEvents);
+$flyers = $flyerService->getFlyers();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,6 +56,8 @@ $sortedAllEvents = $calendarService->sortEvents($allUpcomingEvents);
     <meta name="author" content="">
 
     <title>Los Angeles Baha'i Community</title>
+
+    <link href="favicon.png" rel="shortcut icon" type="image/x-icon" />
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap_revised.min.css" rel="stylesheet">
@@ -78,6 +87,7 @@ $sortedAllEvents = $calendarService->sortEvents($allUpcomingEvents);
 </head>
 
 <body>
+<?php include_once("analyticstracking.php") ?>
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -91,8 +101,8 @@ $sortedAllEvents = $calendarService->sortEvents($allUpcomingEvents);
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav" style="background: rgba(255,255,255,0.8);">
-                <li class="active"><a href="index.php" id="menu-home">Events</a></li>
-                <li><a href="#communitylist" id="menu-contacts">Mailing List</a></li>
+                <li class="active"><a href="#events" id="menu-home">Events</a></li>
+<!--                <li><a href="#communitylist" id="menu-contacts">Mailing List</a></li>-->
                 <li><a href="#communitycontacts" id="menu-contacts">Contacts</a></li>
                 <li><a href="#communitymap" id="menu-contacts">Map</a></li>
                 <li><a href="http://www.bahai.org" id="menu-bahai-faith" class="bahai-faith" target="_blank">The Baha'i Faith</a></li>
@@ -110,84 +120,225 @@ $sortedAllEvents = $calendarService->sortEvents($allUpcomingEvents);
                     universal peace and universal brotherhood."</h4>
             </div>
         </div></div>
-    <div class="row paddingfifty text-center">
+    <div class="row paddingfifty text-center" id="events">
         <div class="container">
             <div class="rowtitle"><h2>Community Events</h2></div>
             <div class="rowdescription">All events are open to the public and free to attend, unless otherwise noted.</div>
-            <?php echo $eventView->getTabsHTML($tabs, $sortedAllEvents) ?>
+            <?php echo $eventView->getTabsHTML($tabs, $sortedAllEvents, $flyers) ?>
         </div>
     </div>
-    <div class="row darkblue paddingfifty text-center" id="communitylist">
-        <div class="container">
-            <div class="rowtitle"><h2>Community Mailing List</h2></div>
-            <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 text-left rowdescription"><p></p></div>
-        </div>
-    </div>
+<!--    <div class="row darkblue paddingfifty text-center" id="communitylist">-->
+<!--        <div class="container">-->
+<!--            <div class="rowtitle"><h2>Community Mailing List</h2></div>-->
+<!--            <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 text-left rowdescription"><p></p></div>-->
+<!--        </div>-->
+<!--    </div>-->
     <div class="row paddingfifty text-center" id="communitycontacts">
         <div class="container">
             <div class="rowtitle"><h2>Community Contacts</h2></div>
-                <table class="table table-expanded table-no-border text-left">
-                    <tbody class="blue-striped agencieslist">
-                        <tr>
-                            <td>
-                                <strong>Secretariat</strong>
-                                <ul>
-                                    
-                                    <li>correspondence intended for the Spiritual Assembly</li>
-                                    <li>administrative assistance with Baha'i marriages</li>
-                                    <li>Baha'i burial information</li>
-                                </ul>
-                            </td>
-                            <td>
-                                Deborah<br/><small>secretariat@labc.org</small><br/><small>323.933.8291 x104</small>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <strong>Membership Information Services</strong>
-                                <ul>
-                                    <li>Baha'is moving into or out of Los Angeles</li>
-                                    <li>changing mailing address and/or contact information</li>
-                                    <li>email list management</li>
-                                    <li>Baha'i births and deaths</li>
-                                </ul>
-                            </td>
-                            <td>
-                                Nadia<br/><small>mis@labc.org</small><br/><small>323.933.8291 x102</small>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <strong>Center Scheduling and Operations</strong>
-                                <ul>
-                                    <li>Los Angeles Baha'i Center</li>
-                                    <li>Encino Baha'i Community Center</li>
-                                    <li>Unity Center</li>
-                                </ul>
-                            </td>
-                            <td>
-                                Nadia<br/><small>mis@labc.org</small><br/><small>323.933.8291 x102</small>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <strong>Treasurer's Office</strong>
-                                <ul>
-                                    <li>Baha'i Fund</li>
-                                </ul>
-                                Please note:
-                                <ul>
-                                    <li>Only Baha'is may contribute to the Baha'i Fund.</li>
-                                    <li>Donations from groups and individuals who are not Baha'i are neither solicited nor accepted.</li>
-                                </ul>
-                            </td>
-                            <td>
-                                Dena<br/><small>treasurer@labc.org</small><br/><small>323.933.8291 x107</small>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="row text-center">
+                <div class="tabbable">
+                    <div class="container">
+                        <ul class="nav nav-tabs centerthetabs">
+                            <li class="active"><a href="#tab3" data-toggle="tab" id="contacts-communityoffices">Community Offices</a></li>
+                            <li><a href="#tab4" data-toggle="tab" id="contacts-communityagencies">Community Agencies</a></li>
+                            <li><a href="#tab5" data-toggle="tab" id="contacts-communityreps">Community Representatives</a></li>
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab3">
+                            <div class="container">
+                                <table class="table table-expanded table-no-border text-left">
 
+                                    <tbody class="blue-striped agencieslist">
+                                    <tr>
+                                        <td>
+                                            <strong>Secretariat</strong>
+                                            <ul>
+
+                                                <li>correspondence intended for the Spiritual Assembly</li>
+                                                <li>administrative assistance with Baha'i marriages</li>
+                                                <li>Baha'i burial information</li>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            Deborah<br/><small>secretariat@labc.org</small><br/><small>323.933.8291 x104</small>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Membership Information Services</strong>
+                                            <ul>
+                                                <li>Baha'is moving into or out of Los Angeles</li>
+                                                <li>changing mailing address and/or contact information</li>
+                                                <li>email list management</li>
+                                                <li>Baha'i births and deaths</li>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            Nadia<br/><small>mis@labc.org</small><br/><small>323.933.8291 x102</small>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Center Scheduling and Operations</strong>
+                                            <ul>
+                                                <li>Los Angeles Baha'i Center</li>
+                                                <li>Encino Baha'i Community Center</li>
+                                                <li>Unity Center</li>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            Nadia<br/><small>mis@labc.org</small><br/><small>323.933.8291 x102</small>
+                                        </td>
+                                    </tr>									<tr>
+                                        <td>
+                                            <strong>Treasurer's Office</strong>
+                                            <ul>
+                                                <li>Baha'i Fund</li>
+                                            </ul>
+                                            Please note:
+                                            <ul>
+                                                <li>Only Baha'is may contribute to the Baha'i Fund.</li>
+                                                <li>Donations from groups and individuals who are not Baha'i are neither solicited nor accepted.</li>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            Dena<br/><small>treasurer@labc.org</small><br/><small>323.933.8291 x107</small>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab4">
+                            <div class="container">
+                                <table class="table table-expanded table-no-border text-left">
+
+                                    <tbody class="blue-striped agencieslist">
+                                    <tr>
+                                        <td>
+                                            <strong>Office of Public Information</strong>
+                                            <ul>
+                                                <li>Coordinates media requests.</li>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            Randy<br/><small>randy@labc.org</small>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Community Life</strong>
+                                            <ul>
+                                                <li>Increases the vitality of the spiritual and social life of the community.</li>
+                                                <li>Welcomes new Baha'is.</li>
+                                                <li>Organizes neighborhood-wide and area-wide Nineteen Day Feasts.</li>
+                                                <li>Organizes neighborhood-wide Holy Day events for the Ascension of Baha'u'llah, the Ascension of `Abdu'l-Baha, and the 9th Day of Ridvan.</li>
+                                                <li>Organizes area-wide social activities.</li>
+                                                <li>Tends to the needs of the sick and ailing.</li>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <?php echoAgencyMembershipHTML($memberships["Area Community Life Committee"]) ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Teaching</strong>
+                                            <li>Facilitates and oversees gatherings for reflection on, and review of, efforts to transform the spiritual life of Los Angeles neighborhoods.</li>
+                                            <li>Coordinates all devotional gatherings in Los Angeles.</li>
+                                        </td>
+                                        <td>
+                                            <?php echoAgencyMembershipHTML($memberships["Cluster Teaching Committee"]) ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Children's Classes</strong>
+                                            <li>Coordinates all children's classes in Los Angeles.</li>
+                                        </td>
+                                        <td>
+                                            <?php echoAgencyMembershipHTML($memberships["Children's Class Coordinators"]) ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Junior Youth Groups</strong>
+                                            <li>Coordinates all junior youth groups in Los Angeles.</li>
+                                        </td>
+                                        <td>
+                                            <?php echoAgencyMembershipHTML($memberships["Jr. Youth Group Coordinators"]) ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Study Circles</strong>
+                                            <li>Coordinates all Baha'i study circles in Los Angeles.</li>
+                                        </td>
+                                        <td>
+                                            <?php echoAgencyMembershipHTML($memberships["Study Circle Coordinators"]) ?>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="tab5">
+                            <div class="container">
+                                <table class="table table-expanded table-no-border text-left">
+
+                                    <tbody class="blue-striped agencieslist">
+                                    <tr>
+                                        <td>
+                                            <strong>Inter-Religious Council</strong>
+                                        </td>
+                                        <td>
+                                            Randy<br/><small>randy@labc.org</small>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan=2><em>Please contact the Los Angeles Baha'i Center if you wish to contact any of the Representatives listed below.</em></td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>United Nations Association</strong>
+                                        </td>
+                                        <td>
+                                            Barbara
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>USC Religious Directors Association</strong>
+                                        </td>
+                                        <td>
+                                            Tim
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Women's Interfaith Committee</strong>
+                                        </td>
+                                        <td>
+                                            Allison
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>Valley Interfaith Council</strong>
+                                        </td>
+                                        <td>
+                                            Key
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row blue paddingfifty text-center" id="communitymap">
@@ -215,6 +366,12 @@ $sortedAllEvents = $calendarService->sortEvents($allUpcomingEvents);
     });
     $('#right-scroll-upcoming').click(function () {
         $('#scrollable-upcoming').animate({scrollLeft: $('#scrollable-upcoming').scrollLeft()+285}, 250);
+    });
+    $('#left-scroll-flyers').click(function () {
+        $('#scrollable-flyers').animate({scrollLeft: $('#scrollable-flyers').scrollLeft()-285}, 250);
+    });
+    $('#right-scroll-flyers').click(function () {
+        $('#scrollable-flyers').animate({scrollLeft: $('#scrollable-flyers').scrollLeft()+285}, 250);
     });
 
     $('#chevron-to-neighborhood-activities').click(function(){
