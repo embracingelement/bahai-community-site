@@ -47,6 +47,7 @@ $flyers = $flyerService->getFlyers();
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <?php include_once("analyticstracking.php") ?>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -158,7 +159,6 @@ $flyers = $flyerService->getFlyers();
 </head>
 
 <body>
-<?php include_once("analyticstracking.php") ?>
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
