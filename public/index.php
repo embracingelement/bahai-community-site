@@ -173,9 +173,9 @@ $flyers = $flyerService->getFlyers();
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav" style="background: rgba(255,255,255,0.8);">
                 <li class="active"><a href="#events" id="menu-home">Events</a></li>
-<!--                <li><a href="#communitylist" id="menu-contacts">Mailing List</a></li>-->
+				<li><a href="#communitylist" id="menu-list">Mailing List</a></li>
                 <li><a href="#communitycontacts" id="menu-contacts">Contacts</a></li>
-                <li><a href="#communitymap" id="menu-contacts">Map</a></li>
+                <li><a href="#communitymap" id="menu-map">Map</a></li>
                 <li><a href="http://www.bahai.org" id="menu-bahai-faith" class="bahai-faith" target="_blank">The Baha'i Faith</a></li>
             </ul>
         </div><!-- /.navbar-collapse -->
@@ -204,21 +204,21 @@ $flyers = $flyerService->getFlyers();
             <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 text-left rowdescription">
                 <form action="mailinglistsignup.php" id="mailing-list-form" novalidate>
                     <div class="form-group">
-                        <label for="email-form-field">Email address</label>
+                        <label for="email-form-field">Please enter your email address:</label>
                         <input type="email" class="form-control" id="email-form-field" aria-describedby="Enter your email" placeholder="Enter email" required>
-                        <div class="invalid-feedback" id="email-form-error" style="color:red; display: none">
-                            Please provide a valid email.
+                        <div class="invalid-feedback" id="email-form-error" style="font-style: italic; display: none">
+                            <p>Please enter a valid email.</p>
                         </div>
                     </div>
-                    <button
-                            class="g-recaptcha btn btn-primary"
-                            data-sitekey="6LdJXjEUAAAAAD2dSAjs0FKs6bAebBnRuMa9wPSr"
-                            data-callback="checkRecaptcha">
-                        Submit
-                    </button>
+					<button
+							class="g-recaptcha btn btn-default"
+							data-sitekey="6LdJXjEUAAAAAD2dSAjs0FKs6bAebBnRuMa9wPSr"
+							data-callback="checkRecaptcha">
+						Subscribe
+					</button>
                 </form>
-                <h4 style="display: none" id="mailing-list-form-thank-you">Thank you we will get back to you shortly. Please feel free to email us at mis@labc.org with any additional questions.</h4>
-                <h4 style="display: none" id="mailing-list-form-error">We are very sorry, but there has been an error. Please reach out to us at mis@labc.org.</h4>
+                <p style="display: none" id="mailing-list-form-thank-you">Thank you, we will get back to you shortly.<br /><br />If you need further help, please contact Nadia by e-mail at <a href="mailto:mis@labc.org" style="color: white; text-decoration: underline;">mis@labc.org</a>, or by phone at 323.933.8291 x102.</p>
+                <p style="display: none" id="mailing-list-form-error">We're sorry, but there's been an error.<br /><br />Please contact Nadia by e-mail at <a href="mailto:mis@labc.org" style="color: white; text-decoration: underline;">mis@labc.org</a>, or by phone at 323.933.8291 x102.</p>
             </div>
         </div>
     </div>
@@ -229,9 +229,9 @@ $flyers = $flyerService->getFlyers();
                 <div class="tabbable">
                     <div class="container">
                         <ul class="nav nav-tabs centerthetabs">
-                            <li class="active"><a href="#tab3" data-toggle="tab" id="contacts-communityoffices">Community Offices</a></li>
-                            <li><a href="#tab4" data-toggle="tab" id="contacts-communityagencies">Community Agencies</a></li>
-                            <li><a href="#tab5" data-toggle="tab" id="contacts-communityreps">Community Representatives</a></li>
+                            <li class="active"><a href="#tab3" data-toggle="tab" id="contacts-communityoffices">Baha'i Center</a></li>
+                            <li><a href="#tab4" data-toggle="tab" id="contacts-communityagencies">Agencies</a></li>
+                            <li><a href="#tab5" data-toggle="tab" id="contacts-communityreps">Reps</a></li>
                         </ul>
                     </div>
                     <div class="tab-content">
@@ -240,7 +240,25 @@ $flyers = $flyerService->getFlyers();
                                 <table class="table table-expanded table-no-border text-left">
 
                                     <tbody class="blue-striped agencieslist">
-                                    <tr>
+									<tr>
+                                        <td>
+                                            <strong>Bookstore</strong>
+											<ul>
+                                                <li>Web: <a href="http://books.labc.org" target="_blank">books.labc.org</a></li>
+                                            </ul>
+                                            Hours:
+                                            <ul>
+                                                <li>11am-6pm Tue-Fri</li>
+                                                <li>11am-3pm Sun</li>
+												<li>Closed Sat & Mon</li>
+                                            </ul>
+											
+                                        </td>
+                                        <td>
+                                            Judy<br/><small>323.933.8291 x102</small>
+                                        </td>
+                                    </tr>
+                                      <tr>
                                         <td>
                                             <strong>Secretariat</strong>
                                             <ul>
@@ -280,7 +298,8 @@ $flyers = $flyerService->getFlyers();
                                         <td>
                                             Nadia<br/><small>mis@labc.org</small><br/><small>323.933.8291 x102</small>
                                         </td>
-                                    </tr>									<tr>
+                                    </tr>
+									<tr>
                                         <td>
                                             <strong>Treasurer's Office</strong>
                                             <ul>
@@ -296,7 +315,7 @@ $flyers = $flyerService->getFlyers();
                                             Dena<br/><small>treasurer@labc.org</small><br/><small>323.933.8291 x107</small>
                                         </td>
                                     </tr>
-                                    </tbody>
+                                  </tbody>
                                 </table>
                             </div>
                         </div>
@@ -471,12 +490,37 @@ $flyers = $flyerService->getFlyers();
     });
 
     function scrolloverabit() {
-		// $(".scrollable").scrollLeft(4);
-		$('#scrollable-losangeles').animate({scrollLeft: $('#scrollable-losangeles').scrollLeft()+4}, 250);
+		$(".scrollable").scrollLeft(4);
+		// $('#scrollable-losangeles').animate({scrollLeft: $('#scrollable-losangeles').scrollLeft()+4}, 250);
     };
     window.onload = scrolloverabit;
 </script>
-
+<script>
+$('#menu-list').click(function(){
+    $('html, body').animate({
+        scrollTop: $( $(this).attr('href') ).offset().top
+    }, 500);
+    return false;
+});
+$('#menu-contacts').click(function(){
+    $('html, body').animate({
+        scrollTop: $( $(this).attr('href') ).offset().top
+    }, 500);
+    return false;
+});
+$('#menu-map').click(function(){
+    $('html, body').animate({
+        scrollTop: $( $(this).attr('href') ).offset().top
+    }, 500);
+    return false;
+});
+$('#menu-home').click(function(){
+    $('html, body').animate({
+        scrollTop: $( $(this).attr('href') ).offset().top
+    }, 500);
+    return false;
+});
+</script>
 <script>
 		var map;
 
