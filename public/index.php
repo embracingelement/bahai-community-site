@@ -84,6 +84,77 @@ $flyers = $flyerService->getFlyers();
         ga('send', 'pageview');
 
     </script>
+    <script>
+        var recaptchaToken = '';
+        var form;
+        var email;
+
+        function isEmail(email) {
+            var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            return regex.test(email);
+        }
+
+        function validateEmail(){
+
+            if(isEmail(email.val())){
+                $("#email-form-error").hide();
+                return true;
+            }else{
+                $("#email-form-error").show();
+                return false;
+            }
+        }
+
+        $(function() {
+            form = $("#mailing-list-form");
+            email = $("#email-form-field");
+
+            email.blur(function(){
+                console.log('blur');
+
+                validateEmail();
+            }).change(function(){
+                console.log('change');
+
+                validateEmail()
+            });
+
+            form.submit(function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                if(validateEmail()) {
+                    console.log('submitting');
+
+                    var email_address = email.val();
+                    $.ajax({
+                        url: "mailinglistsignup.php",
+                        data: {
+                            "email": email_address,
+                            "g-recaptcha-response": recaptchaToken
+                        },
+                        type: "POST",
+                        success: function (response) {
+                            console.log(response);
+                            $("#mailing-list-form").hide()
+                            if ("success" == response) {
+                                $("#mailing-list-form-thank-you").show();
+                            } else {
+                                $("#mailing-list-form-error").show();
+                            }
+                        }
+                    })
+                }
+            });
+        });
+
+        function checkRecaptcha(token) {
+            recaptchaToken = token;
+            console.log(token);
+            form.submit();
+        }
+    </script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 
 <body>
@@ -127,12 +198,30 @@ $flyers = $flyerService->getFlyers();
             <?php echo $eventView->getTabsHTML($tabs, $sortedAllEvents, $flyers) ?>
         </div>
     </div>
-<!--    <div class="row darkblue paddingfifty text-center" id="communitylist">-->
-<!--        <div class="container">-->
-<!--            <div class="rowtitle"><h2>Community Mailing List</h2></div>-->
-<!--            <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 text-left rowdescription"><p></p></div>-->
-<!--        </div>-->
-<!--    </div>-->
+    <div class="row darkblue paddingfifty text-center" id="communitylist">
+        <div class="container">
+            <div class="rowtitle"><h2>Community Mailing List</h2></div>
+            <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 text-left rowdescription">
+                <form action="mailinglistsignup.php" id="mailing-list-form" novalidate>
+                    <div class="form-group">
+                        <label for="email-form-field">Email address</label>
+                        <input type="email" class="form-control" id="email-form-field" aria-describedby="Enter your email" placeholder="Enter email" required>
+                        <div class="invalid-feedback" id="email-form-error" style="color:red; display: none">
+                            Please provide a valid email.
+                        </div>
+                    </div>
+                    <button
+                            class="g-recaptcha btn btn-primary"
+                            data-sitekey="6LdJXjEUAAAAAD2dSAjs0FKs6bAebBnRuMa9wPSr"
+                            data-callback="checkRecaptcha">
+                        Submit
+                    </button>
+                </form>
+                <h4 style="display: none" id="mailing-list-form-thank-you">Thank you we will get back to you shortly. Please feel free to email us at mis@labc.org with any additional questions.</h4>
+                <h4 style="display: none" id="mailing-list-form-error">We are very sorry, but there has been an error. Please reach out to us at mis@labc.org.</h4>
+            </div>
+        </div>
+    </div>
     <div class="row paddingfifty text-center" id="communitycontacts">
         <div class="container">
             <div class="rowtitle"><h2>Community Contacts</h2></div>
@@ -679,7 +768,6 @@ $flyers = $flyerService->getFlyers();
             placement : 'top'
         });
         $(".tooltipex a").tooltip();
-        arrayCheck();
     });
 </script>
 <!-- Start of StatCounter Code for Default Guide -->
