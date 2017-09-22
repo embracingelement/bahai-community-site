@@ -210,12 +210,14 @@ $flyers = $flyerService->getFlyers();
                             <p>Please enter a valid email.</p>
                         </div>
                     </div>
-					<button
-							class="g-recaptcha btn btn-default"
-							data-sitekey="6LdJXjEUAAAAAD2dSAjs0FKs6bAebBnRuMa9wPSr"
-							data-callback="checkRecaptcha">
-						Subscribe
-					</button>
+					<div class="text-center"> 
+						<button
+								class="g-recaptcha btn btn-default"
+								data-sitekey="6LdJXjEUAAAAAD2dSAjs0FKs6bAebBnRuMa9wPSr"
+								data-callback="checkRecaptcha">
+							Subscribe
+						</button>
+					</div>
                 </form>
                 <p style="display: none" id="mailing-list-form-thank-you">Thank you, we will get back to you shortly.<br /><br />If you need further help, please contact Nadia by e-mail at <a href="mailto:mis@labc.org" style="color: white; text-decoration: underline;">mis@labc.org</a>, or by phone at 323.933.8291 x102.</p>
                 <p style="display: none" id="mailing-list-form-error">We're sorry, but there's been an error.<br /><br />Please contact Nadia by e-mail at <a href="mailto:mis@labc.org" style="color: white; text-decoration: underline;">mis@labc.org</a>, or by phone at 323.933.8291 x102.</p>
@@ -255,7 +257,7 @@ $flyers = $flyerService->getFlyers();
 											
                                         </td>
                                         <td>
-                                            Judy<br/><small>323.933.8291 x102</small>
+                                            Judy<br/><small>323.933.8291 x109</small>
                                         </td>
                                     </tr>
                                       <tr>
@@ -452,7 +454,7 @@ $flyers = $flyerService->getFlyers();
     <div class="row blue paddingfifty text-center" id="communitymap">
         <div class="container">
             <div class="rowtitle"><h2>Community Map</h2></div>
-            <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 text-left rowdescription"><p>The Baha'i Community of Los Angeles owns and operates two Centers - the Los Angeles Baha'i Center and the Encino Baha'i Community Center - as indicated by the pins on the map below.</p><p>Additionally, the community is geographically subdivided into four areas - Ala, Nur, Kamal, and Jamal - as indicated by the shaded areas on the map below.</p><p>Click anywhere on the map for more information.</p></div>
+            <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 text-left rowdescription"><p>The Baha'i Community of Los Angeles owns and operates two Centers - the <strong>Los Angeles Baha'i Center</strong> and the <strong>Encino Baha'i Community Center</strong> - as indicated by the pins on the map below.</p><p>Additionally, the community is geographically subdivided into four areas - <strong>"Ala"</strong>, <strong>"Nur"</strong>, <strong>"Kamal"</strong>, and <strong>"Jamal"</strong> - as indicated by the shaded areas on the map below.</p><p>For your convenience, the <strong>Santa Monica Baha'i Center</strong>, which is owned and operated by the <a href="http://www.santamonicabahai.org" target="_blank" style="color: white; text-decoration: underline;">Baha'i Community of Santa Monica</a>, is also included on the map below, as are the email contacts we have on hand for the Baha'i Communities that lie just outside our city limits.</p><p>Click anywhere on the map for more information.</p></div>
         </div>
     </div>
     <div class="row text-center">
@@ -515,6 +517,12 @@ $('#menu-map').click(function(){
     return false;
 });
 $('#menu-home').click(function(){
+    $('html, body').animate({
+        scrollTop: $( $(this).attr('href') ).offset().top
+    }, 500);
+    return false;
+});
+$('#Contacts').click(function(){
     $('html, body').animate({
         scrollTop: $( $(this).attr('href') ).offset().top
     }, 500);
