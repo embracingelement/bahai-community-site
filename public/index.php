@@ -522,7 +522,7 @@ $('#menu-home').click(function(){
     }, 500);
     return false;
 });
-$('#Contacts').click(function(){
+$( ".tab-pane" ).delegate( ".tab-location-contact-info", "click", function() {
     $('html, body').animate({
         scrollTop: $( $(this).attr('href') ).offset().top
     }, 500);
