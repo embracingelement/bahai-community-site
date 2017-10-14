@@ -1,0 +1,460 @@
+<html>
+	<head>
+		<title>Los Angeles Baha'i Communty - Population Density Map</title>
+		<meta name="viewport" content="initial-scale=1.0">
+		<meta charset="utf-8">
+		<style>
+			/* Always set the map height explicitly to define the size of the div
+			* element that contains the map. */
+			#map {
+			height: 100%;
+			}
+			/* Optional: Makes the sample page fill the window. */
+			html, body {
+			height: 100%;
+			margin: 0;
+			padding: 0;
+			}
+			.legend {
+			font-family: Arial, sans-serif;
+			font-size: 16px;
+			background: #fff;
+			padding: 20px;
+			padding-right: 30px;
+			margin: 10px;
+			border: 2px solid #000;
+			}
+			.legend h4, h2, h3 {
+			margin-top: 0;
+			margin-bottom: 0;
+			}
+			.legend img {
+			vertical-align: middle;
+			}
+			ul {
+			list-style: none;
+			margn: 0;
+			padding: 0;
+			}
+			li {
+			margin-bottom: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="map"></div>
+		<div id="maptitle" class="legend">
+			<h2>Unit Convention Participation<h2>
+			<h3>Zip Codes with 0% Voter Participation</h3>
+			<h4>(2016 Only)</h4>
+		</div>
+<!--		<div id="legend" class="legend">
+			<h4>Legend</h4>
+			<p>Participation<br />
+			   per zip code.</p>
+			<ul>
+				<li class="leg" white-space="nowrap"><span style="color: #ffffff; opacity: 0.7;">&block;</span> 0%</li>
+			</ul>
+		</div>-->
+		<script>
+			var map;
+			var labcLatlng = new google.maps.LatLng(34.021854,-118.371388);		
+			var encinoLatlng = new google.maps.LatLng(34.158773,-118.502741);
+			var santamonicaLatlng = new google.maps.LatLng(34.0346509,-118.4658966);
+
+			function initMap() {
+				var mapOptions = {
+					zoom: 11,
+					center: {
+						lat: 34.052156,
+						lng: -118.378969
+					},
+					panControl: false,
+					zoomControl: true,
+					mapTypeControl: false,
+					scaleControl: false,
+					streetViewControl: false,
+					overviewMapControl: false,
+					scrollwheel: false,
+					disableDoubleClickZoom: true
+				};
+				
+				// Create a simple map.
+				map = new google.maps.Map(document.getElementById('map'), mapOptions);
+				
+				// Load a GeoJSON from the same server as our demo.
+				map.data.loadGeoJson('../maps/zip-code-tabulation-areas-2012.geojson');
+
+				// Load GeoJSON.
+				map.data.loadGeoJson('https://storage.googleapis.com/maps-devrel/google.json');
+
+				infoWindow = new google.maps.InfoWindow({
+					content: "",
+					maxWidth: 400,
+					disableAutoPan: true
+				});
+
+				map.data.setStyle(function(feature) {
+					var name = feature.getProperty('name');
+					var color =
+						name == "62033" ? '#FFFFFF' :
+						name == "90001" ? '#FFFFFF' :
+						name == "90003" ? '#FFFFFF' :
+						name == "90004" ? '#FFFFFF' :
+						name == "90005" ? '#FFFFFF' :
+						name == "90006" ? '#FFFFFF' :
+						name == "90007" ? '#FFFFFF' :
+						name == "90012" ? '#FFFFFF' :
+						name == "90013" ? '#FFFFFF' :
+						name == "90014" ? '#FFFFFF' :
+						name == "90015" ? '#FFFFFF' :
+						name == "90020" ? '#FFFFFF' :
+						name == "90021" ? '#FFFFFF' :
+						name == "90026" ? '#FFFFFF' :
+						name == "90028" ? '#FFFFFF' :
+						name == "90033" ? '#FFFFFF' :
+						name == "90037" ? '#FFFFFF' :
+						name == "90038" ? '#FFFFFF' :
+						name == "90042" ? '#FFFFFF' :
+						name == "90044" ? '#FFFFFF' :
+						name == "90045" ? '#FFFFFF' :
+						name == "90050" ? '#FFFFFF' :
+						name == "90057" ? '#FFFFFF' :
+						name == "90059" ? '#FFFFFF' :
+						name == "90061" ? '#FFFFFF' :
+						name == "90065" ? '#FFFFFF' :
+						name == "90067" ? '#FFFFFF' :
+						name == "90068" ? '#FFFFFF' :
+						name == "90075" ? '#FFFFFF' :
+						name == "90078" ? '#FFFFFF' :
+						name == "90081" ? '#FFFFFF' :
+						name == "90089" ? '#FFFFFF' :
+						name == "90211" ? '#FFFFFF' :
+						name == "90213" ? '#FFFFFF' :
+						name == "90230" ? '#FFFFFF' :
+						name == "90291" ? '#FFFFFF' :
+						name == "90404" ? '#FFFFFF' :
+						name == "90408" ? '#FFFFFF' :
+						name == "90502" ? '#FFFFFF' :
+						name == "90710" ? '#FFFFFF' :
+						name == "90732" ? '#FFFFFF' :
+						name == "90733" ? '#FFFFFF' :
+						name == "90802" ? '#FFFFFF' :
+						name == "91040" ? '#FFFFFF' :
+						name == "91042" ? '#FFFFFF' :
+						name == "91302" ? '#FFFFFF' :
+						name == "91325" ? '#FFFFFF' :
+						name == "91327" ? '#FFFFFF' :
+						name == "91331" ? '#FFFFFF' :
+						name == "91337" ? '#FFFFFF' :
+						name == "91340" ? '#FFFFFF' :
+						name == "91342" ? '#FFFFFF' :
+						name == "91343" ? '#FFFFFF' :
+						name == "91344" ? '#FFFFFF' :
+						name == "91345" ? '#FFFFFF' :
+						name == "91357" ? '#FFFFFF' :
+						name == "91365" ? '#FFFFFF' :
+						name == "91372" ? '#FFFFFF' :
+						name == "91392" ? '#FFFFFF' :
+						name == "91402" ? '#FFFFFF' :
+						name == "91409" ? '#FFFFFF' :
+						name == "91411" ? '#FFFFFF' :
+						name == "91413" ? '#FFFFFF' :
+						name == "91416" ? '#FFFFFF' :
+						name == "91504" ? '#FFFFFF' :
+						name == "91601" ? '#FFFFFF' :
+						name == "91603" ? '#FFFFFF' :
+						name == "91604" ? '#FFFFFF' :
+						name == "91605" ? '#FFFFFF' :
+						name == "91606" ? '#FFFFFF' :
+						name == "91615" ? '#FFFFFF' :
+						name == "91770" ? '#FFFFFF' :
+						name == "92610" ? '#FFFFFF' :
+						name == "93063" ? '#FFFFFF' :
+						name == "93277" ? '#FFFFFF' :
+						'TRANSPARENT';
+					var weight =
+						color == "TRANSPARENT" ? '0' :
+						'2';
+					return {
+						fillColor: color,
+						strokeWeight: weight,
+						fillOpacity: 0.7,
+					};
+
+
+				});
+
+				map.data.addListener('mouseout', function(event) {
+					map.data.revertStyle();
+					infoWindow.close();
+				});
+
+				map.data.addListener('mouseover', function(event) {
+					//show an infowindow on mouseover
+					map.data.revertStyle();
+					map.data.overrideStyle(event.feature, {
+						strokeWeight: 4
+					});
+					var name = event.feature.getProperty("name");
+					var population =
+						name == "90008" ? '1/10 | 10.0%' :
+						name == "90011" ? '1/5 | 20.0%' :
+						name == "90016" ? '5/21 | 23.8%' :
+						name == "90017" ? '3/4 | 75.0%' :
+						name == "90018" ? '1/12 | 8.3%' :
+						name == "90019" ? '1/22 | 4.5%' :
+						name == "90024" ? '10/82 | 12.2%' :
+						name == "90025" ? '12/234 | 5.1%' :
+						name == "90027" ? '1/12 | 8.3%' :
+						name == "90029" ? '2/14 | 14.3%' :
+						name == "90031" ? '1/8 | 12.5%' :
+						name == "90034" ? '9/52 | 17.3%' :
+						name == "90035" ? '2/86 | 2.3%' :
+						name == "90036" ? '5/31 | 16.1%' :
+						name == "90039" ? '1/12 | 8.3%' :
+						name == "90041" ? '1/5 | 20.0%' :
+						name == "90043" ? '3/17 | 17.6%' :
+						name == "90046" ? '4/26 | 15.4%' :
+						name == "90047" ? '1/5 | 20.0%' :
+						name == "90048" ? '1/20 | 5.0%' :
+						name == "90049" ? '7/128 | 5.5%' :
+						name == "90062" ? '11/22 | 50.0%' :
+						name == "90064" ? '10/34 | 29.4%' :
+						name == "90066" ? '1/39 | 2.6%' :
+						name == "90069" ? '1/15 | 6.7%' :
+						name == "90077" ? '6/35 | 17.1%' :
+						name == "90210" ? '5/34 | 14.7%' :
+						name == "90212" ? '1/2 | 50.0%' :
+						name == "90272" ? '6/32 | 18.8%' :
+						name == "90292" ? '2/13 | 15.4%' :
+						name == "90293" ? '1/4 | 25.0%' :
+						name == "90501" ? '1/4 | 25.0%' :
+						name == "90731" ? '1/6 | 16.7%' :
+						name == "91303" ? '3/55 | 5.5%' :
+						name == "91304" ? '12/101 | 11.9%' :
+						name == "91306" ? '8/92 | 8.7%' :
+						name == "91307" ? '5/56 | 8.9%' :
+						name == "91311" ? '2/41 | 4.9%' :
+						name == "91316" ? '8/184 | 4.3%' :
+						name == "91324" ? '3/40 | 7.5%' :
+						name == "91326" ? '6/71 | 8.5%' :
+						name == "91335" ? '11/219 | 5.0%' :
+						name == "91352" ? '2/6 | 33.3%' :
+						name == "91356" ? '5/152 | 3.3%' :
+						name == "91364" ? '2/66 | 3.0%' :
+						name == "91367" ? '3/140 | 2.1%' :
+						name == "91401" ? '5/35 | 14.3%' :
+						name == "91403" ? '2/49 | 4.1%' :
+						name == "91405" ? '2/18 | 11.1%' :
+						name == "91406" ? '2/39 | 5.1%' :
+						name == "91423" ? '4/32 | 12.5%' :
+						name == "91436" ? '5/66 | 7.6%' :
+						name == "91602" ? '1/19 | 5.3%' :
+						name == "91607" ? '1/18 | 5.6%' :
+						name == "62033" ? '0/1 (0.0%)' :
+						name == "90001" ? '0/2 (0.0%)' :
+						name == "90003" ? '0/2 (0.0%)' :
+						name == "90004" ? '0/17 (0.0%)' :
+						name == "90005" ? '0/8 (0.0%)' :
+						name == "90006" ? '0/9 (0.0%)' :
+						name == "90007" ? '0/3 (0.0%)' :
+						name == "90012" ? '0/9 (0.0%)' :
+						name == "90013" ? '0/5 (0.0%)' :
+						name == "90014" ? '0/3 (0.0%)' :
+						name == "90015" ? '0/6 (0.0%)' :
+						name == "90020" ? '0/8 (0.0%)' :
+						name == "90021" ? '0/1 (0.0%)' :
+						name == "90026" ? '0/16 (0.0%)' :
+						name == "90028" ? '0/13 (0.0%)' :
+						name == "90033" ? '0/1 (0.0%)' :
+						name == "90037" ? '0/7 (0.0%)' :
+						name == "90038" ? '0/2 (0.0%)' :
+						name == "90042" ? '0/12 (0.0%)' :
+						name == "90044" ? '0/1 (0.0%)' :
+						name == "90045" ? '0/11 (0.0%)' :
+						name == "90050" ? '0/2 (0.0%)' :
+						name == "90057" ? '0/3 (0.0%)' :
+						name == "90059" ? '0/1 (0.0%)' :
+						name == "90061" ? '0/2 (0.0%)' :
+						name == "90065" ? '0/9 (0.0%)' :
+						name == "90067" ? '0/2 (0.0%)' :
+						name == "90068" ? '0/16 (0.0%)' :
+						name == "90075" ? '0/1 (0.0%)' :
+						name == "90078" ? '0/1 (0.0%)' :
+						name == "90081" ? '0/1 (0.0%)' :
+						name == "90089" ? '0/1 (0.0%)' :
+						name == "90211" ? '0/4 (0.0%)' :
+						name == "90213" ? '0/1 (0.0%)' :
+						name == "90230" ? '0/4 (0.0%)' :
+						name == "90291" ? '0/11 (0.0%)' :
+						name == "90404" ? '0/1 (0.0%)' :
+						name == "90408" ? '0/1 (0.0%)' :
+						name == "90502" ? '0/1 (0.0%)' :
+						name == "90710" ? '0/4 (0.0%)' :
+						name == "90732" ? '0/5 (0.0%)' :
+						name == "90733" ? '0/1 (0.0%)' :
+						name == "90802" ? '0/1 (0.0%)' :
+						name == "91040" ? '0/4 (0.0%)' :
+						name == "91042" ? '0/3 (0.0%)' :
+						name == "91302" ? '0/1 (0.0%)' :
+						name == "91325" ? '0/18 (0.0%)' :
+						name == "91327" ? '0/1 (0.0%)' :
+						name == "91331" ? '0/8 (0.0%)' :
+						name == "91337" ? '0/2 (0.0%)' :
+						name == "91340" ? '0/2 (0.0%)' :
+						name == "91342" ? '0/19 (0.0%)' :
+						name == "91343" ? '0/17 (0.0%)' :
+						name == "91344" ? '0/49 (0.0%)' :
+						name == "91345" ? '0/3 (0.0%)' :
+						name == "91357" ? '0/4 (0.0%)' :
+						name == "91365" ? '0/1 (0.0%)' :
+						name == "91372" ? '0/1 (0.0%)' :
+						name == "91392" ? '0/1 (0.0%)' :
+						name == "91402" ? '0/7 (0.0%)' :
+						name == "91409" ? '0/1 (0.0%)' :
+						name == "91411" ? '0/11 (0.0%)' :
+						name == "91413" ? '0/1 (0.0%)' :
+						name == "91416" ? '0/1 (0.0%)' :
+						name == "91504" ? '0/1 (0.0%)' :
+						name == "91601" ? '0/9 (0.0%)' :
+						name == "91603" ? '0/1 (0.0%)' :
+						name == "91604" ? '0/17 (0.0%)' :
+						name == "91605" ? '0/11 (0.0%)' :
+						name == "91606" ? '0/4 (0.0%)' :
+						name == "91615" ? '0/1 (0.0%)' :
+						name == "91770" ? '0/1 (0.0%)' :
+						name == "92610" ? '0/1 (0.0%)' :
+						name == "93063" ? '0/1 (0.0%)' :
+						name == "93277" ? '0/1 (0.0%)' :
+						"";
+					var windowcontent =
+						population == "" ? "<div class='text-left infowindow'><p><h4>" + event.feature.getProperty("name") + "</h4></p></div>" :
+						population == "1" ? "<div class='text-left infowindow' id='contacts-map-" + event.feature.getProperty("name").replace(" ", "-") + "'><p><h4>" + event.feature.getProperty("name") + "</h4></p><p>There is <b>" + population + "</b> Baha'i living in this zip code.</p></div>" :
+						"<div class='text-left infowindow' id='contacts-map-" + event.feature.getProperty("name").replace(" ", "-") + "'><p><h4>" + event.feature.getProperty("name") + "</h4></p><p><b>" + population + "</b> of the Baha'is living in this zip code voted at the 2016 Unit Convention.</p></div>";
+					infoWindow.setContent(windowcontent);
+					var anchor = new google.maps.MVCObject();
+					anchor.set("position", event.latLng);
+					infoWindow.open(map, anchor);
+				});
+
+				var styles = [{
+					"stylers": [{
+						"hue": "#99CCFF"
+					}, {
+						"saturation": -50
+					}]
+				}, {
+					"featureType": "road",
+					"elementType": "geometry",
+					"stylers": [{
+						"lightness": 100
+					}, {
+						"visibility": "simplified"
+					}]
+				}, {
+					"featureType": "transit",
+					"stylers": [{
+						"visibility": "off"
+					}]
+				}, {
+					"featureType": "poi",
+					"stylers": [{
+						"visibility": "off"
+					}]
+				}, {
+					"featureType": "road",
+					"elementType": "labels.icon",
+					"stylers": [{
+						"visibility": "off"
+					}]
+				}, {
+					"featureType": "road",
+					"elementType": "labels.text",
+					"stylers": [{
+						"visibility": "simplified"
+					}]
+				}, {
+					"featureType": "administrative.neighborhood",
+					"stylers": [{
+						"visibility": "off"
+					}]
+				}, {
+					"featureType": "administrative.land_parcel"
+				}, {
+					"featureType": "landscape.man_made"
+				}];
+
+				map.setOptions({
+					styles: styles
+				});
+				
+				var labcmarker = new google.maps.Marker({
+					position: labcLatlng,
+					map: map,
+					// icon: "http://chart.apis.google.com/chart?chst=d_map_spin&chld=1.25|0|FFFF00|9|_|LA",
+					title:"Los Angeles Baha'i Center"
+				});
+				
+				// To add the marker to the map, call setMap();
+				labcmarker.setMap(map);
+				
+				var encinomarker = new google.maps.Marker({
+					position: encinoLatlng,
+					map: map,
+					// icon: "http://chart.apis.google.com/chart?chst=d_map_spin&chld=1.25|0|FFFF00|9|_|Encino",
+					title:"Encino Baha'i Community Center"
+				});
+
+				// To add the marker to the map, call setMap();
+				encinomarker.setMap(map);
+				
+				var santamonicamarker = new google.maps.Marker({
+					position: santamonicaLatlng,
+					map: map,
+					// icon: "http://chart.apis.google.com/chart?chst=d_map_spin&chld=1.25|0|FFFF00|9|_|Santa|Monica",
+					title:"Santa Monica Baha'i Center"
+				});
+
+				// To add the marker to the map, call setMap();
+				santamonicamarker.setMap(map);
+			
+				google.maps.event.addListener(labcmarker, 'click', function() {
+					infoWindow.setContent("<div class='text-left infowindow' id='contacts-map-labcpin'><p><h4>Los Angeles Baha'i Center</h4></p><p>5755 Rodeo Road<br/>Los Angeles, CA<br/>90016<br/>Tel: 323.933.8291</p><p><strong>Bookstore</strong><br/>Hours:<br />11am-6pm Tue-Fri<br />11am-3pm Sun<br />Closed Sat & Mon<br/>Tel: 323.933.8291 x109<br/>Web: <a href='http://books.labc.org/' target='_blank'>books.labc.org</a></p><p><strong>Unity Center</strong><br />5753 Rodeo Road<br/>Los Angeles, CA<br/>90016-5013</p></div>");
+					infoWindow.open(map,labcmarker);
+				});
+				google.maps.event.addListener(encinomarker, 'click', function() {
+					infoWindow.setContent("<div class='text-left infowindow' id='contacts-map-encinopin'><p><h4>Encino Baha'i Community Center</h4></p><p>4830 Genesta Ave<br/>Encino, CA<br/>91316<br/>Tel: 818.981.7550</p></div>");
+					infoWindow.open(map,encinomarker);
+				});
+				google.maps.event.addListener(santamonicamarker, 'click', function() {
+					infoWindow.setContent("<div class='text-left infowindow' id='contacts-map-santamonicapin'><p><h4>Santa Monica Baha'i Center</h4></p><p><em>The Santa Monica Baha'i Center is owned and operated by our sister community in Santa Monica. Its contact information is provided here for your convenience.</em></p><p>3102 Colorado Avenue<br/>Santa Monica, CA<br/>90404<br/>Tel: 310.394.7971<br />Web: <a href='http://www.santamonicabahai.org' target='_blank'>www.santamonicabahai.org</a><br />E-mail: <a href='mailto:info@santamonicabahai.org'>info@santamonicabahai.org</a></p></div>");
+					infoWindow.open(map,santamonicamarker);
+				});
+			map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById('maptitle'));
+			map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById('legend'));
+			}
+			google.maps.event.addDomListener(window, 'load', initialize);
+		</script>
+		<script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
+
+		<!-- Start of StatCounter Code for Default Guide -->
+		<script type="text/javascript">
+			var sc_project=8795522;
+			var sc_invisible=1;
+			var sc_security="e0303a8a";
+			var scJsHost = (("https:" == document.location.protocol) ?
+			"https://secure." : "http://www.");
+			document.write("<sc"+"ript type='text/javascript' src='" +
+			scJsHost+
+			"statcounter.com/counter/counter.js'></"+"script>");
+		</script>
+
+		<noscript>
+			<div class="statcounter"><a title="web analytics" href="http://statcounter.com/" target="_blank"><img class="statcounter" src="http://c.statcounter.com/8795522/0/e0303a8a/1/" alt="web analytics"></a></div>
+		</noscript>
+
+		<!-- End of StatCounter Code for Default Guide -->
+
+	</body>
+</html>

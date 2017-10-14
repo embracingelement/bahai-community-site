@@ -156,6 +156,7 @@ $flyers = $flyerService->getFlyers();
         }
     </script>
     <script src='https://www.google.com/recaptcha/api.js'></script>
+   
 </head>
 
 <body>
@@ -172,7 +173,8 @@ $flyers = $flyerService->getFlyers();
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav" style="background: rgba(255,255,255,0.8);">
-                <li class="active"><a href="#events" id="menu-home">Events</a></li>
+                <li class="active"><a href="http://www.labahais.org" id="home">Home</a></li>
+                <li><a href="#events" id="menu-home">Events</a></li>
 				<li><a href="#communitylist" id="menu-list">Mailing List</a></li>
                 <li><a href="#communitycontacts" id="menu-contacts">Contacts</a></li>
                 <li><a href="#communitymap" id="menu-map">Map</a></li>
@@ -182,28 +184,19 @@ $flyers = $flyerService->getFlyers();
     </div><!-- /.container-fluid -->
 </nav>
 
-<div class="container-fluid" style="padding: 0;">
-    <div class="row herophoto">
-		<div class="headline">
-            <a href="200year.php" class="bicentenary-events-link">
-                <img src="css/logo11.png" alt="baha'is believe"/>
-            </a>
-        </center>
+
+        <div class="container-fluid">
+    <div class="row herophoto200">
+		<div class="headline"><center><a href="https://oss.ticketmaster.com/aps/uclacto2/EN/buy/details/M172527"><img src="css/logo200.png" alt="baha'is believe"/></a></center>
 		
              
             </div>
         </div></div>
-        <div class="row paddingtwenty text-center">
-        <div class="container" style="padding: 0;">
-            <a href="http://www.bahai.org/"><img src="img/what.jpg" alt="baha'is believe" style="width:100%;height:auto;"></a>
-                       
-        </div>
-    </div>
     <div class="row paddingfifty text-center" id="events">
         <div class="container">
-            <div class="rowtitle"><h2>Community Events</h2></div>
+            <div class="rowtitle"><h2>Events</h2></div>
             <div class="rowdescription">All events are open to the public and free to attend, unless otherwise noted.</div>
-            <?php echo $eventView->getTabsHTML($tabs, $sortedAllEvents, $flyers) ?>
+          
         </div>
     </div>
     <div class="row darkblue paddingfifty text-center" id="communitylist">

@@ -1,0 +1,379 @@
+<html>
+	<head>
+		<title>Los Angeles Baha'i Communty - Population Density Map</title>
+		<meta name="viewport" content="initial-scale=1.0">
+		<meta charset="utf-8">
+		<style>
+			/* Always set the map height explicitly to define the size of the div
+			* element that contains the map. */
+			#map {
+			height: 100%;
+			}
+			/* Optional: Makes the sample page fill the window. */
+			html, body {
+			height: 100%;
+			margin: 0;
+			padding: 0;
+			}
+			.legend {
+			font-family: Arial, sans-serif;
+			font-size: 16px;
+			background: #fff;
+			padding: 20px;
+			padding-right: 30px;
+			margin: 10px;
+			border: 2px solid #000;
+			}
+			.legend h4, h2, h3 {
+			margin-top: 0;
+			margin-bottom: 0;
+			}
+			.legend img {
+			vertical-align: middle;
+			}
+			ul {
+			list-style: none;
+			margn: 0;
+			padding: 0;
+			}
+			li {
+			margin-bottom: 5px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="map"></div>
+		<div id="maptitle" class="legend">
+			<h2>Unit Convention Participation<h2>
+			<h3>Total Actual Voters by Zip Code</h3>
+			<h4>(2016 Only)</h4>
+		</div>
+		<div id="legend" class="legend">
+			<h4>Legend</h4>
+			<p>Baha'is per<br />
+			   zip code.</p>
+			<ul>
+				<li class="leg" white-space="nowrap"><span style="color: #e6e6ff; opacity: 0.7;">&block;</span> 1</li>
+				<li class="leg" white-space="nowrap"><span style="color: #ccccff; opacity: 0.7;">&block;</span> 2-5</li>
+				<li class="leg" white-space="nowrap"><span style="color: #b3b3ff; opacity: 0.7;">&block;</span> 6-9</li>
+				<li class="leg" white-space="nowrap"><span style="color: #9999ff; opacity: 0.7;">&block;</span> 10-14</li>
+				<li class="leg" white-space="nowrap"><span style="color: #8080ff; opacity: 0.7;">&block;</span> 15-19</li>
+				<li class="leg" white-space="nowrap"><span style="color: #6666ff; opacity: 0.7;">&block;</span> 20-29</li>
+				<li class="leg" white-space="nowrap"><span style="color: #4d4dff; opacity: 0.7;">&block;</span> 30-39</li>
+				<li class="leg" white-space="nowrap"><span style="color: #3333ff; opacity: 0.7;">&block;</span> 40-49</li>
+				<li class="leg" white-space="nowrap"><span style="color: #1a1aff; opacity: 0.7;">&block;</span> 50-59</li>
+				<li class="leg" white-space="nowrap"><span style="color: #0000ff; opacity: 0.7;">&block;</span> 60-69</li>
+				<li class="leg" white-space="nowrap"><span style="color: #0000e6; opacity: 0.7;">&block;</span> 70-79</li>
+				<li class="leg" white-space="nowrap"><span style="color: #0000cc; opacity: 0.7;">&block;</span> 80-89</li>
+				<li class="leg" white-space="nowrap"><span style="color: #0000b3; opacity: 0.7;">&block;</span> 90-99</li>
+				<li class="leg" white-space="nowrap"><span style="color: #000099; opacity: 0.7;">&block;</span> 100-149</li>
+				<li class="leg" white-space="nowrap"><span style="color: #000066; opacity: 0.7;">&block;</span> 150-199</li>
+				<li class="leg" white-space="nowrap"><span style="color: #000033; opacity: 0.7;">&block;</span> 200-249</li>
+			</ul>
+		</div>
+		<script>
+			var map;
+			var labcLatlng = new google.maps.LatLng(34.021854,-118.371388);		
+			var encinoLatlng = new google.maps.LatLng(34.158773,-118.502741);
+			var santamonicaLatlng = new google.maps.LatLng(34.0346509,-118.4658966);
+
+			function initMap() {
+				var mapOptions = {
+					zoom: 11,
+					center: {
+						lat: 34.052156,
+						lng: -118.378969
+					},
+					panControl: false,
+					zoomControl: true,
+					mapTypeControl: false,
+					scaleControl: false,
+					streetViewControl: false,
+					overviewMapControl: false,
+					scrollwheel: false,
+					disableDoubleClickZoom: true
+				};
+				
+				// Create a simple map.
+				map = new google.maps.Map(document.getElementById('map'), mapOptions);
+				
+				// Load a GeoJSON from the same server as our demo.
+				map.data.loadGeoJson('../maps/zip-code-tabulation-areas-2012.geojson');
+
+				// Load GeoJSON.
+				map.data.loadGeoJson('https://storage.googleapis.com/maps-devrel/google.json');
+
+				infoWindow = new google.maps.InfoWindow({
+					content: "",
+					maxWidth: 400,
+					disableAutoPan: true
+				});
+
+				map.data.setStyle(function(feature) {
+					var name = feature.getProperty('name');
+					var color =
+						name == "90025" ? '#9999ff' :
+						name == "91304" ? '#9999ff' :
+						name == "90062" ? '#9999ff' :
+						name == "91335" ? '#9999ff' :
+						name == "90024" ? '#9999ff' :
+						name == "90064" ? '#9999ff' :
+						name == "90034" ? '#b3b3ff' :
+						name == "91306" ? '#b3b3ff' :
+						name == "91316" ? '#b3b3ff' :
+						name == "90049" ? '#b3b3ff' :
+						name == "90077" ? '#b3b3ff' :
+						name == "90272" ? '#b3b3ff' :
+						name == "91326" ? '#b3b3ff' :
+						name == "90016" ? '#ccccff' :
+						name == "90036" ? '#ccccff' :
+						name == "90210" ? '#ccccff' :
+						name == "91307" ? '#ccccff' :
+						name == "91356" ? '#ccccff' :
+						name == "91401" ? '#ccccff' :
+						name == "91436" ? '#ccccff' :
+						name == "90046" ? '#ccccff' :
+						name == "91423" ? '#ccccff' :
+						name == "90017" ? '#ccccff' :
+						name == "90043" ? '#ccccff' :
+						name == "91303" ? '#ccccff' :
+						name == "91324" ? '#ccccff' :
+						name == "91367" ? '#ccccff' :
+						name == "90029" ? '#ccccff' :
+						name == "90035" ? '#ccccff' :
+						name == "90292" ? '#ccccff' :
+						name == "91311" ? '#ccccff' :
+						name == "91352" ? '#ccccff' :
+						name == "91364" ? '#ccccff' :
+						name == "91403" ? '#ccccff' :
+						name == "91405" ? '#ccccff' :
+						name == "91406" ? '#ccccff' :
+						name == "90008" ? '#e6e6ff' :
+						name == "90011" ? '#e6e6ff' :
+						name == "90018" ? '#e6e6ff' :
+						name == "90019" ? '#e6e6ff' :
+						name == "90027" ? '#e6e6ff' :
+						name == "90031" ? '#e6e6ff' :
+						name == "90039" ? '#e6e6ff' :
+						name == "90041" ? '#e6e6ff' :
+						name == "90047" ? '#e6e6ff' :
+						name == "90048" ? '#e6e6ff' :
+						name == "90066" ? '#e6e6ff' :
+						name == "90069" ? '#e6e6ff' :
+						name == "90212" ? '#e6e6ff' :
+						name == "90293" ? '#e6e6ff' :
+						name == "90501" ? '#e6e6ff' :
+						name == "90731" ? '#e6e6ff' :
+						name == "91602" ? '#e6e6ff' :
+						name == "91607" ? '#e6e6ff' :
+						'TRANSPARENT';
+					var weight =
+						color == "TRANSPARENT" ? '0' :
+						'2';
+					return {
+						fillColor: color,
+						strokeWeight: weight,
+						fillOpacity: 0.7,
+					};
+
+
+				});
+
+				map.data.addListener('mouseout', function(event) {
+					map.data.revertStyle();
+					infoWindow.close();
+				});
+
+				map.data.addListener('mouseover', function(event) {
+					//show an infowindow on mouseover
+					map.data.revertStyle();
+					map.data.overrideStyle(event.feature, {
+						strokeWeight: 4
+					});
+					var name = event.feature.getProperty("name");
+					var population =
+						name == "90008" ? '1' :
+						name == "90011" ? '1' :
+						name == "90016" ? '5' :
+						name == "90017" ? '3' :
+						name == "90018" ? '1' :
+						name == "90019" ? '1' :
+						name == "90024" ? '10' :
+						name == "90025" ? '12' :
+						name == "90027" ? '1' :
+						name == "90029" ? '2' :
+						name == "90031" ? '1' :
+						name == "90034" ? '9' :
+						name == "90035" ? '2' :
+						name == "90036" ? '5' :
+						name == "90039" ? '1' :
+						name == "90041" ? '1' :
+						name == "90043" ? '3' :
+						name == "90046" ? '4' :
+						name == "90047" ? '1' :
+						name == "90048" ? '1' :
+						name == "90049" ? '7' :
+						name == "90062" ? '11' :
+						name == "90064" ? '10' :
+						name == "90066" ? '1' :
+						name == "90069" ? '1' :
+						name == "90077" ? '6' :
+						name == "90210" ? '5' :
+						name == "90212" ? '1' :
+						name == "90272" ? '6' :
+						name == "90292" ? '2' :
+						name == "90293" ? '1' :
+						name == "90501" ? '1' :
+						name == "90731" ? '1' :
+						name == "91303" ? '3' :
+						name == "91304" ? '12' :
+						name == "91306" ? '8' :
+						name == "91307" ? '5' :
+						name == "91311" ? '2' :
+						name == "91316" ? '8' :
+						name == "91324" ? '3' :
+						name == "91326" ? '6' :
+						name == "91335" ? '11' :
+						name == "91352" ? '2' :
+						name == "91356" ? '5' :
+						name == "91364" ? '2' :
+						name == "91367" ? '3' :
+						name == "91401" ? '5' :
+						name == "91403" ? '2' :
+						name == "91405" ? '2' :
+						name == "91406" ? '2' :
+						name == "91423" ? '4' :
+						name == "91436" ? '5' :
+						name == "91602" ? '1' :
+						name == "91607" ? '1' :
+						"";
+					var windowcontent =
+						population == "" ? "<div class='text-left infowindow'><p><h4>" + event.feature.getProperty("name") + "</h4></p></div>" :
+						population == "1" ? "<div class='text-left infowindow' id='contacts-map-" + event.feature.getProperty("name").replace(" ", "-") + "'><p><h4>" + event.feature.getProperty("name") + "</h4></p><p>There is <b>" + population + "</b> Baha'i living in this zip code.</p></div>" :
+						"<div class='text-left infowindow' id='contacts-map-" + event.feature.getProperty("name").replace(" ", "-") + "'><p><h4>" + event.feature.getProperty("name") + "</h4></p><p>There are <b>" + population + "</b> Baha'is living in this zip code.</p></div>";
+					infoWindow.setContent(windowcontent);
+					var anchor = new google.maps.MVCObject();
+					anchor.set("position", event.latLng);
+					infoWindow.open(map, anchor);
+				});
+
+				var styles = [{
+					"stylers": [{
+						"hue": "#99CCFF"
+					}, {
+						"saturation": -50
+					}]
+				}, {
+					"featureType": "road",
+					"elementType": "geometry",
+					"stylers": [{
+						"lightness": 100
+					}, {
+						"visibility": "simplified"
+					}]
+				}, {
+					"featureType": "transit",
+					"stylers": [{
+						"visibility": "off"
+					}]
+				}, {
+					"featureType": "poi",
+					"stylers": [{
+						"visibility": "off"
+					}]
+				}, {
+					"featureType": "road",
+					"elementType": "labels.icon",
+					"stylers": [{
+						"visibility": "off"
+					}]
+				}, {
+					"featureType": "road",
+					"elementType": "labels.text",
+					"stylers": [{
+						"visibility": "simplified"
+					}]
+				}, {
+					"featureType": "administrative.neighborhood",
+					"stylers": [{
+						"visibility": "off"
+					}]
+				}, {
+					"featureType": "administrative.land_parcel"
+				}, {
+					"featureType": "landscape.man_made"
+				}];
+
+				map.setOptions({
+					styles: styles
+				});
+				
+				var labcmarker = new google.maps.Marker({
+					position: labcLatlng,
+					map: map,
+					// icon: "http://chart.apis.google.com/chart?chst=d_map_spin&chld=1.25|0|FFFF00|9|_|LA",
+					title:"Los Angeles Baha'i Center"
+				});
+				
+				// To add the marker to the map, call setMap();
+				labcmarker.setMap(map);
+				
+				var encinomarker = new google.maps.Marker({
+					position: encinoLatlng,
+					map: map,
+					// icon: "http://chart.apis.google.com/chart?chst=d_map_spin&chld=1.25|0|FFFF00|9|_|Encino",
+					title:"Encino Baha'i Community Center"
+				});
+
+				// To add the marker to the map, call setMap();
+				encinomarker.setMap(map);
+				
+				var santamonicamarker = new google.maps.Marker({
+					position: santamonicaLatlng,
+					map: map,
+					// icon: "http://chart.apis.google.com/chart?chst=d_map_spin&chld=1.25|0|FFFF00|9|_|Santa|Monica",
+					title:"Santa Monica Baha'i Center"
+				});
+
+				// To add the marker to the map, call setMap();
+				santamonicamarker.setMap(map);
+			
+				google.maps.event.addListener(labcmarker, 'click', function() {
+					infoWindow.setContent("<div class='text-left infowindow' id='contacts-map-labcpin'><p><h4>Los Angeles Baha'i Center</h4></p><p>5755 Rodeo Road<br/>Los Angeles, CA<br/>90016<br/>Tel: 323.933.8291</p><p><strong>Bookstore</strong><br/>Hours:<br />11am-6pm Tue-Fri<br />11am-3pm Sun<br />Closed Sat & Mon<br/>Tel: 323.933.8291 x109<br/>Web: <a href='http://books.labc.org/' target='_blank'>books.labc.org</a></p><p><strong>Unity Center</strong><br />5753 Rodeo Road<br/>Los Angeles, CA<br/>90016-5013</p></div>");
+					infoWindow.open(map,labcmarker);
+				});
+				google.maps.event.addListener(encinomarker, 'click', function() {
+					infoWindow.setContent("<div class='text-left infowindow' id='contacts-map-encinopin'><p><h4>Encino Baha'i Community Center</h4></p><p>4830 Genesta Ave<br/>Encino, CA<br/>91316<br/>Tel: 818.981.7550</p></div>");
+					infoWindow.open(map,encinomarker);
+				});
+				google.maps.event.addListener(santamonicamarker, 'click', function() {
+					infoWindow.setContent("<div class='text-left infowindow' id='contacts-map-santamonicapin'><p><h4>Santa Monica Baha'i Center</h4></p><p><em>The Santa Monica Baha'i Center is owned and operated by our sister community in Santa Monica. Its contact information is provided here for your convenience.</em></p><p>3102 Colorado Avenue<br/>Santa Monica, CA<br/>90404<br/>Tel: 310.394.7971<br />Web: <a href='http://www.santamonicabahai.org' target='_blank'>www.santamonicabahai.org</a><br />E-mail: <a href='mailto:info@santamonicabahai.org'>info@santamonicabahai.org</a></p></div>");
+					infoWindow.open(map,santamonicamarker);
+				});
+			map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById('maptitle'));
+			map.controls[google.maps.ControlPosition.LEFT_TOP].push(document.getElementById('legend'));
+			}
+			google.maps.event.addDomListener(window, 'load', initialize);
+		</script>
+		<script src="https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
+
+		<!-- Start of StatCounter Code for Default Guide -->
+		<script type="text/javascript">
+			var sc_project=8795522;
+			var sc_invisible=1;
+			var sc_security="e0303a8a";
+			var scJsHost = (("https:" == document.location.protocol) ?
+			"https://secure." : "http://www.");
+			document.write("<sc"+"ript type='text/javascript' src='" +
+			scJsHost+
+			"statcounter.com/counter/counter.js'></"+"script>");
+		</script>
+
+		<noscript>
+			<div class="statcounter"><a title="web analytics" href="http://statcounter.com/" target="_blank"><img class="statcounter" src="http://c.statcounter.com/8795522/0/e0303a8a/1/" alt="web analytics"></a></div>
+		</noscript>
+
+		<!-- End of StatCounter Code for Default Guide -->
+
+	</body>
+</html>

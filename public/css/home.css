@@ -58,8 +58,19 @@ body {
 }
 
 .herophoto {
-	background: url('herophoto-original.jpg') no-repeat center center;
+	background: url('herophoto-bicentenary.jpg') no-repeat center center;
 	background-size: cover;
+}
+
+.bicentenary-events-link{
+	position: absolute;
+	left: 50%;
+	margin-left: -180px;
+	bottom: -30px;
+}
+
+.bicentenary-events-link img{
+	width: 360px;
 }
 
 .header-image {
@@ -71,7 +82,8 @@ body {
 }
 
 .headline {
-	padding: 175px 0 50px 0;
+	padding: 215px 0 90px 0;
+	position: relative;
 }
 
 .headline h1 {
@@ -475,6 +487,8 @@ body {
 @media (max-width: 640px) {
 
 .headline {padding: 120px 0 40px 0;}
+.bicentenary-events-link{  margin-left: -130px;  bottom: -30px;  }
+.bicentenary-events-link img{  width: 260px;  }
 .headline h1 {font-size: 1.75em;}
 .header-image { background: url(logo60.png) center 18px no-repeat; }
 
@@ -482,6 +496,8 @@ body {
 
 @media (max-width: 404px) {
 .headline {padding: 80px 0 30px 0;}
+.bicentenary-events-link{  margin-left: -95px;  bottom: -20px;  }
+.bicentenary-events-link img{  width: 190px;  }
 .headline h1 {font-size: 1.25em;}
 .headline h4 {font-size: .95em;}
 .header-image { background: url(logo40.png) center 12px no-repeat; }
