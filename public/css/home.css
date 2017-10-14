@@ -62,11 +62,26 @@ body {
 	background-size: cover;
 }
 
+.herophoto200 {
+	background: none;
+}
+
 .bicentenary-events-link{
 	position: absolute;
 	left: 50%;
 	margin-left: -180px;
 	bottom: -30px;
+}
+.bicentenary-ticketmaster-link{
+	position: absolute;
+	width: 100%;
+	bottom: -50px;
+}
+.bicentenary-ticketmaster-link img{
+	margin: 0 auto;
+	display: block;
+	width:40%;
+	max-width: 347px;
 }
 
 .bicentenary-events-link img{
@@ -489,6 +504,7 @@ body {
 .headline {padding: 120px 0 40px 0;}
 .bicentenary-events-link{  margin-left: -130px;  bottom: -30px;  }
 .bicentenary-events-link img{  width: 260px;  }
+.bicentenary-ticketmaster-link{  bottom: -40px;  }
 .headline h1 {font-size: 1.75em;}
 .header-image { background: url(logo60.png) center 18px no-repeat; }
 
@@ -498,6 +514,8 @@ body {
 .headline {padding: 80px 0 30px 0;}
 .bicentenary-events-link{  margin-left: -95px;  bottom: -20px;  }
 .bicentenary-events-link img{  width: 190px;  }
+.bicentenary-ticketmaster-link{  bottom: -30px;  }
+
 .headline h1 {font-size: 1.25em;}
 .headline h4 {font-size: .95em;}
 .header-image { background: url(logo40.png) center 12px no-repeat; }

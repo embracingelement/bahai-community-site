@@ -185,7 +185,7 @@ $flyers = $flyerService->getFlyers();
 <div class="container-fluid" style="padding: 0;">
     <div class="row herophoto">
 		<div class="headline">
-            <a href="200year.php" class="bicentenary-events-link">
+            <a href="https://oss.ticketmaster.com/aps/uclacto2/EN/buy/details/M172527" class="bicentenary-events-link ticketmaster">
                 <img src="css/logo11.png" alt="baha'is believe"/>
             </a>
         </center>
