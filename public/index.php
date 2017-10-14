@@ -195,7 +195,7 @@ $flyers = $flyerService->getFlyers();
         </div></div>
         <div class="row paddingtwenty text-center">
         <div class="container" style="padding: 0;">
-            <a href="http://www.bahai.org/"><img src="img/what.jpg" alt="baha'is believe" style="width:100%;height:auto;"></a>
+            <a href="http://www.bahai.org/"><img src="img/what.jpg" alt="baha'is believe" style="width:100%;height:auto;padding:0 40px"></a>
                        
         </div>
     </div>
