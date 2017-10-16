@@ -1,70 +1,25 @@
-<?php
 
-use BCS\BahaiCommunitySiteApp;
-use Calendar\Calendar;
-
-require __DIR__.'/../vendor/autoload.php';
-require __DIR__.'/../app/Config/definitions.php';
-
-$app = new BahaiCommunitySiteApp();
-
-$calendarService = $app->getCalendarService();
-$eventView = $app->getEventView();
-$registeredCalendars = $app->getRegisteredCalendars();
-$flyerService = $app->getFlyerService();
-
-$tabs = $registeredCalendars->getTabs();
-
-foreach( $tabs as $tab) {
-    foreach($tab->getCalendars() as $calendar){
-        $calendarService->getUpcomingEvents($calendar);
-    }
-    $tab->setEvents($calendarService->mergeCalendarsEvents($tab->getCalendars()));
-
-}
-
-include_once("../app/Config/membership.php");
-
-function echoAgencyMembershipHTML($people){
-    if(!empty($people)){
-        foreach($people as $person){
-            /** @var Person $person */
-            echo "<p>";
-            echo $person->getName();
-            echo "<br/>";
-            if($person->getFocus()){
-                echo "(".$person->getFocus().")";
-                echo "<br/>";
-            }
-            echo "<small>".$person->getEmail()."</small>";
-            echo "</p>";
-        }
-    }
-}
-
-$flyers = $flyerService->getFlyers();
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <?php include_once("analyticstracking.php") ?>
+    <?php include_once("../analyticstracking.php") ?>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="js/bootstrap.js"></script>
+    <script src="../js/bootstrap.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
 
     <title>Los Angeles Baha'i Community</title>
 
-    <link href="favicon.png" rel="shortcut icon" type="image/x-icon" />
+    <link href="../favicon.png" rel="shortcut icon" type="image/x-icon" />
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap_revised.min.css" rel="stylesheet">
+    <link href="../css/bootstrap_revised.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="css/home.css?v17" rel="stylesheet">
+    <link href="../css/home.css?v17" rel="stylesheet">
 
     <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:700,100,400|Roboto:900,100,300,700,400' rel='stylesheet' type='text/css'>
 
@@ -173,11 +128,11 @@ $flyers = $flyerService->getFlyers();
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav" style="background: rgba(255,255,255,0.8);">
-                <li class="active"><a href="http://www.labahais.org" id="home">Home</a></li>
-                <li><a href="#events" id="menu-home">Events</a></li>
-				<li><a href="#communitylist" id="menu-list">Mailing List</a></li>
-                <li><a href="#communitycontacts" id="menu-contacts">Contacts</a></li>
-                <li><a href="#communitymap" id="menu-map">Map</a></li>
+                <li class="active"><a href="/" id="home">Home</a></li>
+                <li><a href="/#events" id="menu-home">Events</a></li>
+				<li><a href="/#communitylist" id="menu-list">Mailing List</a></li>
+                <li><a href="/#communitycontacts" id="menu-contacts">Contacts</a></li>
+                <li><a href="/#communitymap" id="menu-map">Map</a></li>
                 <li><a href="http://www.bahai.org" id="menu-bahai-faith" class="bahai-faith" target="_blank">The Baha'i Faith</a></li>
             </ul>
         </div><!-- /.navbar-collapse -->
@@ -188,23 +143,21 @@ $flyers = $flyerService->getFlyers();
         <div class="container-fluid">
     <div class="row herophoto herophoto200">
         <div style="position: relative">
-            <img src="css/herophoto200.jpg" alt="baha'is believe" style="
+            <img src="../css/herophoto200-correction.jpg" alt="baha'is believe" style="
             width: 110%;
             margin-left: -5%;
+            display:none;
             "/>
-            <a href="https://oss.ticketmaster.com/aps/uclacto2/EN/buy/details/M172527" class="bicentenary-ticketmaster-link ">
-                <img src="css/logo200.png" alt="baha'is believe"/>
-            </a>
-        </div>
-
-		<div class="headline">
 
         </div>
+
         </div></div>
-    <div class="row paddingfifty text-center" id="events">
-        <div class="container">
-            <div class="rowtitle"><h2>Events</h2></div>
-            <div class="rowdescription">There are over 30 event around LA celebrating</div>
+    <div class="row  text-center" id="events">
+        <div class="container" style="padding: 0; width: 100%; position: relative;">
+            <img src="../css/roycehallflyer.jpg" alt="" style="width:100%">
+            <a href="https://oss.ticketmaster.com/aps/uclacto2/EN/buy/details/M172527" class="bicentenary-ticketmaster-link ">
+                <img src="../css/logo200-reserve.png" alt="baha'is believe"/>
+            </a>
           
         </div>
     </div>

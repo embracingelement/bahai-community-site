@@ -75,7 +75,8 @@ body {
 .bicentenary-ticketmaster-link{
 	position: absolute;
 	width: 100%;
-	bottom: -50px;
+	left: 0;
+	top: 65%;
 }
 .bicentenary-ticketmaster-link img{
 	margin: 0 auto;
