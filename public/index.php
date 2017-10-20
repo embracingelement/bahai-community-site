@@ -309,6 +309,10 @@ $flyers = $flyerService->getFlyers();
                                             Nadia<br/><small>mis@labc.org</small><br/><small>323.933.8291 x102</small>
                                         </td>
                                     </tr>
+                                    <?php /**
+                                     * @var $treasuresOfficePerson Person
+                                     */
+                                        $treasuresOfficePerson = $memberships["Treasurer's Office"][0]; ?>
 									<tr>
                                         <td>
                                             <strong>Treasurer's Office</strong>
@@ -322,7 +326,9 @@ $flyers = $flyerService->getFlyers();
                                             </ul>
                                         </td>
                                         <td>
-                                            Dena<br/><small>treasurer@labc.org</small><br/><small>323.933.8291 x107</small>
+                                            <?= $treasuresOfficePerson->getName() ?><br/>
+                                            <small><?= $treasuresOfficePerson->getEmail() ?></small><br/>
+                                            <small><?= $treasuresOfficePerson->getPhone() ?></small>
                                         </td>
                                     </tr>
                                   </tbody>

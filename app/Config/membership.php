@@ -19,11 +19,12 @@ foreach($raw_memberships as $index => $raw_membership){
     $name = $raw_membership[1];
     $email = $raw_membership[2];
     $focus = $raw_membership[3];
+    $phone = $raw_membership[4];
 
     if(!array_key_exists($agency,$memberships)){
         $memberships[$agency] = [];
     }
-    array_push($memberships[$agency], new Person($name, $email, $agency, $focus));
+    array_push($memberships[$agency], new Person($name, $email, $agency, $focus, $phone));
 }
 
 //$membership = array(

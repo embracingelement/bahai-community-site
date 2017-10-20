@@ -16,12 +16,15 @@ class Person
 
     private $focus;
 
-    public function __construct($name, $email, $agency, $focus=null)
+    private $phone;
+
+    public function __construct($name, $email, $agency, $focus=null, $phone=null)
     {
         $this->name = $name;
         $this->email = $email;
         $this->agency = $agency;
         $this->focus = $focus;
+        $this->phone = $phone;
     }
 
     /**
@@ -55,4 +58,22 @@ class Person
     {
         return $this->focus;
     }
+
+    /**
+     * @return null
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * @param null $phone
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+    }
+
+
 }
