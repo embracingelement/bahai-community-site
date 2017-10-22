@@ -65,7 +65,21 @@ body {
 .herophoto200 {
 	background: none;
 }
-
+.bicentenary-videos{
+	background-color: rgba(153, 204, 255, 0.1);
+	padding: 40px 40px 0;
+	margin: 0 auto;
+	overflow: auto;
+	text-align: center;
+}
+.bicentenary-videos .video{
+	display: inline-block;
+	padding-right: 20px;
+	padding-bottom: 40px;
+}
+.bicentenary-videos .video .title{
+	font-weight: 800;
+}
 .bicentenary-events-link{
 	position: absolute;
 	left: 50%;

@@ -182,17 +182,26 @@ $flyers = $flyerService->getFlyers();
     </div><!-- /.container-fluid -->
 </nav>
 
+
 <div class="container-fluid" style="padding: 0;">
     <div class="row herophoto">
 		<div class="headline">
             <a href="/200" class="bicentenary-events-link ticketmaster">
                 <img src="css/logo11.png" alt="baha'is believe"/>
             </a>
-        </center>
-		
-             
-            </div>
-        </div></div>
+        </div>
+    </div>
+</div>
+<div style="" class="bicentenary-videos">
+    <div class="video">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/Ft-P77Q2Ohw?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+        <div class="title">Livestream of the Los Angeles Bicentenary Celebration</div>
+    </div>
+    <div class="video">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/Ku6BmiVbSnc?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+        <div class="title">A message from Eric Garcetti, Mayor of Los Angeles</div>
+    </div>
+</div>
         <div class="row paddingtwenty text-center">
         <div class="container" style="padding: 0;">
             <a href="http://www.bahai.org/"><img src="img/whatnew.jpg" alt="baha'is believe" style="width:100%;height:auto;padding:25px;padding-top:100px;"></a>
