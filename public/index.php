@@ -49,7 +49,7 @@ $flyers = $flyerService->getFlyers();
 <head>
     <?php include_once("analyticstracking.php") ?>
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyCvFFB-0dBzAoHJUZQp8syGAxRJXwXmB-I"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="js/bootstrap.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -184,23 +184,32 @@ $flyers = $flyerService->getFlyers();
 
 
 <div class="container-fluid" style="padding: 0;">
-    <div class="row herophoto">
-		<div class="headline">
-            <a href="/200" class="bicentenary-events-link ticketmaster">
-                <img src="css/logo11.png" alt="baha'is believe"/>
-            </a>
+    <div class="row herophoto bicentenary">
+		<div class="headline bicentenary">
+
         </div>
     </div>
 </div>
 <div style="" class="bicentenary-videos">
     <div class="video">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/Ft-P77Q2Ohw?rel=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
-        <div class="title">Livestream of the Los Angeles Bicentenary Celebration</div>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/6gDBU-8UzEo?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>        <div class="title">Los Angeles Bicentenary Celebration</div>
     </div>
     <div class="video">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/Ku6BmiVbSnc?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
-        <div class="title">A message from Eric Garcetti, Mayor of Los Angeles</div>
+        <a href="img/Congratulations-from-the-LA-Mayors-Office.jpg" target="_blank">
+            <img src="img/Congratulations-from-the-LA-Mayors-Office-sm.jpg" alt="" style="height: 315px;">
+            <div class="title">Congratulations from the LA Mayor's office</div>
+        </a>
     </div>
+    <div class="video">
+        <a href="img/California-Legislature-Resolution.jpg" target="_blank">
+            <img src="img/California-Legislature-Resolution-sm.jpg" alt="" style="height: 315px;">
+            <div class="title">California Legislature Resolution</div>
+        </a>
+    </div>
+<!--    <div class="video">
+<!--        <iframe width="560" height="315" src="https://www.youtube.com/embed/Ku6BmiVbSnc?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
+<!--        <div class="title">A message from Eric Garcetti, Mayor of Los Angeles</div>
+<!--    </div> -->
 </div>
         <div class="row paddingtwenty text-center">
         <div class="container" style="padding: 0;">

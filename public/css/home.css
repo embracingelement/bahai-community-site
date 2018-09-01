@@ -58,6 +58,11 @@ body {
 }
 
 .herophoto {
+	background: url('herophoto-original.jpg') no-repeat center center;
+	background-size: cover;
+}
+
+.herophoto.bicentenary {
 	background: url('herophotonew3200.jpg') no-repeat center center;
 	background-size: cover;
 }
@@ -112,6 +117,10 @@ body {
 }
 
 .headline {
+	padding: 175px 0 50px 0;
+}
+
+.headline.bicentenary {
 	padding: 215px 0 90px 0;
 	position: relative;
 }
