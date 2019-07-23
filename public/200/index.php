@@ -164,14 +164,6 @@
 </div>
 
 <script type="text/javascript">
-    <?php foreach($tabs as $tab){ ?>
-        $('#left-scroll-<?php echo $tab->getHash() ?>').click(function () {
-            $('#scrollable-<?php echo $tab->getHash() ?>').animate({scrollLeft: $('#scrollable-<?php echo $tab->getHash() ?>').scrollLeft()-285}, 250);
-        });
-        $('#right-scroll-<?php echo $tab->getHash() ?>').click(function () {
-            $('#scrollable-<?php echo $tab->getHash() ?>').animate({scrollLeft: $('#scrollable-<?php echo $tab->getHash() ?>').scrollLeft()+285}, 250);
-        });
-    <?php } ?>
     $('#left-scroll-upcoming').click(function () {
         $('#scrollable-upcoming').animate({scrollLeft: $('#scrollable-upcoming').scrollLeft()-285}, 250);
     });

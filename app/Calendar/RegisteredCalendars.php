@@ -35,7 +35,7 @@ class RegisteredCalendars
         $labcTab = new Tab();
         $labcTab
             ->setLocationTitle("LA Baha'i Center")
-            ->setLocation("5755 Rodeo Road, Los Angeles, CA 90016")
+            ->setLocation("5755 Obama Blvd., Los Angeles, CA 90016")
             ->setContact("Nadia")
             ->setTabName("LA")
             ->setCalendars([$tabCalendars['labc'], $tabCalendars['labcFeast']]);
