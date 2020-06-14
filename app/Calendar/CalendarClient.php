@@ -1,6 +1,8 @@
 <?php
 namespace Calendar;
 
+use Google_Client;
+
 /**
  * Created by PhpStorm.
  * User: Admin
@@ -11,7 +13,7 @@ namespace Calendar;
 class CalendarClient {
 
     /**
-     * @var \Google_Client
+     * @var Google_Client
      */
     private $googleClient;
 
@@ -40,25 +42,29 @@ class CalendarClient {
     }
 
     private function setGoogleClient(){
-        $client = new \Google_Client();
+        $client = new Google_Client();
         $client->setApplicationName(APPLICATION_NAME);
         $client->setScopes(SCOPES);
-        $client->setAuthConfigFile(CLIENT_SECRET_FILE);
+        $client->setAuthConfig(CLIENT_SECRET_FILE);
         $client->setAccessType('offline');
+        $client->setPrompt('select_account consent');
 
-        $accessToken = file_get_contents(CREDENTIALS_FILE);
-
-        $client->setAccessToken($accessToken);
-
+        $this->setAccessToken($client);
         $this->refreshAuthToken($client);
 
         $this->googleClient = $client;
     }
 
-    private function refreshAuthToken(\Google_Client $client){
+    private function setAccessToken(Google_Client $client){
+        if (file_exists(CREDENTIALS_FILE)) {
+            $accessToken = json_decode(file_get_contents(CREDENTIALS_FILE), true);
+            $client->setAccessToken($accessToken);
+        }
+    }
+
+    private function refreshAuthToken(Google_Client $client){
         if ($client->isAccessTokenExpired()) {
-            $client->refreshToken($client->getRefreshToken());
-            file_put_contents(CREDENTIALS_FILE, $client->getAccessToken());
+            $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
         }
     }
 

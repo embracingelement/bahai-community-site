@@ -16,8 +16,9 @@ function getClient() {
     $client = new Google_Client();
     $client->setApplicationName(APPLICATION_NAME);
     $client->setScopes(SCOPES);
-    $client->setAuthConfigFile(CLIENT_SECRET_FILE);
+    $client->setAuthConfig(CLIENT_SECRET_FILE);
     $client->setAccessType('offline');
+    $client->setPrompt('select_account consent');
 
     // Load previously authorized credentials from a file.
     $credentialsPath = CREDENTIALS_FILE;
@@ -29,22 +30,21 @@ function getClient() {
     $authCode = trim(fgets(STDIN));
 
     // Exchange authorization code for an access token.
-    $accessToken = $client->authenticate($authCode);
-
-    // Store the credentials to disk.
-    if(!file_exists(dirname($credentialsPath))) {
-        mkdir(dirname($credentialsPath), 0700, true);
-    }
-    file_put_contents($credentialsPath, $accessToken);
-    printf("Credentials saved to %s\n", $credentialsPath);
-
+    $accessToken = $client->fetchAccessTokenWithAuthCode($authCode);
     $client->setAccessToken($accessToken);
 
-    // Refresh the token if it's expired.
-    if ($client->isAccessTokenExpired()) {
-        $client->refreshToken($client->getRefreshToken());
-        file_put_contents($credentialsPath, $client->getAccessToken());
+    // Check to see if there was an error.
+    if (array_key_exists('error', $accessToken)) {
+        throw new Exception(join(', ', $accessToken));
     }
+
+    if (!file_exists(dirname($credentialsPath))) {
+        mkdir(dirname($credentialsPath), 0700, true);
+    }
+    file_put_contents($credentialsPath, json_encode($client->getAccessToken()));
+
+    printf("Credentials saved to %s\n", $credentialsPath);
+
     return $client;
 }
 

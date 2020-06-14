@@ -1,13 +1,12 @@
 {
     "name": "embracingelement/bahai-community-site",
     "require": {
-        "google/apiclient": "^1.1",
+        "google/apiclient": "^2.0",
         "twig/twig": "~1.0",
-        "fastcache/silex-service": "dev-master"
+        "phpfastcache/phpfastcache": "^8.0"
     },
     "require-dev":{
-      "phpunit/phpunit": "^5.0",
-      "phpunit/php-code-coverage": "dev-master#b8436b000263f6d72fbad1d36890e247ce84857e"
+        "phpunit/phpunit": "^9.2"
     },
     "autoload": {
       "psr-4": {"": "app/"}

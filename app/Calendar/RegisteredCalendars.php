@@ -3,7 +3,6 @@
 namespace Calendar;
 
 use ActivityType\ActivityType;
-use Calendar\CalendarService;
 
 class RegisteredCalendars
 {
@@ -26,7 +25,7 @@ class RegisteredCalendars
     {
         $this->calendarService = $calendarService;
         $this->setTabs();
-        $this->setActivityTypes();
+//        $this->setActivityTypes();
     }
 
     function setTabs(){
@@ -40,7 +39,7 @@ class RegisteredCalendars
             ->setTabName("LA")
             ->setCalendars([$tabCalendars['labc'], $tabCalendars['labcFeast']]);
 
-        $encinoTab = new Tab("labc.org_k55hah7gd5ji1jhms75d7b6bh4@group.calendar.google.com");
+        $encinoTab = new Tab(); //labc.org_k55hah7gd5ji1jhms75d7b6bh4@group.calendar.google.com
         $encinoTab
             ->setContact("Nadia")
             ->setLocationTitle("Encino Baha'i Community Center")

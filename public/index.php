@@ -17,6 +17,7 @@ $tabs = $registeredCalendars->getTabs();
 
 foreach( $tabs as $tab) {
     foreach($tab->getCalendars() as $calendar){
+        /** @var $calendar Calendar */
         $calendarService->getUpcomingEvents($calendar);
     }
     $tab->setEvents($calendarService->mergeCalendarsEvents($tab->getCalendars()));
@@ -25,18 +26,18 @@ foreach( $tabs as $tab) {
 
 include_once("../app/Config/membership.php");
 
-function echoAgencyMembershipHTML($people){
-    if(!empty($people)){
-        foreach($people as $person){
+function echoAgencyMembershipHTML($membership, $key){
+    if(isset($membership, $key) && !empty($membership[$key])) {
+        foreach ($membership[$key] as $person) {
             /** @var Person $person */
             echo "<p>";
             echo $person->getName();
             echo "<br/>";
-            if($person->getFocus()){
-                echo "(".$person->getFocus().")";
+            if ($person->getFocus()) {
+                echo "(" . $person->getFocus() . ")";
                 echo "<br/>";
             }
-            echo "<small>".$person->getEmail()."</small>";
+            echo "<small>" . $person->getEmail() . "</small>";
             echo "</p>";
         }
     }
@@ -138,7 +139,7 @@ $flyers = $flyerService->getFlyers();
                         success: function (response) {
                             console.log(response);
                             $("#mailing-list-form").hide()
-                            if ("success" == response) {
+                            if ("success" === response) {
                                 $("#mailing-list-form-thank-you").show();
                             } else {
                                 $("#mailing-list-form-error").show();
@@ -184,36 +185,15 @@ $flyers = $flyerService->getFlyers();
 
 
 <div class="container-fluid" style="padding: 0;">
-    <div class="row herophoto bicentenary">
-		<div class="headline bicentenary">
+    <div class="row herophoto">
+		<div class="headline">
 
         </div>
     </div>
 </div>
-<div style="" class="bicentenary-videos">
-    <div class="video">
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/6gDBU-8UzEo?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>        <div class="title">Los Angeles Bicentenary Celebration</div>
-    </div>
-    <div class="video">
-        <a href="img/Congratulations-from-the-LA-Mayors-Office.jpg" target="_blank">
-            <img src="img/Congratulations-from-the-LA-Mayors-Office-sm.jpg" alt="" style="height: 315px;">
-            <div class="title">Congratulations from the LA Mayor's office</div>
-        </a>
-    </div>
-    <div class="video">
-        <a href="img/California-Legislature-Resolution.jpg" target="_blank">
-            <img src="img/California-Legislature-Resolution-sm.jpg" alt="" style="height: 315px;">
-            <div class="title">California Legislature Resolution</div>
-        </a>
-    </div>
-<!--    <div class="video">
-<!--        <iframe width="560" height="315" src="https://www.youtube.com/embed/Ku6BmiVbSnc?rel=0&amp;controls=0&amp;showinfo=0" frameborder="0" allowfullscreen></iframe>
-<!--        <div class="title">A message from Eric Garcetti, Mayor of Los Angeles</div>
-<!--    </div> -->
-</div>
         <div class="row paddingtwenty text-center">
         <div class="container" style="padding: 0;">
-            <a href="http://www.bahai.org/"><img src="img/whatnew.jpg" alt="baha'is believe" style="width:100%;height:auto;padding:25px;padding-top:100px;"></a>
+            <a href="http://www.bahai.org/"><img src="img/whatnew.jpg" alt="baha'is believe" style="width:100%;height:auto;padding: 100px 25px 25px;"></a>
                        
         </div>
     </div>
@@ -221,7 +201,7 @@ $flyers = $flyerService->getFlyers();
         <div class="container">
             <div class="rowtitle"><h2>Community Events</h2></div>
             <div class="rowdescription">All events are open to the public and free to attend, unless otherwise noted.</div>
-            <?php echo $eventView->getTabsHTML($tabs, $sortedAllEvents, $flyers) ?>
+            <?php echo $eventView->getTabsHTML($tabs, null, $flyers) ?>
         </div>
     </div>
     <div class="row darkblue paddingfifty text-center" id="communitylist">
@@ -382,44 +362,52 @@ $flyers = $flyerService->getFlyers();
                                             </ul>
                                         </td>
                                         <td>
-                                            <?php echoAgencyMembershipHTML($memberships["Area Community Life Committee"]) ?>
+                                            <?php echoAgencyMembershipHTML($memberships, "Area Community Life Committee") ?>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <strong>Teaching</strong>
-                                            <li>Facilitates and oversees gatherings for reflection on, and review of, efforts to transform the spiritual life of Los Angeles neighborhoods.</li>
-                                            <li>Coordinates all devotional gatherings in Los Angeles.</li>
+                                            <ul>
+                                                <li>Facilitates and oversees gatherings for reflection on, and review of, efforts to transform the spiritual life of Los Angeles neighborhoods.</li>
+                                                <li>Coordinates all devotional gatherings in Los Angeles.</li>
+                                            </ul>
                                         </td>
                                         <td>
-                                            <?php echoAgencyMembershipHTML($memberships["Cluster Teaching Committee"]) ?>
+                                            <?php echoAgencyMembershipHTML($memberships, "Cluster Teaching Committee") ?>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <strong>Children's Classes</strong>
-                                            <li>Coordinates all children's classes in Los Angeles.</li>
+                                            <ul>
+                                                <li>Coordinates all children's classes in Los Angeles.</li>
+                                            </ul>
                                         </td>
                                         <td>
-                                            <?php echoAgencyMembershipHTML($memberships["Children's Class Coordinators"]) ?>
+                                            <?php echoAgencyMembershipHTML($memberships, "Children's Class Coordinators") ?>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <strong>Junior Youth Groups</strong>
-                                            <li>Coordinates all junior youth groups in Los Angeles.</li>
+                                            <ul>
+                                                <li>Coordinates all junior youth groups in Los Angeles.</li>
+                                            </ul>
                                         </td>
                                         <td>
-                                            <?php echoAgencyMembershipHTML($memberships["Jr. Youth Group Coordinators"]) ?>
+                                            <?php echoAgencyMembershipHTML($memberships, "Jr. Youth Group Coordinators") ?>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <strong>Study Circles</strong>
-                                            <li>Coordinates all Baha'i study circles in Los Angeles.</li>
+                                            <ul>
+                                                <li>Coordinates all Baha'i study circles in Los Angeles.</li>
+                                            </ul>
                                         </td>
                                         <td>
-                                            <?php echoAgencyMembershipHTML($memberships["Study Circle Coordinators"]) ?>
+                                            <?php echoAgencyMembershipHTML($memberships, "Study Circle Coordinators") ?>
                                         </td>
                                     </tr>
                                 </table>
@@ -503,17 +491,27 @@ $flyers = $flyerService->getFlyers();
             $('#scrollable-<?php echo $tab->getHash() ?>').animate({scrollLeft: $('#scrollable-<?php echo $tab->getHash() ?>').scrollLeft()+285}, 250);
         });
     <?php } ?>
-    $('#left-scroll-upcoming').click(function () {
-        $('#scrollable-upcoming').animate({scrollLeft: $('#scrollable-upcoming').scrollLeft()-285}, 250);
+    let $upcoming = $('#scrollable-upcoming');
+    let $flyers = $('#scrollable-flyers');
+    let $leftScrollFlyersButton = $('#left-scroll-flyers');
+    let $leftScrollUpcomingButton = $('#left-scroll-upcoming');
+    let $rightScrollUpcomingButton = $('#right-scroll-upcoming');
+    let $rightScrollUpcomingFlyers = $('#right-scroll-flyers');
+
+    $leftScrollUpcomingButton.click(function () {
+        $upcoming.animate({scrollLeft: $upcoming.scrollLeft()-285}, 250);
     });
-    $('#right-scroll-upcoming').click(function () {
-        $('#scrollable-upcoming').animate({scrollLeft: $('#scrollable-upcoming').scrollLeft()+285}, 250);
+
+    $rightScrollUpcomingButton.click(function () {
+        $upcoming.animate({scrollLeft: $upcoming.scrollLeft()+285}, 250);
     });
-    $('#left-scroll-flyers').click(function () {
-        $('#scrollable-flyers').animate({scrollLeft: $('#scrollable-flyers').scrollLeft()-285}, 250);
+
+    $leftScrollFlyersButton.click(function () {
+        $flyers.animate({scrollLeft: $flyers.scrollLeft()-285}, 250);
     });
-    $('#right-scroll-flyers').click(function () {
-        $('#scrollable-flyers').animate({scrollLeft: $('#scrollable-flyers').scrollLeft()+285}, 250);
+
+    $rightScrollUpcomingFlyers.click(function () {
+        $flyers.animate({scrollLeft: $flyers.scrollLeft()+285}, 250);
     });
 
     $('#chevron-to-neighborhood-activities').click(function(){
@@ -526,7 +524,7 @@ $flyers = $flyerService->getFlyers();
     function scrolloverabit() {
 		$(".scrollable").scrollLeft(4);
 		// $('#scrollable-losangeles').animate({scrollLeft: $('#scrollable-losangeles').scrollLeft()+4}, 250);
-    };
+    }
     window.onload = scrolloverabit;
 </script>
 <script>

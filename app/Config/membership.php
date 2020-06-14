@@ -26,28 +26,3 @@ foreach($raw_memberships as $index => $raw_membership){
     }
     array_push($memberships[$agency], new Person($name, $email, $agency, $focus, $phone));
 }
-
-//$membership = array(
-//    "Area Community Life Committee" => [],
-//    "Study Circle Coordinators" => [
-//        new Person("Grania McCall" ,"graniamary@gmail.com"),
-//        new Person("Naeema Eckfeld", "naeemaeckfeld@gmail.com"),
-//        new Person( "Rod Mobini", "rodmobini@gmail.com")
-//    ],
-//    "Children’s Class Coordinators" => [
-//        new Person( "Nabil Maghzi", "nabilgm@gmail.com"),
-//        new Person( "Carmel (Saba) Rashidi", "carmel.rashidi@gmail.com")
-//    ],
-//    "Jr. Youth Group Coordinators" => [
-//        new Person( "Shaheen Abkenari", "shaheenabkenari@gmail.com"),
-//        new Person( "Mac Heravian", "mac@labahais.org")
-//    ],
-//    "Cluster Teaching Committee" => array(
-//        "Secretary" => new Person( "Ariana Vajdi", "arianavajdi@gmail.com"),
-//        "‘Alá" => new Person( "Lida Darabi", "lida@labahais.org"),
-//        "Kamál" => new Person( "Ladan Vajdi", "ladan@labahais.org"),
-//        "Jamál" => new Person("Nura Darabi", "Bassnurface@gmail.com"),
-//        "Núr" => new Person( "Negah Behnam", "negahbehnam@sbcglobal.net")
-//    )
-//
-//);

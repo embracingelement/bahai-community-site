@@ -106,7 +106,8 @@ class FlyerService {
 
 
     private function getFlyerDate($filename){
-        $date_array = explode("::",array_pop(explode("/",$filename)));
+        $array = explode("/", $filename);
+        $date_array = explode("::",array_pop($array));
         return !empty($date_array[1]) ? date_parse($date_array[0]) : false;
     }
 

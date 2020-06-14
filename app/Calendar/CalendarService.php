@@ -5,7 +5,7 @@ use Calendar\Event\Event;
 use Google_Service_Calendar;
 use Google_Service_Calendar_CalendarListEntry;
 use Google_Service_Calendar_Event;
-use FastCache\FastCache;
+use Phpfastcache\Helper\Psr16Adapter;
 use Neighborhood\Neighborhood;
 
 /**
@@ -23,7 +23,7 @@ class CalendarService {
     function __construct(CalendarClient $client){
         $this->client = $client;
         $this->googleService = new Google_Service_Calendar($client->getGoogleClient());
-        $this->cache = FastCache::file(strtotime('+10 minute'));
+        $this->cache = new Psr16Adapter('Files');
     }
 
     /**
@@ -134,7 +134,7 @@ class CalendarService {
     }
 
     function getUpcomingEvents(Calendar &$calendar, $options = array()){
-        $events = $this->cache->get($calendar->getId());
+        $events = $this->cache->get($this->getCalenderCacheId($calendar));
 
         if(is_null($events) || CACHE_BREAK_OVERRIDE) {
 
@@ -164,12 +164,16 @@ class CalendarService {
 
             $events = $this->sortByFeatured($events);
 
-            $this->cache->set($calendar->getId(), $events);
+            $this->cache->set($this->getCalenderCacheId($calendar), $events, 600);
         }
 
         $calendar->setEvents($events);
 
         return $events;
+    }
+
+    private function getCalenderCacheId(Calendar $calendar) {
+        return str_replace(["{","}","(",")","/","\\","@",":"], "_", $calendar->getId());;
     }
 
     /**
