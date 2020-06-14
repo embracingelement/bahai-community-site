@@ -65,6 +65,7 @@ class CalendarClient {
     private function refreshAuthToken(Google_Client $client){
         if ($client->isAccessTokenExpired()) {
             $client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
+            file_put_contents(CREDENTIALS_FILE, json_encode($client->getAccessToken()));
         }
     }
 
