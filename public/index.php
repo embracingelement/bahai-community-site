@@ -474,7 +474,7 @@ $flyers = $flyerService->getFlyers();
     <div class="row blue paddingfifty text-center" id="communitymap">
         <div class="container">
             <div class="rowtitle"><h2>Community Map</h2></div>
-            <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 text-left rowdescription"><p>The Baha'i Community of Los Angeles owns and operates two Centers - the <strong>Los Angeles Baha'i Center</strong> and the <strong>Encino Baha'i Community Center</strong> - as indicated by the pins on the map below.</p><p>Additionally, the community is geographically subdivided into four areas - <strong>"Ala"</strong>, <strong>"Nur"</strong>, <strong>"Kamal"</strong>, and <strong>"Jamal"</strong> - as indicated by the shaded areas on the map below.</p><p>For your convenience, the <strong>Santa Monica Baha'i Center</strong>, which is owned and operated by the <a href="http://www.santamonicabahai.org" target="_blank" style="color: white; text-decoration: underline;">Baha'i Community of Santa Monica</a>, is also included on the map below, as are the email contacts we have on hand for the Baha'i Communities that lie just outside our city limits.</p><p>Click anywhere on the map for more information.</p></div>
+            <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 text-left rowdescription"><p>The Baha'i Community of Los Angeles owns and operates two Centers - the <strong>Los Angeles Baha'i Center</strong> and the <strong>Encino Baha'i Community Center</strong> - as indicated by the pins on the map below.</p><p>Additionally, the community is geographically subdivided into five areas - <strong>"Ala"</strong>, <strong>"Nur"</strong>, <strong>"Kamal"</strong>, <strong>"Jalal"</strong>, and <strong>"Jamal"</strong> - as indicated by the shaded areas on the map below.</p><p>For your convenience, the <strong>Santa Monica Baha'i Center</strong>, which is owned and operated by the <a href="http://www.santamonicabahai.org" target="_blank" style="color: white; text-decoration: underline;">Baha'i Community of Santa Monica</a>, is also included on the map below, as are the email contacts we have on hand for the Baha'i Communities that lie just outside our city limits.</p><p>Click anywhere on the map for more information.</p></div>
         </div>
     </div>
     <div class="row text-center">
@@ -588,7 +588,8 @@ $( ".tab-pane" ).delegate( ".tab-location-contact-info", "click", function() {
 
 
 		    // Load a GeoJSON from the same server as our demo.
-		    map.data.loadGeoJson('maps/apc-combined.json');
+		    // map.data.loadGeoJson('maps/apc-combined.json');
+		    map.data.loadGeoJson('maps/areas.geojson');
 			map.data.loadGeoJson('maps/el-segundo-la-county-neighborhood-current.geojson');
 			// map.data.loadGeoJson('maps/aminle-la-county-neighborhood-current.geojson');
 			map.data.loadGeoJson('maps/hidden-hills-la-county-neighborhood-current.geojson');
@@ -625,19 +626,94 @@ $( ".tab-pane" ).delegate( ".tab-location-contact-info", "click", function() {
 				maxWidth: 400
 		    });
 
+		    var areas = {
+                "Ala" : {
+                    "fillColor": '#99CC66',
+                    "mouseOverFillColor": '#FFFF00'
+                },
+                "Kamal" : {
+                    "fillColor": '#336600',
+                    "mouseOverFillColor": '#FFFF00'
+                },
+                "Nur" : {
+                    "fillColor": '#6699CC',
+                    "mouseOverFillColor": '#FFFF00'
+                },
+                "Jalal" : {
+                    "fillColor": '#003366',
+                    "mouseOverFillColor": '#FFFF00'
+                },
+                "Jamal" : {
+                    "fillColor": '#333333',
+                    "mouseOverFillColor": '#FFFF00'
+                }
+            };
+
+		    function getAreaValueOrDefault(feature, key, valueDefault){
+                var areaName = feature.getProperty('APC');
+
+		        if(areas[areaName] && areas[areaName][key])
+		            return areas[areaName][key];
+		        else
+		            return valueDefault;
+            }
+
+            var memberships=<?php echo json_encode($memberships) ?>
+
+            function getPersonForActivity(area, activity){
+                if(memberships[activity]) {
+                    var personForArea = memberships[activity].filter(person => person.focus === area)[0]
+                    var firstPerson = memberships[activity][0];
+
+                    return personForArea ? personForArea : firstPerson;
+                }else{
+                    return {};
+                }
+            }
+
+            var activites = [
+                {
+                    name: "Children's Classes",
+                    coordinatorGroup: "Children's Class Coordinators"
+                },
+                {
+                    name: "Junior Youth Groups",
+                    coordinatorGroup: "Jr. Youth Group Coordinators"
+                },
+                {
+                    name: "Study Circles",
+                    coordinatorGroup: "Study Circle Coordinators"
+                },
+                {
+                    name: "Devotional Gatherings",
+                    coordinatorGroup: "Cluster Teaching Committee"
+                }
+            ];
+
+            function getActivitiesHTML(feature){
+                var areaName = feature.getProperty('APC');
+
+		        var html = "<table class='table'>";
+		        html += "<tbody class='blue-striped' id='contacts-map-"+areaName+"-coordinators'>";
+
+		        activites.forEach(activity => {
+                    var person = getPersonForActivity(areaName, activity.coordinatorGroup);
+
+                    if(person.name){
+                        html += "<tr><td>"+activity.name+"</td><td><a target='_blank' href='mailto:"+person.email+"'>"+person.name+"</a></td></tr>";
+                    }
+                })
+
+		        html += "</tbody></table>";
+
+		        return html;
+            }
+
 		    map.data.setStyle(function(feature) {
-		        var APC = feature.getProperty('APC');
-		        var color = APC == "North Valley" ? '#99CC66' :
-		            APC == "South Valley" ? '#336600' :
-		            APC == "West Metro" ? '#6699CC' :
-		            APC == "East Metro" ? '#003366' :
-		            '#FFFFFF';
-		        return {
-		            fillColor: color,
+                return {
+		            fillColor: getAreaValueOrDefault(feature, "fillColor", '#FFFFFF'),
 		            strokeWeight: 0,
 		        };
-
-
 		    });
 
 		    // Set mouseover event for each feature.
@@ -645,16 +721,10 @@ $( ".tab-pane" ).delegate( ".tab-location-contact-info", "click", function() {
 		    // Call revertStyle() to remove all overrides. This will use the style rules
 		    // defined in the function passed to setStyle()
 		    map.data.addListener('mouseover', function(event) {
-		        var APC = event.feature.getProperty('APC');
-		        var color = APC == "North Valley" ? '#FFFF00' :
-		            APC == "South Valley" ? '#FFFF00' :
-		            APC == "West Metro" ? '#FFFF00' :
-		            APC == "East Metro" ? '#FFFF00' :
-		            '#FFFF99';
 		        map.data.revertStyle();
 		        map.data.overrideStyle(event.feature, {
-		            fillColor: color,
-		            strokeWeight: 4
+		            fillColor: getAreaValueOrDefault(event.feature, "mouseOverFillColor", '#FFFF99'),
+		            strokeWeight: 0
 		        });
 		    });
 
@@ -664,78 +734,34 @@ $( ".tab-pane" ).delegate( ".tab-location-contact-info", "click", function() {
 
 		    map.data.addListener('click', function(event) {
 		        //show an infowindow on click
-				if (event.feature.getProperty("APC") == undefined) {
+				if (event.feature.getProperty("APC") === undefined) {
 					var cityname = event.feature.getProperty("name");
-					var cityemail = cityname == "Santa Monica" ? "info@santamonicabahai.org" :
-						cityname == "Beverly Hills" ? "payam@beverlyhillsbahai.org" :
-						cityname == "Culver City" ? "lsaculvercity@gmail.com" :
-						cityname == "Inglewood" ? "inglewoodlsa@gmail.com" :
-						cityname == "Carson" ? "carsoncalsa@gmail.com" :
-						cityname == "Long Beach" ? "longbeachlsa@gmail.com" :
-						cityname == "Calabasas" ? "calabasasbahaisecretary@gmail.com" :
-						cityname == "Monterey Park" ? "bahaisofmpark@gmail.com" :
-						cityname == "Burbank" ? "burbankbahais@gmail.com" :
-						cityname == "Aminle" ? "aminlelsa@gmail.com" :
-						cityname == "Pasadena" ? "lsa@pasadenabahai.org" :
-						cityname == "Rancho Palos Verdes" ? "ranchopalosverdesbahais@yahoo.com" :
+					var cityemail = cityname === "Santa Monica" ? "info@santamonicabahai.org" :
+						cityname === "Beverly Hills" ? "payam@beverlyhillsbahai.org" :
+						cityname === "Culver City" ? "lsaculvercity@gmail.com" :
+						cityname === "Inglewood" ? "inglewoodlsa@gmail.com" :
+						cityname === "Carson" ? "carsoncalsa@gmail.com" :
+						cityname === "Long Beach" ? "longbeachlsa@gmail.com" :
+						cityname === "Calabasas" ? "calabasasbahaisecretary@gmail.com" :
+						cityname === "Monterey Park" ? "bahaisofmpark@gmail.com" :
+						cityname === "Burbank" ? "burbankbahais@gmail.com" :
+						cityname === "Aminle" ? "aminlelsa@gmail.com" :
+						cityname === "Pasadena" ? "lsa@pasadenabahai.org" :
+						cityname === "Rancho Palos Verdes" ? "ranchopalosverdesbahais@yahoo.com" :
 						"";
 					
 					var citycontact = "";
 					
-					if (cityemail != "") {
+					if (cityemail !== "") {
 						citycontact = "<p>For more information on the Baha'i Community of " + event.feature.getProperty("name") + ", please send an e-mail to <a id='contacts-map-" + event.feature.getProperty("name") + "-email' target='_blank' href='mailto:" + cityemail + "'>" + cityemail + "</a>.</p>";
 					}
 				
 					infoWindow.setContent("<div class='text-left infowindow' id='contacts-map-" + event.feature.getProperty("name").replace(" ", "-") + "'><p><h4>" + event.feature.getProperty("name") + "</h4></p><p>For practical purposes, Baha'i communities are organized by city boundary lines, and " + event.feature.getProperty("name") + " is an incorporated stand-alone city adjacent to, but outside of, the City of Los Angeles.</p>" + citycontact + "</div>");
 				}
 		        else {
-					var areaname = event.feature.getProperty("APC");
-					var areacontacts = areaname == "East Metro" ?
-																"<table class='table'>" +
-																"<tbody class='blue-striped' id='contacts-map-eastla-coordinators'>" +
-																"<tr><td>Children's Classes</td><td><a target='_blank' href='mailto:touba@labahais.org'>Touba</a></td></tr>" +
-																"<tr><td>Junior Youth Groups</td><td><a target='_blank' href='mailto:mac@labahais.org'>Mac</a></td></tr>" + 
-																"<tr><td>Study Circles</td><td><a target='_blank' href='mailto:naveed@labahais.org'>Naveed</a></td></tr>" + 
-																"<tr><td>Devotional Gatherings</td><td><a target='_blank' href='mailto:amin@labahais.org'>Amin</a></td></tr>" + 
-																"</tbody></table>" :
-						areaname == "West Metro" ?
-																"<table class='table'>" +
-																"<tbody class='blue-striped' id='contacts-map-westla-coordinators'>" +
-																"<tr><td>Children's Classes</td><td><a target='_blank' href='mailto:hodad@labahais.org'>Hoda</a></td></tr>" +
-																"<tr><td>Junior Youth Groups</td><td><a target='_blank' href='mailto:roya@labahais.org'>Roya</a></td></tr>" + 
-																"<tr><td>Study Circles</td><td><a target='_blank' href='mailto:kalim@labahais.org'>Kalim</a></td></tr>" + 
-																"<tr><td>Devotional Gatherings</td><td><a target='_blank' href='mailto:ladan@labahais.org'>Ladan</a></td></tr>" + 
-																"</tbody></table>" :
-						areaname == "North Valley" ?
-																"<table class='table'>" +
-																"<tbody class='blue-striped' id='contacts-map-northvalley-coordinators'>" +
-																"<tr><td>Children's Classes</td><td><a target='_blank' href='mailto:mandana@labahais.org'>Mandana</a></td></tr>" +
-																"<tr><td>Junior Youth Groups</td><td></td></tr>" + 
-																"<tr><td>Study Circles</td><td><a target='_blank' href='mailto:mona@labahais.org'>Mona</a></td></tr>" + 
-																"<tr><td>Devotional Gatherings</td><td><a target='_blank' href='mailto:lida@labahais.org'>Lida</a></td></tr>" + 
-																"</tbody></table>" :
-						areaname == "South Valley" ?
-																"<table class='table'>" +
-																"<tbody class='blue-striped' id='contacts-map-southvalley-coordinators'>" +
-																"<tr><td>Children's Classes</td><td><a target='_blank' href='mailto:mandana@labahais.org'>Mandana</a></td></tr>" +
-																"<tr><td>Junior Youth Groups</td><td><a target='_blank' href='mailto:chad@labahais.org'>Chad</a></td></tr>" + 
-																"<tr><td>Study Circles</td><td><a target='_blank' href='mailto:dominic@labahais.org'>Dominic</a></td></tr>" + 
-																"<tr><td>Devotional Gatherings</td><td><a target='_blank' href='mailto:divi@labahais.org'>Divi</a></td></tr>" + 
-																"</tbody></table>" :
+                    var activitiesHTML = getActivitiesHTML(event.feature);
 
-						"";
-					
-					var feastcontact = areaname == "East Metro" ? "Touba" :
-						areaname == "West Metro" ? "Talisa" :
-						areaname == "North Valley" ? "Erfan" :
-						areaname == "South Valley" ? "Nika" :
-						"";
-					
-					if (feastcontact != "") {
-						// feastcontact = "<p>If you're a Baha'i living in this area and want more information about area and neighborhood Nineteen Day Feasts, please contact " + feastcontact + " at <a target='_blank' id='contacts-map-" + feastcontact.toLowerCase() + "@labahais.org' href='mailto:" + feastcontact.toLowerCase() + "@labahais.org'>" + feastcontact.toLowerCase() + "@labahais.org</a>.</p>";
-					}
-				
-					infoWindow.setContent("<div class='text-left infowindow' id='contacts-map-" + event.feature.getProperty("APC").replace(" ", "-") + "'><p><h4>Los Angeles - \"" + event.feature.getProperty("APC").replace("East Metro", "Jamal").replace("West Metro", "Kamal").replace("North Valley", "Ala").replace("South Valley", "Nur") + "\" Area<br /><small>" + event.feature.getProperty("NAME_ALF") + "</small></h4></p><p>Baha'is are working to transform the spiritual life of Los Angeles through children's classes, junior youth groups, study circles, and devotional gatherings.</p>To get involved with one of these activities in the \"" + event.feature.getProperty("APC").replace("East Metro", "Jamal").replace("West Metro", "Kamal").replace("North Valley", "Ala").replace("South Valley", "Nur") + "\" area of Los Angeles, please contact Nadia at <a href='mailto:nadia@labahais.org'>nadia@labahais.org</a>.</p></div>"); //+ event.feature.getProperty("APC") + " coordinator:</p>" + areacontacts + feastcontact + "</div>");
+					infoWindow.setContent("<div class='text-left infowindow' id='contacts-map-" + event.feature.getProperty("APC").replace(" ", "-") + "'><p><h4>Los Angeles - \"" + event.feature.getProperty("APC") + "\" Area<br /><small>" + event.feature.getProperty("NAME_ALF") + "</small></h4></p><p>Baha'is are working to transform the spiritual life of Los Angeles through children's classes, junior youth groups, study circles, and devotional gatherings.</p>To get involved with one of these activities in the \"" + event.feature.getProperty("APC") + "\" area of Los Angeles, please contact a corresponding coordinator</p>"+activitiesHTML+"</div>");
 				}
 		        var anchor = new google.maps.MVCObject();
 		        anchor.set("position", event.latLng);

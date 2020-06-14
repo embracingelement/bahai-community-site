@@ -8,15 +8,15 @@
 
 class Person
 {
-    private $name;
+    public $name;
 
-    private $email;
+    public $email;
 
-    private $agency;
+    public $agency;
 
-    private $focus;
+    public $focus;
 
-    private $phone;
+    public $phone;
 
     public function __construct($name, $email, $agency, $focus=null, $phone=null)
     {

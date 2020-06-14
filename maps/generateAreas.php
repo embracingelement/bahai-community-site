@@ -1,4 +1,5 @@
 <?php
+ini_set("memory_limit","16G");
 
 class FeatureCollection {
     public String $type = "FeatureCollection";
@@ -31,7 +32,9 @@ class Feature {
 }
 
 class FeatureProperties {
-    public String $APY;
+    public String $APC;
+    public string $name;
+    public string $NAME_ALF = "";
 }
 
 class FeatureGeometry {
@@ -43,7 +46,7 @@ class FeatureGeometry {
      */
     public function __construct()
     {
-        $this->type = "Polygon";
+        $this->type = "MultiPolygon";
         $this->coordinates = [];
     }
 }
@@ -68,7 +71,7 @@ class FeatureCollectionFactory {
         $featuresByZipCode = [];
 
         foreach($zipCodes["features"] as $feature) {
-            $featuresByZipCode[$feature["properties"]["name"]] = $feature;
+            $featuresByZipCode[$feature["attributes"]["ZIP"]] = $feature;
         }
 
         return $featuresByZipCode;
@@ -93,11 +96,12 @@ class FeatureCollectionFactory {
     {
         $feature = new Feature();
 
-        $feature->properties->APY = $area;
+        $feature->properties->APC = $area;
+        $feature->properties->name = $area;
 
         foreach($zipCodes as $zipCode) {
             if(isset($zipCodeFeatures[$zipCode])) {
-                $zipCoordinates = $zipCodeFeatures[$zipCode]["geometry"]["coordinates"];
+                $zipCoordinates = $zipCodeFeatures[$zipCode]["geometry"]["rings"];
 
                 array_push($feature->geometry->coordinates, $zipCoordinates);
             }
@@ -108,10 +112,10 @@ class FeatureCollectionFactory {
 }
 
 $areas = json_decode(file_get_contents("areasToZipCodes.json"), true);
-$zipCodes = json_decode(file_get_contents("zip-code-tabulation-areas-2012.geojson"), true);
+$zipCodes = json_decode(file_get_contents("los-angeles-county-zip-codes.json"), true);
 
 $featureCollectionFactory = new FeatureCollectionFactory();
 
 $featureCollection = $featureCollectionFactory->createFeatureCollectionFromZipCodes($areas, $zipCodes);
 
-file_put_contents("areas.json", json_encode($featureCollection, JSON_PRETTY_PRINT));
+file_put_contents("../public/maps/areas.geojson", json_encode($featureCollection, JSON_PRETTY_PRINT));
