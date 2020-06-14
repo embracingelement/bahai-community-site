@@ -96,10 +96,11 @@ class FeatureCollectionFactory {
         $feature->properties->APY = $area;
 
         foreach($zipCodes as $zipCode) {
-            print_r($zipCodeFeatures[$zipCode]["geometry"]["coordinates"][0][0][0]);
-            $zipCoordinates = $zipCodeFeatures[$zipCode]["geometry"]["coordinates"];
+            if(isset($zipCodeFeatures[$zipCode])) {
+                $zipCoordinates = $zipCodeFeatures[$zipCode]["geometry"]["coordinates"];
 
-            array_push($feature->geometry->coordinates, $zipCoordinates);
+                array_push($feature->geometry->coordinates, $zipCoordinates);
+            }
         }
 
         return $feature;
@@ -113,4 +114,4 @@ $featureCollectionFactory = new FeatureCollectionFactory();
 
 $featureCollection = $featureCollectionFactory->createFeatureCollectionFromZipCodes($areas, $zipCodes);
 
-file_put_contents("areas.json", json_encode($featureCollection));
+file_put_contents("areas.json", json_encode($featureCollection, JSON_PRETTY_PRINT));
