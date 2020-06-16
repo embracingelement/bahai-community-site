@@ -112,7 +112,7 @@ class FeatureCollectionFactory {
 }
 
 $areas = json_decode(file_get_contents("areasToZipCodes.json"), true);
-$zipCodes = json_decode(file_get_contents("los-angeles-county-zip-codes.json"), true);
+$zipCodes = json_decode(file_get_contents("los-angeles-city-zip-codes.json"), true);
 
 $featureCollectionFactory = new FeatureCollectionFactory();
 
