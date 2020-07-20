@@ -187,7 +187,7 @@ $flyers = $flyerService->getFlyers();
 <div class="container-fluid" style="padding: 0;">
     <div class="row herophoto">
 		<div class="headline" style="padding-top:50px;">
-            <a href="statement-on-racism-old.pdf" style="color: white; text-align: center; display:block; background: rgba(0,0,0,.2); padding: 5px;">
+            <a href="statement-on-racism.pdf" style="color: white; text-align: center; display:block; background: rgba(0,0,0,.2); padding: 5px;">
                 <h3 style="text-decoration: underline">Statement on Racism</h3>
                 <h5 style="font-style: italic">By the</h5>
                 <h5>Spiritual Assembly of the Bahá’ís of the City of Los Angeles</h5>
