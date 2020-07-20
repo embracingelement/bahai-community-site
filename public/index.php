@@ -186,31 +186,51 @@ $flyers = $flyerService->getFlyers();
 
 <div class="container-fluid" style="padding: 0;">
     <div class="row herophoto">
-		<div class="headline">
-
+		<div class="headline" style="padding-top:50px;">
+            <a href="statement-on-racism-old.pdf" style="color: white; text-align: center; display:block; background: rgba(0,0,0,.2); padding: 5px;">
+                <h3 style="text-decoration: underline">Statement on Racism</h3>
+                <h5 style="font-style: italic">By the</h5>
+                <h5>Spiritual Assembly of the Bahá’ís of the City of Los Angeles</h5>
+            </a>
+            <a href="https://www.bahai.us/race-unity-action" style="text-decoration: underline; margin-top: 15px; color: white; text-align: center; display:block; background: rgba(0,0,0,.6); padding: 1px 0 5px;">
+                <h3>National Race Unity Action Resource</h3>
+            </a>
         </div>
     </div>
 </div>
         <div class="row paddingtwenty text-center">
         <div class="container" style="padding: 0;">
-            <a href="http://www.bahai.org/"><img src="img/whatnew.jpg" alt="baha'is believe" style="width:100%;height:auto;padding: 100px 25px 25px;"></a>
+            <a href="http://www.bahai.org/"><img src="img/whatnew.jpg" alt="baha'is believe" style="width:75%; max-width: 700px; height:auto;margin: 100px 25px 25px;"></a>
                        
         </div>
     </div>
-    <div class="row paddingfifty text-center" id="events">
-        <div class="container">
-            <div class="rowtitle"><h2>Community Events</h2></div>
-            <div class="rowdescription">All events are open to the public and free to attend, unless otherwise noted.</div>
-            <?php echo $eventView->getTabsHTML($tabs, null, $flyers) ?>
+<!--    <div class="row paddingfifty text-center" id="events">-->
+<!--        <div class="container">-->
+<!--            <div class="rowtitle"><h2>Community Events</h2></div>-->
+<!--            <div class="rowdescription">All events are open to the public and free to attend, unless otherwise noted.</div>-->
+<!--            --><?php //echo $eventView->getTabsHTML($tabs, null, $flyers) ?>
+<!--        </div>-->
+<!--    </div>-->
+<div class="row paddingfifty text-center" id="communitylist2" style="background-color: #eeeeee; margin-top: 40px;">
+    <div class="container">
+        <div class="rowtitle"><h3>To connect with</br>your Baha'i friends in Los Angeles:</h3></div>
+        <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 text-left rowdescription">
+            <div class="rowtitle" style="text-align: center">
+                <h2>1-800-22-unite</h2>
+                <h3 style="margin-bottom: 30px;">secretariat@labc.org</h3>
+                <div><a style="color: inherit" href="https://www.facebook.com/LABahais">https://www.facebook.com/LABahais</a></div>
+                <div><a style="color: inherit" href="https://www.youtube.com/LABahaiCenter">https://www.youtube.com/LABahaiCenter</a></div>
+            </div>
         </div>
     </div>
-    <div class="row darkblue paddingfifty text-center" id="communitylist">
+</div>
+    <div class="row darkblue paddingfifty text-center" id="communitylist" style="margin-top: 55px;">
         <div class="container">
-            <div class="rowtitle"><h2>Community Mailing List</h2></div>
+            <div class="rowtitle"><h2>Members of the Baha'i Community Mailing List</h2></div>
             <div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-6 col-md-offset-3 text-left rowdescription">
                 <form action="mailinglistsignup.php" id="mailing-list-form" novalidate>
                     <div class="form-group">
-                        <label for="email-form-field">Please enter your email address:</label>
+                        <label for="email-form-field">Please enter your email address</label>
                         <input type="email" class="form-control" id="email-form-field" aria-describedby="Enter your email" placeholder="Enter email" required>
                         <div class="invalid-feedback" id="email-form-error" style="font-style: italic; display: none">
                             <p>Please enter a valid email.</p>
@@ -232,14 +252,14 @@ $flyers = $flyerService->getFlyers();
     </div>
     <div class="row paddingfifty text-center" id="communitycontacts">
         <div class="container">
-            <div class="rowtitle"><h2>Community Contacts</h2></div>
+            <div class="rowtitle"><h2>Baha'i Community Contacts</h2></div>
             <div class="row text-center">
                 <div class="tabbable">
                     <div class="container">
                         <ul class="nav nav-tabs centerthetabs">
                             <li class="active"><a href="#tab3" data-toggle="tab" id="contacts-communityoffices">Baha'i Center</a></li>
                             <li><a href="#tab4" data-toggle="tab" id="contacts-communityagencies">Agencies</a></li>
-                            <li><a href="#tab5" data-toggle="tab" id="contacts-communityreps">Reps</a></li>
+                            <li><a href="#tab5" data-toggle="tab" id="contacts-communityreps">Representatives</a></li>
                         </ul>
                     </div>
                     <div class="tab-content">

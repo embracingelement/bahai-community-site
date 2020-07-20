@@ -1,7 +1,7 @@
 {
     "name": "embracingelement/bahai-community-site",
     "require": {
-        "google/apiclient": "^2.0",
+        "google/apiclient": "^2.5.0",
         "twig/twig": "~1.0",
         "phpfastcache/phpfastcache": "^8.0"
     },
